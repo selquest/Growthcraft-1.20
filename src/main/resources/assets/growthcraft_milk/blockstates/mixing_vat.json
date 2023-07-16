@@ -1,0 +1,10 @@
+{
+  "variants": {
+    "lit=true": {
+      "model": "growthcraft_milk:block/mixing_vat"
+    },
+    "lit=false": {
+      "model": "growthcraft_milk:block/mixing_vat"
+    }
+  }
+}
