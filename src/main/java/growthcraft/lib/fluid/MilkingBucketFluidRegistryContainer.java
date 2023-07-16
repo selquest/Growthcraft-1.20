@@ -2,7 +2,7 @@ package growthcraft.lib.fluid;
 
 import com.mojang.blaze3d.shaders.FogShape;
 import com.mojang.blaze3d.systems.RenderSystem;
-import com.mojang.math.Vector3f;
+import org.joml.Vector3f;
 import growthcraft.lib.client.ClientFluidTypeExtensions;
 import growthcraft.milk.item.MilkingBucketItem;
 import net.minecraft.client.Camera;

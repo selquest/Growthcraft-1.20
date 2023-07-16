@@ -1,6 +1,6 @@
 package growthcraft.lib.utils;
 
-import com.mojang.math.Vector3f;
+import org.joml.Vector3f;
 import net.minecraft.client.color.item.ItemColor;
 
 import java.awt.*;
