@@ -1,15 +1,15 @@
 package growthcraft.lib.block;
 
 import net.minecraft.world.level.block.Block;
+import net.minecraft.world.level.block.Blocks;
 import net.minecraft.world.level.block.SoundType;
-import net.minecraft.world.level.material.Material;
 
 public class GrowthcraftPlankBlock extends Block {
     public GrowthcraftPlankBlock() {
-        this(getInitProperties(Material.WOOD));
+        this(getInitProperties(Blocks.OAK_PLANKS));
     }
 
-    public GrowthcraftPlankBlock(Material material) {
+    public GrowthcraftPlankBlock(Block material) {
         this(getInitProperties(material));
     }
 
@@ -17,8 +17,8 @@ public class GrowthcraftPlankBlock extends Block {
         super(properties);
     }
 
-    private static Properties getInitProperties(Material material) {
-        Properties properties = Properties.of(material);
+    private static Properties getInitProperties(Block material) {
+        Properties properties = Properties.copy(material);
         properties.strength(2.0F, 3.0F);
         properties.sound(SoundType.WOOD);
         return properties;

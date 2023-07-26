@@ -5,10 +5,10 @@ import growthcraft.core.utils.BlockPropertiesUtils;
 import net.minecraft.core.BlockPos;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.util.RandomSource;
+import net.minecraft.world.level.block.Blocks;
 import net.minecraft.world.level.block.LeavesBlock;
 import net.minecraft.world.level.block.SoundType;
 import net.minecraft.world.level.block.state.BlockState;
-import net.minecraft.world.level.material.Material;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -68,7 +68,7 @@ public class AppleTreeLeaves extends LeavesBlock {
     }
 
     private static Properties getInitProperties() {
-        Properties properties = Properties.of(Material.LEAVES);
+        Properties properties = Properties.copy(Blocks.OAK_LEAVES);
         properties.strength(0.2F);
         properties.randomTicks();
         properties.sound(SoundType.GRASS);

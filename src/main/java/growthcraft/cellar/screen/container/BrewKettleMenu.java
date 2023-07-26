@@ -23,15 +23,15 @@ public class BrewKettleMenu extends AbstractContainerMenu {
     private ContainerData data;
 
     public BrewKettleMenu(int containerId, Inventory inventory, FriendlyByteBuf extraData) {
-        this(containerId, inventory, inventory.player.level.getBlockEntity(extraData.readBlockPos()), new SimpleContainerData(2));
+        this(containerId, inventory, inventory.player.level().getBlockEntity(extraData.readBlockPos()), new SimpleContainerData(2));
     }
 
     public BrewKettleMenu(int containerId, Inventory inventory, BlockEntity blockEntity, ContainerData data) {
         super(GrowthcraftCellarMenus.BREW_KETTLE_MENU.get(), containerId);
 
         this.blockEntity = (BrewKettleBlockEntity) blockEntity;
-        this.block = (BrewKettleBlock) inventory.player.level.getBlockEntity(this.blockEntity.getBlockPos()).getBlockState().getBlock();
-        this.level = inventory.player.level;
+        this.block = (BrewKettleBlock) inventory.player.level().getBlockEntity(this.blockEntity.getBlockPos()).getBlockState().getBlock();
+        this.level = inventory.player.level();
         this.data = data;
 
         addPlayerInventory(inventory);

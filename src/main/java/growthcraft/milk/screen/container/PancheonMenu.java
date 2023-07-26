@@ -25,15 +25,15 @@ public class PancheonMenu extends AbstractContainerMenu {
     private FluidStack fluidStack2;
 
     public PancheonMenu(int containerId, Inventory inventory, FriendlyByteBuf extraData) {
-        this(containerId, inventory, inventory.player.level.getBlockEntity(extraData.readBlockPos()), new SimpleContainerData(2));
+        this(containerId, inventory, inventory.player.level().getBlockEntity(extraData.readBlockPos()), new SimpleContainerData(2));
     }
 
     public PancheonMenu(int containerId, Inventory inventory, BlockEntity blockEntity , ContainerData data) {
         super(GrowthcraftMilkMenus.PANCHEON_MENU.get(), containerId);
 
         this.blockEntity = (PancheonBlockEntity) blockEntity;
-        this.block = (PancheonBlock) inventory.player.level.getBlockEntity(this.blockEntity.getBlockPos()).getBlockState().getBlock();
-        this.level = inventory.player.level;
+        this.block = (PancheonBlock) inventory.player.level().getBlockEntity(this.blockEntity.getBlockPos()).getBlockState().getBlock();
+        this.level = inventory.player.level();
         this.data = data;
 
         this.fluidStack0 = this.blockEntity.getFluidStackInTank(0);

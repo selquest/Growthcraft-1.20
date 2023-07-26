@@ -3,22 +3,23 @@ package growthcraft.lib.block;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
 import net.minecraft.world.level.BlockGetter;
+import net.minecraft.world.level.block.Block;
+import net.minecraft.world.level.block.Blocks;
 import net.minecraft.world.level.block.RotatedPillarBlock;
 import net.minecraft.world.level.block.SoundType;
 import net.minecraft.world.level.block.state.BlockState;
-import net.minecraft.world.level.material.Material;
 
 public class GrowthcraftLogBlock extends RotatedPillarBlock {
     public GrowthcraftLogBlock() {
-        this(getInitProperties(Material.WOOD));
+        this(getInitProperties(Blocks.OAK_LOG));
     }
 
     public GrowthcraftLogBlock(Properties properties) {
         super(properties);
     }
 
-    private static Properties getInitProperties(Material material) {
-        Properties properties = Properties.of(material);
+    private static Properties getInitProperties(Block material) {
+        Properties properties = Properties.copy(material);
         properties.strength(2.0F);
         properties.sound(SoundType.WOOD);
         return properties;

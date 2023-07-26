@@ -27,7 +27,7 @@ import net.minecraft.world.level.block.state.properties.BooleanProperty;
 import net.minecraft.world.level.block.state.properties.DirectionProperty;
 import net.minecraft.world.level.material.FluidState;
 import net.minecraft.world.level.material.PushReaction;
-import net.minecraft.world.level.storage.loot.LootContext;
+import net.minecraft.world.level.storage.loot.LootParams;
 import net.minecraft.world.phys.BlockHitResult;
 import net.minecraft.world.phys.shapes.CollisionContext;
 import net.minecraft.world.phys.shapes.Shapes;
@@ -125,7 +125,7 @@ public class FruitPressPistonBlock  extends Block {
     }
 
     @Override
-    public List<ItemStack> getDrops(BlockState p_60537_, LootContext.Builder p_60538_) {
+    public List<ItemStack> getDrops(BlockState p_287732_, LootParams.Builder p_287596_) {
         return Collections.emptyList();
     }
 

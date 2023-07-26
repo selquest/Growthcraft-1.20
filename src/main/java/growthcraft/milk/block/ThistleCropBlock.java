@@ -11,11 +11,11 @@ import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.ItemLike;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.Block;
+import net.minecraft.world.level.block.Blocks;
 import net.minecraft.world.level.block.CropBlock;
 import net.minecraft.world.level.block.SoundType;
 import net.minecraft.world.level.block.state.BlockState;
-import net.minecraft.world.level.material.Material;
-import net.minecraft.world.level.storage.loot.LootContext;
+import net.minecraft.world.level.storage.loot.LootParams;
 import net.minecraft.world.level.storage.loot.parameters.LootContextParams;
 import net.minecraft.world.phys.BlockHitResult;
 import net.minecraft.world.phys.Vec3;
@@ -46,7 +46,7 @@ public class ThistleCropBlock extends CropBlock {
     }
 
     private static Properties getInitProperties() {
-        Properties properties = Properties.of(Material.PLANT);
+        Properties properties = Properties.copy(Blocks.WHEAT);
         properties.noOcclusion();
         properties.randomTicks();
         properties.instabreak();
@@ -62,10 +62,10 @@ public class ThistleCropBlock extends CropBlock {
     @Override
     @SuppressWarnings("deprecation")
     public InteractionResult use(BlockState blockState, Level level, BlockPos blockPos, Player player, InteractionHand hand, BlockHitResult hitResult) {
-        if(level.isClientSide) return super.use(blockState, level, blockPos, player, hand, hitResult);
+        if (level.isClientSide) return super.use(blockState, level, blockPos, player, hand, hitResult);
 
-        if(blockState.getValue(AGE) == this.getMaxAge())  {
-            LootContext.Builder context = new LootContext.Builder((ServerLevel) level)
+        if (blockState.getValue(AGE) == this.getMaxAge()) {
+            LootParams.Builder context = new LootParams.Builder((ServerLevel) level)
                     .withParameter(LootContextParams.ORIGIN, new Vec3(blockPos.getX(), blockPos.getY(), blockPos.getZ()))
                     .withParameter(LootContextParams.BLOCK_STATE, blockState)
                     .withParameter(LootContextParams.THIS_ENTITY, player)

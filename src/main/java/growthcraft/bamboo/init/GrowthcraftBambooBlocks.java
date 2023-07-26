@@ -9,8 +9,8 @@ import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.item.BlockItem;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.level.block.Block;
+import net.minecraft.world.level.block.Blocks;
 import net.minecraft.world.level.block.state.BlockBehaviour;
-import net.minecraft.world.level.material.Material;
 import net.minecraftforge.registries.DeferredRegister;
 import net.minecraftforge.registries.ForgeRegistries;
 import net.minecraftforge.registries.RegistryObject;
@@ -25,7 +25,7 @@ public class GrowthcraftBambooBlocks {
     );
 
     public static final RegistryObject<Block> BAMBOO_PLANK = registerBlock(
-            Reference.UnlocalizedName.BAMBOO_PLANK, () -> new GrowthcraftPlankBlock(Material.BAMBOO)
+            Reference.UnlocalizedName.BAMBOO_PLANK, () -> new GrowthcraftPlankBlock(Blocks.OAK_PLANKS)
     );
 
     public static final RegistryObject<Block> BAMBOO_PLANK_STAIRS = registerBlock(

@@ -19,10 +19,7 @@ import net.minecraft.world.level.BlockGetter;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.LevelAccessor;
 import net.minecraft.world.level.LevelReader;
-import net.minecraft.world.level.block.Block;
-import net.minecraft.world.level.block.BonemealableBlock;
-import net.minecraft.world.level.block.BushBlock;
-import net.minecraft.world.level.block.SoundType;
+import net.minecraft.world.level.block.*;
 import net.minecraft.world.level.block.state.BlockBehaviour;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.block.state.StateDefinition;
@@ -30,7 +27,6 @@ import net.minecraft.world.level.block.state.properties.BlockStateProperties;
 import net.minecraft.world.level.block.state.properties.BooleanProperty;
 import net.minecraft.world.level.block.state.properties.IntegerProperty;
 import net.minecraft.world.level.material.FluidState;
-import net.minecraft.world.level.material.Material;
 import net.minecraft.world.phys.BlockHitResult;
 import net.minecraft.world.phys.shapes.CollisionContext;
 import net.minecraft.world.phys.shapes.Shapes;
@@ -79,7 +75,7 @@ public class GrowthcraftCropsRopeBlock extends BushBlock implements Bonemealable
     }
 
     public static Properties getInitProperties() {
-        BlockBehaviour.Properties properties = BlockBehaviour.Properties.of(Material.PLANT);
+        BlockBehaviour.Properties properties = BlockBehaviour.Properties.copy(Blocks.WHEAT);
         properties.noCollission();
         properties.randomTicks();
         properties.instabreak();
@@ -247,8 +243,8 @@ public class GrowthcraftCropsRopeBlock extends BushBlock implements Bonemealable
         float f = 1.0F;
         BlockPos blockpos = pos.below();
 
-        for(int i = -1; i <= 1; ++i) {
-            for(int j = -1; j <= 1; ++j) {
+        for (int i = -1; i <= 1; ++i) {
+            for (int j = -1; j <= 1; ++j) {
                 float f1 = 0.0F;
                 BlockState blockstate = blockGetter.getBlockState(blockpos.offset(i, 0, j));
                 if (blockstate.canSustainPlant(blockGetter, blockpos.offset(i, 0, j), net.minecraft.core.Direction.UP, (net.minecraftforge.common.IPlantable) block)) {

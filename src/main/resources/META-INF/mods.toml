@@ -1,38 +1,45 @@
-modLoader="javafml" #mandatory
-loaderVersion="[45,)"
-license = "GPL-3.0"
+modLoader = "javafml"
+loaderVersion = "[45,)"
+license = "GNU General Public License v3.0"
 issueTrackerURL = "https://github.com/GrowthcraftCE/Growthcraft-1.19/issues"
 
 [[mods]]
-modId = "growthcraft"
-version = "8.1.0"
-displayName = "Growthcraft"
-updateJSONURL = "https://raw.githubusercontent.com/GrowthcraftCE/Growthcraft-Updates/master/growthcraft-versions.json"
-displayURL = "https://github.com/GrowthcraftCE/Growthcraft-1.19/wiki"
+modId = "${mod_id}"
+version = "${mod_version}"
+displayName = "${mod_name}"
+updateJSONURL = "https://raw.githubusercontent.com/GrowthcraftCE/Growthcraft-Updates/master/growthcraft-trapper-versions.json"
+displayURL = "https://github.com/GrowthcraftCE/Growthcraft/wiki"
 logoFile = "growthcraft_core_logo.png"
 credits = "Thanks to Gwafu for starting a great mod. And the Growthcraft CE Development for continuing the work."
-authors = "Alatyami"
-description = '''
-Growthcraft is a realistic and immersive Forge mod that adds various new elements to the game of Minecraft.
-'''
+authors = "${mod_authors}"
+description = '''${mod_description}'''
 
-[[dependencies.growthcraft]] #optional
+[[dependencies.${ mod_id }]]
 modId = "forge"
 mandatory = true
-versionRange = "[45,)"
+versionRange = "${forge_version_range}"
 ordering = "NONE"
 side = "BOTH"
 
-[[dependencies.growthcraft]]
+[[dependencies.${ mod_id }]]
 modId = "minecraft"
 mandatory = true
-versionRange = "[1.19.4,1.20)"
+# This version range declares a minimum of the current minecraft version up to but not including the next major version
+versionRange = "${minecraft_version_range}"
 ordering = "NONE"
 side = "BOTH"
+
+[[dependencies.${ mod_id }]]
+modId = "growthcraft"
+mandatory = false
+versionRange = "[9,)"
+ordering = "AFTER"
+side = "BOTH"
+
 
 [[mods]]
 modId = "growthcraft_apiary"
-version = "8.1.0"
+versionRange = "[9,)"
 displayName = "Growthcraft Apiary"
 logoFile = "growthcraft_bees_logo.png"
 description = '''
@@ -42,13 +49,13 @@ description = '''
 [[dependencies.growthcraft_apiary]]
 modId = "growthcraft"
 mandatory = true
-versionRange = "[8,)"
+versionRange = "[9,)"
 ordering = "AFTER"
 side = "BOTH"
 
 [[mods]]
 modId = "growthcraft_apples"
-version = "8.1.0"
+version = "${mod_version}"
 displayName = "Growthcraft Apples"
 logoFile = "growthcraft_apples_logo.png"
 description = '''
@@ -58,13 +65,13 @@ description = '''
 [[dependencies.growthcraft_apples]]
 modId = "growthcraft"
 mandatory = true
-versionRange = "[8,)"
+versionRange = "[9,)"
 ordering = "AFTER"
 side = "BOTH"
 
 [[mods]]
 modId = "growthcraft_bamboo"
-version = "8.1.0"
+version = "${mod_version}"
 displayName = "Growthcraft Bamboo"
 logoFile = "growthcraft_bamboo_logo.png"
 description = '''
@@ -74,13 +81,13 @@ description = '''
 [[dependencies.growthcraft_apples]]
 modId = "growthcraft"
 mandatory = true
-versionRange = "[8,)"
+versionRange = "[9,)"
 ordering = "AFTER"
 side = "BOTH"
 
 [[mods]]
 modId = "growthcraft_cellar"
-version = "8.1.0"
+version = "${mod_version}"
 displayName = "Growthcraft Cellar"
 logoFile = "growthcraft_cellar_logo.png"
 description = '''
@@ -90,13 +97,13 @@ description = '''
 [[dependencies.growthcraft_cellar]]
 modId = "growthcraft"
 mandatory = true
-versionRange = "[8,)"
+versionRange = "[9,)"
 ordering = "AFTER"
 side = "BOTH"
 
 [[mods]]
 modId = "growthcraft_milk"
-version = "8.1.0"
+version = "${mod_version}"
 displayName = "Growthcraft Milk"
 logoFile = "growthcraft_milk_logo.png"
 description = '''
@@ -106,13 +113,13 @@ description = '''
 [[dependencies.growthcraft_milk]]
 modId = "growthcraft"
 mandatory = true
-versionRange = "[8,)"
+versionRange = "[9,)"
 ordering = "AFTER"
 side = "BOTH"
 
 [[mods]]
 modId = "growthcraft_rice"
-version = "8.1.0"
+version = "${mod_version}"
 displayName = "Growthcraft Rice"
 logoFile = "growthcraft_rice_logo.png"
 description = '''
@@ -122,7 +129,7 @@ description = '''
 [[dependencies.growthcraft_rice]]
 modId = "growthcraft"
 mandatory = true
-versionRange = "[8,)"
+versionRange = "[9,)"
 ordering = "AFTER"
 side = "BOTH"
 

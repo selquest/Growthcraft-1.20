@@ -30,7 +30,7 @@ public class Growthcraft {
         GrowthcraftItems.ITEMS.register(modEventBus);
         GrowthcraftBlockEntities.BLOCK_ENTITIES.register(modEventBus);
 
-        GrowthcraftCreativeTabs.CREATIVE_MODE_TABS.register(modEventBus);
+        GrowthcraftCreativeModeTabs.CREATIVE_MODE_TABS.register(modEventBus);
 
         GrowthcraftLootModifiers.register(modEventBus);
 

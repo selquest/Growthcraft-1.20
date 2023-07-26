@@ -27,15 +27,15 @@ public class BeeBoxMenu extends AbstractContainerMenu {
     private final Level level;
 
     public BeeBoxMenu(int containerID, Inventory inventory, FriendlyByteBuf extraData) {
-        this(containerID, inventory, inventory.player.level.getBlockEntity(extraData.readBlockPos()));
+        this(containerID, inventory, inventory.player.level().getBlockEntity(extraData.readBlockPos()));
     }
 
     public BeeBoxMenu(int containerID, Inventory inventory, BlockEntity blockEntity) {
         super(GrowthcraftApiaryMenus.BEE_BOX_MENU.get(), containerID);
 
         this.blockEntity = (BeeBoxBlockEntity) blockEntity;
-        this.block = (BeeBoxBlock) inventory.player.level.getBlockEntity(this.blockEntity.getBlockPos()).getBlockState().getBlock();
-        this.level = inventory.player.level;
+        this.block = (BeeBoxBlock) inventory.player.level().getBlockEntity(this.blockEntity.getBlockPos()).getBlockState().getBlock();
+        this.level = inventory.player.level();
 
         addPlayerInventory(inventory);
         addPlayerHotbar(inventory);

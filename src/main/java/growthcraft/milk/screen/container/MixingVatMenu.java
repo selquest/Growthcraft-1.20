@@ -29,7 +29,7 @@ public class MixingVatMenu extends AbstractContainerMenu {
     private ContainerData data;
 
     public MixingVatMenu(int containerId, Inventory inventory, FriendlyByteBuf extraData) {
-        this(containerId, inventory, Objects.requireNonNull(inventory.player.level.getBlockEntity(extraData.readBlockPos())), new SimpleContainerData(2));
+        this(containerId, inventory, Objects.requireNonNull(inventory.player.level().getBlockEntity(extraData.readBlockPos())), new SimpleContainerData(2));
     }
 
     public MixingVatMenu(int containerId, Inventory inventory, BlockEntity blockEntity , ContainerData data) {
@@ -37,7 +37,7 @@ public class MixingVatMenu extends AbstractContainerMenu {
 
         this.blockEntity = (MixingVatBlockEntity) blockEntity;
         this.block = (MixingVatBlock) blockEntity.getBlockState().getBlock();
-        this.level = inventory.player.level;
+        this.level = inventory.player.level();
         this.data = data;
 
         this.blockEntity.getCapability(ForgeCapabilities.ITEM_HANDLER).ifPresent(handler -> {

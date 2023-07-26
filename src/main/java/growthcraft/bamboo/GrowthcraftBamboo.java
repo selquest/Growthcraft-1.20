@@ -8,7 +8,7 @@ import growthcraft.bamboo.shared.Reference;
 import growthcraft.core.init.GrowthcraftCreativeModeTabs;
 import net.minecraft.world.item.ItemStack;
 import net.minecraftforge.common.MinecraftForge;
-import net.minecraftforge.event.CreativeModeTabEvent;
+import net.minecraftforge.event.BuildCreativeModeTabContentsEvent;
 import net.minecraftforge.event.server.ServerStartingEvent;
 import net.minecraftforge.eventbus.api.IEventBus;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
@@ -42,8 +42,8 @@ public class GrowthcraftBamboo {
         MinecraftForge.EVENT_BUS.register(this);
     }
 
-    public void buildCreativeTabContents(CreativeModeTabEvent.BuildContents event) {
-        if (event.getTab() == GrowthcraftCreativeModeTabs.GROWTHCRAFT_CREATIVE_TAB) {
+    public void buildCreativeTabContents(BuildCreativeModeTabContentsEvent event) {
+        if (event.getTab() == GrowthcraftCreativeModeTabs.CREATIVE_TAB.get()) {
             GrowthcraftBambooItems.ITEMS.getEntries().forEach(itemRegistryObject -> {
                 if (!GrowthcraftBambooItems.excludeItemRegistry(itemRegistryObject.getId())) {
                     event.accept(new ItemStack(itemRegistryObject.get()));

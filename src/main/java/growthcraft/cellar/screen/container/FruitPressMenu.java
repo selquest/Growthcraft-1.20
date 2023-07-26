@@ -26,15 +26,15 @@ public class FruitPressMenu extends AbstractContainerMenu {
     private FluidStack fluidStack0;
 
     public FruitPressMenu(int containerId, Inventory inventory, FriendlyByteBuf extraData) {
-        this(containerId, inventory, inventory.player.level.getBlockEntity(extraData.readBlockPos()), new SimpleContainerData(2));
+        this(containerId, inventory, inventory.player.level().getBlockEntity(extraData.readBlockPos()), new SimpleContainerData(2));
     }
 
     public FruitPressMenu(int containerId, Inventory inventory, BlockEntity blockEntity, ContainerData data) {
         super(GrowthcraftCellarMenus.FRUIT_PRESS_MENU.get(), containerId);
 
         this.blockEntity = (FruitPressBlockEntity) blockEntity;
-        this.block = (FruitPressBlock) inventory.player.level.getBlockEntity(this.blockEntity.getBlockPos()).getBlockState().getBlock();
-        this.level = inventory.player.level;
+        this.block = (FruitPressBlock) inventory.player.level().getBlockEntity(this.blockEntity.getBlockPos()).getBlockState().getBlock();
+        this.level = inventory.player.level();
         this.data = data;
 
         this.fluidStack0 = this.blockEntity.getFluidStackInTank(0);

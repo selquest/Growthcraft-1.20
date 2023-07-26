@@ -18,15 +18,11 @@ import net.minecraft.world.level.BlockGetter;
 import net.minecraft.world.level.ItemLike;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.LevelReader;
-import net.minecraft.world.level.block.Block;
-import net.minecraft.world.level.block.BonemealableBlock;
-import net.minecraft.world.level.block.BushBlock;
-import net.minecraft.world.level.block.SoundType;
+import net.minecraft.world.level.block.*;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.block.state.StateDefinition;
 import net.minecraft.world.level.block.state.properties.BlockStateProperties;
 import net.minecraft.world.level.block.state.properties.IntegerProperty;
-import net.minecraft.world.level.material.Material;
 import net.minecraft.world.phys.BlockHitResult;
 import net.minecraft.world.phys.shapes.CollisionContext;
 import net.minecraft.world.phys.shapes.VoxelShape;
@@ -96,12 +92,13 @@ public class AppleTreeFruit extends BushBlock implements BonemealableBlock {
 
     @Override
     public void randomTick(@NotNull BlockState blockState, ServerLevel level, @NotNull BlockPos blockPos, @NotNull RandomSource random) {
-        if (!level.isAreaLoaded(blockPos, 1)) return; // Forge: prevent loading unloaded chunks when checking neighbor's light
+        if (!level.isAreaLoaded(blockPos, 1))
+            return; // Forge: prevent loading unloaded chunks when checking neighbor's light
         if (level.getRawBrightness(blockPos, 0) >= 9) {
             int i = this.getAge(blockState);
             if (i < this.getMaxAge()) {
                 float f = getGrowthSpeed(this, level, blockPos);
-                if (net.minecraftforge.common.ForgeHooks.onCropsGrowPre(level, blockPos, blockState, random.nextInt((int)(25.0F / f) + 1) == 0)) {
+                if (net.minecraftforge.common.ForgeHooks.onCropsGrowPre(level, blockPos, blockState, random.nextInt((int) (25.0F / f) + 1) == 0)) {
                     level.setBlock(blockPos, this.getStateForAge(i + 1), 2);
                     net.minecraftforge.common.ForgeHooks.onCropsGrowPost(level, blockPos, blockState);
                 }
@@ -128,8 +125,8 @@ public class AppleTreeFruit extends BushBlock implements BonemealableBlock {
         float f = 1.0F;
         BlockPos blockpos = pos.below();
 
-        for(int i = -1; i <= 1; ++i) {
-            for(int j = -1; j <= 1; ++j) {
+        for (int i = -1; i <= 1; ++i) {
+            for (int j = -1; j <= 1; ++j) {
                 float f1 = 0.0F;
                 BlockState blockstate = blockGetter.getBlockState(blockpos.offset(i, 0, j));
                 if (blockstate.canSustainPlant(blockGetter, blockpos.offset(i, 0, j), net.minecraft.core.Direction.UP, (net.minecraftforge.common.IPlantable) block)) {
@@ -203,7 +200,7 @@ public class AppleTreeFruit extends BushBlock implements BonemealableBlock {
 
     @Override
     public InteractionResult use(BlockState state, Level level, BlockPos pos, Player player, InteractionHand hand, BlockHitResult hitResult) {
-        if(state.getValue(AGE) == this.getMaxAge()) {
+        if (state.getValue(AGE) == this.getMaxAge()) {
             level.destroyBlock(pos, true);
             ItemEntity itemEntity = new ItemEntity(level, pos.getX(), pos.getY(), pos.getZ(), new ItemStack(Items.APPLE));
             level.addFreshEntity(itemEntity);
@@ -212,7 +209,7 @@ public class AppleTreeFruit extends BushBlock implements BonemealableBlock {
     }
 
     private static Properties getInitProperties() {
-        Properties properties = Properties.of(Material.LEAVES);
+        Properties properties = Properties.copy(Blocks.OAK_LEAVES);
         properties.randomTicks();
         properties.sound(SoundType.CROP);
         properties.noOcclusion();

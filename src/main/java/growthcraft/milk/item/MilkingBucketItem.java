@@ -33,12 +33,10 @@ import net.minecraft.world.level.gameevent.GameEvent;
 import net.minecraft.world.level.material.FlowingFluid;
 import net.minecraft.world.level.material.Fluid;
 import net.minecraft.world.level.material.Fluids;
-import net.minecraft.world.level.material.Material;
 import net.minecraft.world.phys.BlockHitResult;
 import net.minecraft.world.phys.HitResult;
 
 import javax.annotation.Nullable;
-import java.security.SecureRandom;
 import java.util.function.Supplier;
 
 public class MilkingBucketItem extends Item implements DispensibleContainerItem {
@@ -72,7 +70,7 @@ public class MilkingBucketItem extends Item implements DispensibleContainerItem 
 
     @Override
     public InteractionResult interactLivingEntity(ItemStack itemStack, Player player, LivingEntity livingEntity, InteractionHand hand) {
-        if (livingEntity.level.isClientSide) return InteractionResult.PASS;
+        if (livingEntity.level().isClientSide) return InteractionResult.PASS;
 
         if (livingEntity.getType().is(GrowthcraftMilkTags.EntityTypes.MILKABLE)) {
             player.getInventory().add(new ItemStack(GrowthcraftMilkFluids.MILK.bucket.get()));
@@ -99,8 +97,7 @@ public class MilkingBucketItem extends Item implements DispensibleContainerItem 
             if (p_40703_.mayInteract(p_40704_, blockpos) && p_40704_.mayUseItemAt(blockpos1, direction, itemstack)) {
                 if (this.content == Fluids.EMPTY) {
                     BlockState blockstate1 = p_40703_.getBlockState(blockpos);
-                    if (blockstate1.getBlock() instanceof BucketPickup) {
-                        BucketPickup bucketpickup = (BucketPickup)blockstate1.getBlock();
+                    if (blockstate1.getBlock() instanceof BucketPickup bucketpickup) {
                         ItemStack itemstack1 = bucketpickup.pickupBlock(p_40703_, blockpos, blockstate1);
                         if (!itemstack1.isEmpty()) {
                             p_40704_.awardStat(Stats.ITEM_USED.get(this));
@@ -110,7 +107,7 @@ public class MilkingBucketItem extends Item implements DispensibleContainerItem 
                             p_40703_.gameEvent(p_40704_, GameEvent.FLUID_PICKUP, blockpos);
                             ItemStack itemstack2 = ItemUtils.createFilledResult(itemstack, p_40704_, itemstack1);
                             if (!p_40703_.isClientSide) {
-                                CriteriaTriggers.FILLED_BUCKET.trigger((ServerPlayer)p_40704_, itemstack1);
+                                CriteriaTriggers.FILLED_BUCKET.trigger((ServerPlayer) p_40704_, itemstack1);
                             }
 
                             return InteractionResultHolder.sidedSuccess(itemstack2, p_40703_.isClientSide());
@@ -124,7 +121,7 @@ public class MilkingBucketItem extends Item implements DispensibleContainerItem 
                     if (this.emptyContents(p_40704_, p_40703_, blockpos2, blockhitresult)) {
                         this.checkExtraContent(p_40704_, p_40703_, itemstack, blockpos2);
                         if (p_40704_ instanceof ServerPlayer) {
-                            CriteriaTriggers.PLACED_BLOCK.trigger((ServerPlayer)p_40704_, blockpos2, itemstack);
+                            CriteriaTriggers.PLACED_BLOCK.trigger((ServerPlayer) p_40704_, blockpos2, itemstack);
                         }
 
                         p_40704_.awardStat(Stats.ITEM_USED.get(this));
@@ -146,36 +143,43 @@ public class MilkingBucketItem extends Item implements DispensibleContainerItem 
     public void checkExtraContent(@javax.annotation.Nullable Player p_150711_, Level p_150712_, ItemStack p_150713_, BlockPos p_150714_) {
     }
 
-    public boolean emptyContents(@javax.annotation.Nullable Player p_150716_, Level p_150717_, BlockPos p_150718_, @javax.annotation.Nullable BlockHitResult p_150719_) {
+    @Deprecated
+    public boolean emptyContents(@Nullable Player p_150716_, Level p_150717_, BlockPos p_150718_, @Nullable BlockHitResult p_150719_) {
+        return this.emptyContents(p_150716_, p_150717_, p_150718_, p_150719_, null);
+    }
+
+    @Override
+    public boolean emptyContents(@Nullable Player p_150716_, Level p_150717_, BlockPos p_150718_, @Nullable BlockHitResult p_150719_, @Nullable ItemStack container) {
         if (!(this.content instanceof FlowingFluid)) {
             return false;
         } else {
-            SecureRandom random = new SecureRandom();
-
             BlockState blockstate = p_150717_.getBlockState(p_150718_);
             Block block = blockstate.getBlock();
-            Material material = blockstate.getMaterial();
             boolean flag = blockstate.canBeReplaced(this.content);
-            boolean flag1 = blockstate.isAir() || flag || block instanceof LiquidBlockContainer && ((LiquidBlockContainer)block).canPlaceLiquid(p_150717_, p_150718_, blockstate, this.content);
+            boolean flag1 = blockstate.isAir() || flag || block instanceof LiquidBlockContainer && ((LiquidBlockContainer) block).canPlaceLiquid(p_150717_, p_150718_, blockstate, this.content);
+            java.util.Optional<net.minecraftforge.fluids.FluidStack> containedFluidStack = java.util.Optional.ofNullable(container).flatMap(net.minecraftforge.fluids.FluidUtil::getFluidContained);
             if (!flag1) {
-                return p_150719_ != null && this.emptyContents(p_150716_, p_150717_, p_150719_.getBlockPos().relative(p_150719_.getDirection()), (BlockHitResult)null);
+                return p_150719_ != null && this.emptyContents(p_150716_, p_150717_, p_150719_.getBlockPos().relative(p_150719_.getDirection()), null, container);
+            } else if (containedFluidStack.isPresent() && this.content.getFluidType().isVaporizedOnPlacement(p_150717_, p_150718_, containedFluidStack.get())) {
+                this.content.getFluidType().onVaporize(p_150716_, p_150717_, p_150718_, containedFluidStack.get());
+                return true;
             } else if (p_150717_.dimensionType().ultraWarm() && this.content.is(FluidTags.WATER)) {
                 int i = p_150718_.getX();
                 int j = p_150718_.getY();
                 int k = p_150718_.getZ();
                 p_150717_.playSound(p_150716_, p_150718_, SoundEvents.FIRE_EXTINGUISH, SoundSource.BLOCKS, 0.5F, 2.6F + (p_150717_.random.nextFloat() - p_150717_.random.nextFloat()) * 0.8F);
 
-                for(int l = 0; l < 8; ++l) {
-                    p_150717_.addParticle(ParticleTypes.LARGE_SMOKE, i + random.nextDouble(), j + random.nextDouble(), k + random.nextDouble(), 0.0D, 0.0D, 0.0D);
+                for (int l = 0; l < 8; ++l) {
+                    p_150717_.addParticle(ParticleTypes.LARGE_SMOKE, (double) i + Math.random(), (double) j + Math.random(), (double) k + Math.random(), 0.0D, 0.0D, 0.0D);
                 }
 
                 return true;
-            } else if (block instanceof LiquidBlockContainer && ((LiquidBlockContainer)block).canPlaceLiquid(p_150717_,p_150718_,blockstate,content)) {
-                ((LiquidBlockContainer)block).placeLiquid(p_150717_, p_150718_, blockstate, ((FlowingFluid)this.content).getSource(false));
+            } else if (block instanceof LiquidBlockContainer && ((LiquidBlockContainer) block).canPlaceLiquid(p_150717_, p_150718_, blockstate, content)) {
+                ((LiquidBlockContainer) block).placeLiquid(p_150717_, p_150718_, blockstate, ((FlowingFluid) this.content).getSource(false));
                 this.playEmptySound(p_150716_, p_150717_, p_150718_);
                 return true;
             } else {
-                if (!p_150717_.isClientSide && flag && !material.isLiquid()) {
+                if (!p_150717_.isClientSide && flag && !blockstate.liquid()) {
                     p_150717_.destroyBlock(p_150718_, true);
                 }
 
@@ -191,7 +195,8 @@ public class MilkingBucketItem extends Item implements DispensibleContainerItem 
 
     protected void playEmptySound(@javax.annotation.Nullable Player p_40696_, LevelAccessor p_40697_, BlockPos p_40698_) {
         SoundEvent soundevent = this.content.getFluidType().getSound(p_40696_, p_40697_, p_40698_, net.minecraftforge.common.SoundActions.BUCKET_EMPTY);
-        if(soundevent == null) soundevent = this.content.is(FluidTags.LAVA) ? SoundEvents.BUCKET_EMPTY_LAVA : SoundEvents.BUCKET_EMPTY;
+        if (soundevent == null)
+            soundevent = this.content.is(FluidTags.LAVA) ? SoundEvents.BUCKET_EMPTY_LAVA : SoundEvents.BUCKET_EMPTY;
         p_40697_.playSound(p_40696_, p_40698_, soundevent, SoundSource.BLOCKS, 1.0F, 1.0F);
         p_40697_.gameEvent(p_40696_, GameEvent.FLUID_PLACE, p_40698_);
     }
@@ -204,11 +209,12 @@ public class MilkingBucketItem extends Item implements DispensibleContainerItem 
             return super.initCapabilities(stack, nbt);
     }
 
-    public Fluid getFluid() { return fluidSupplier.get(); }
+    public Fluid getFluid() {
+        return fluidSupplier.get();
+    }
 
-    private boolean canBlockContainFluid(Level worldIn, BlockPos posIn, BlockState blockstate)
-    {
-        return blockstate.getBlock() instanceof LiquidBlockContainer && ((LiquidBlockContainer)blockstate.getBlock()).canPlaceLiquid(worldIn, posIn, blockstate, this.content);
+    private boolean canBlockContainFluid(Level worldIn, BlockPos posIn, BlockState blockstate) {
+        return blockstate.getBlock() instanceof LiquidBlockContainer && ((LiquidBlockContainer) blockstate.getBlock()).canPlaceLiquid(worldIn, posIn, blockstate, this.content);
     }
 
 

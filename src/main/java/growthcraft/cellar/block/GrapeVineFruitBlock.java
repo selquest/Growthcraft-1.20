@@ -13,7 +13,7 @@ import net.minecraft.world.level.BlockGetter;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.state.BlockState;
-import net.minecraft.world.level.storage.loot.LootContext;
+import net.minecraft.world.level.storage.loot.LootParams;
 import net.minecraft.world.level.storage.loot.parameters.LootContextParams;
 import net.minecraft.world.phys.BlockHitResult;
 import net.minecraft.world.phys.Vec3;
@@ -75,7 +75,7 @@ public class GrapeVineFruitBlock extends GrowthcraftCropsRopeBlock {
         }
 
         if (state.getValue(AGE) == this.getMaxAge()) {
-            LootContext.Builder context = new LootContext.Builder((ServerLevel) level)
+            LootParams.Builder context = new LootParams.Builder((ServerLevel) level)
                     .withParameter(LootContextParams.ORIGIN, new Vec3(pos.getX(), pos.getY(), pos.getZ()))
                     .withParameter(LootContextParams.BLOCK_STATE, state)
                     .withParameter(LootContextParams.THIS_ENTITY, player)

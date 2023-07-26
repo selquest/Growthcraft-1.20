@@ -10,7 +10,7 @@ import growthcraft.apples.shared.Reference;
 import growthcraft.core.init.GrowthcraftCreativeModeTabs;
 import net.minecraft.world.item.ItemStack;
 import net.minecraftforge.common.MinecraftForge;
-import net.minecraftforge.event.CreativeModeTabEvent;
+import net.minecraftforge.event.BuildCreativeModeTabContentsEvent;
 import net.minecraftforge.event.server.ServerStartingEvent;
 import net.minecraftforge.eventbus.api.IEventBus;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
@@ -58,8 +58,8 @@ public class GrowthcraftApples {
         LOGGER.info("Growthcraft Apples starting up ...");
     }
 
-    public void buildCreativeTabContents(CreativeModeTabEvent.BuildContents event) {
-        if (event.getTab() == GrowthcraftCreativeModeTabs.GROWTHCRAFT_CREATIVE_TAB) {
+    public void buildCreativeTabContents(BuildCreativeModeTabContentsEvent event) {
+        if (event.getTab() == GrowthcraftCreativeModeTabs.CREATIVE_TAB.get()) {
             GrowthcraftApplesItems.ITEMS.getEntries().forEach(itemRegistryObject -> {
                 if (!GrowthcraftApplesItems.excludeItemRegistry(itemRegistryObject.getId())) {
                     event.accept(new ItemStack(itemRegistryObject.get()));

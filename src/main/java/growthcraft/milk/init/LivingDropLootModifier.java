@@ -17,7 +17,7 @@ public class LivingDropLootModifier {
     @SubscribeEvent
     public void onLivingDropsEvent(LivingDropsEvent event) {
         LivingEntity entity = event.getEntity();
-        Level level = entity.getLevel();
+        Level level = entity.level();
 
         if(!level.getGameRules().getBoolean(GameRules.RULE_DOMOBLOOT)) {
             return;
@@ -36,7 +36,7 @@ public class LivingDropLootModifier {
         if(GrowthcraftMilkConfig.isStomachLootingEnabled() && new SecureRandom().nextInt(100) <= chance) {
             drops.add(
                     new ItemEntity(
-                        event.getEntity().getLevel(),
+                        event.getEntity().level(),
                         cow.getX(), cow.getY(), cow.getZ(),
                         new ItemStack(GrowthcraftMilkItems.STOMACH.get())
                     )
