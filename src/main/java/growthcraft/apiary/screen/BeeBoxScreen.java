@@ -47,9 +47,9 @@ public class BeeBoxScreen extends AbstractContainerScreen<BeeBoxMenu> {
         // We will have to render the GUI title and inventory label ourselves.
         poseStack.drawString(this.font, this.title,
                 this.titleLabelX, this.titleLabelY,
-                4210752);
+                4210752, false);
         poseStack.drawString(this.font, this.playerInventoryTitle,
                 this.inventoryLabelX, this.inventoryLabelY - 32,
-                4210752);
+                4210752, false);
     }
 }

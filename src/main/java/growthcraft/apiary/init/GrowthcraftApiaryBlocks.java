@@ -26,6 +26,10 @@ public class GrowthcraftApiaryBlocks {
             Reference.UnlocalizedName.BEE_BOX_BIRCH, BeeBoxBlock::new
     );
 
+    public static final RegistryObject<Block> BEE_BOX_CHERRY = registerBlock(
+            Reference.UnlocalizedName.BEE_BOX_CHERRY, BeeBoxBlock::new
+    );
+
     public static final RegistryObject<Block> BEE_BOX_CRIMSON = registerBlock(
             Reference.UnlocalizedName.BEE_BOX_CRIMSON, BeeBoxBlock::new
     );
@@ -37,6 +41,11 @@ public class GrowthcraftApiaryBlocks {
     public static final RegistryObject<Block> BEE_BOX_JUNGLE = registerBlock(
             Reference.UnlocalizedName.BEE_BOX_JUNGLE, BeeBoxBlock::new
     );
+
+    public static final RegistryObject<Block> BEE_BOX_MANGROVE = registerBlock(
+            Reference.UnlocalizedName.BEE_BOX_MANGROVE, BeeBoxBlock::new
+    );
+
     public static final RegistryObject<Block> BEE_BOX_OAK = registerBlock(
             Reference.UnlocalizedName.BEE_BOX_OAK, BeeBoxBlock::new
     );
