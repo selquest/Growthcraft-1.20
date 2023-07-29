@@ -1,5 +1,6 @@
 package growthcraft.milk.item;
 
+import growthcraft.lib.utils.RandomGeneratorUtils;
 import growthcraft.milk.init.GrowthcraftMilkFluids;
 import growthcraft.milk.init.GrowthcraftMilkItems;
 import growthcraft.milk.init.GrowthcraftMilkTags;
@@ -149,44 +150,50 @@ public class MilkingBucketItem extends Item implements DispensibleContainerItem 
     }
 
     @Override
-    public boolean emptyContents(@Nullable Player p_150716_, Level p_150717_, BlockPos p_150718_, @Nullable BlockHitResult p_150719_, @Nullable ItemStack container) {
+    public boolean emptyContents(@Nullable Player player, Level level, BlockPos blockPos, @Nullable BlockHitResult blockHitResult, @Nullable ItemStack container) {
         if (!(this.content instanceof FlowingFluid)) {
             return false;
         } else {
-            BlockState blockstate = p_150717_.getBlockState(p_150718_);
+            BlockState blockstate = level.getBlockState(blockPos);
             Block block = blockstate.getBlock();
             boolean flag = blockstate.canBeReplaced(this.content);
-            boolean flag1 = blockstate.isAir() || flag || block instanceof LiquidBlockContainer && ((LiquidBlockContainer) block).canPlaceLiquid(p_150717_, p_150718_, blockstate, this.content);
+            boolean flag1 = blockstate.isAir() || flag || block instanceof LiquidBlockContainer && ((LiquidBlockContainer) block).canPlaceLiquid(level, blockPos, blockstate, this.content);
             java.util.Optional<net.minecraftforge.fluids.FluidStack> containedFluidStack = java.util.Optional.ofNullable(container).flatMap(net.minecraftforge.fluids.FluidUtil::getFluidContained);
             if (!flag1) {
-                return p_150719_ != null && this.emptyContents(p_150716_, p_150717_, p_150719_.getBlockPos().relative(p_150719_.getDirection()), null, container);
-            } else if (containedFluidStack.isPresent() && this.content.getFluidType().isVaporizedOnPlacement(p_150717_, p_150718_, containedFluidStack.get())) {
-                this.content.getFluidType().onVaporize(p_150716_, p_150717_, p_150718_, containedFluidStack.get());
+                return blockHitResult != null && this.emptyContents(player, level, blockHitResult.getBlockPos().relative(blockHitResult.getDirection()), null, container);
+            } else if (containedFluidStack.isPresent() && this.content.getFluidType().isVaporizedOnPlacement(level, blockPos, containedFluidStack.get())) {
+                this.content.getFluidType().onVaporize(player, level, blockPos, containedFluidStack.get());
                 return true;
-            } else if (p_150717_.dimensionType().ultraWarm() && this.content.is(FluidTags.WATER)) {
-                int i = p_150718_.getX();
-                int j = p_150718_.getY();
-                int k = p_150718_.getZ();
-                p_150717_.playSound(p_150716_, p_150718_, SoundEvents.FIRE_EXTINGUISH, SoundSource.BLOCKS, 0.5F, 2.6F + (p_150717_.random.nextFloat() - p_150717_.random.nextFloat()) * 0.8F);
+            } else if (level.dimensionType().ultraWarm() && this.content.is(FluidTags.WATER)) {
+                int i = blockPos.getX();
+                int j = blockPos.getY();
+                int k = blockPos.getZ();
+
+                float f1 = level.random.nextFloat();
+                float f2 = level.random.nextFloat();
+
+                level.playSound(player, blockPos,
+                        SoundEvents.FIRE_EXTINGUISH, SoundSource.BLOCKS,
+                        0.5F, 2.6F + (f1 - f2) * 0.8F);
 
                 for (int l = 0; l < 8; ++l) {
-                    p_150717_.addParticle(ParticleTypes.LARGE_SMOKE, (double) i + Math.random(), (double) j + Math.random(), (double) k + Math.random(), 0.0D, 0.0D, 0.0D);
+                    level.addParticle(ParticleTypes.LARGE_SMOKE, RandomGeneratorUtils.getRandomDouble(i), RandomGeneratorUtils.getRandomDouble(j), RandomGeneratorUtils.getRandomDouble(k), 0.0D, 0.0D, 0.0D);
                 }
 
                 return true;
-            } else if (block instanceof LiquidBlockContainer && ((LiquidBlockContainer) block).canPlaceLiquid(p_150717_, p_150718_, blockstate, content)) {
-                ((LiquidBlockContainer) block).placeLiquid(p_150717_, p_150718_, blockstate, ((FlowingFluid) this.content).getSource(false));
-                this.playEmptySound(p_150716_, p_150717_, p_150718_);
+            } else if (block instanceof LiquidBlockContainer && ((LiquidBlockContainer) block).canPlaceLiquid(level, blockPos, blockstate, content)) {
+                ((LiquidBlockContainer) block).placeLiquid(level, blockPos, blockstate, ((FlowingFluid) this.content).getSource(false));
+                this.playEmptySound(player, level, blockPos);
                 return true;
             } else {
-                if (!p_150717_.isClientSide && flag && !blockstate.liquid()) {
-                    p_150717_.destroyBlock(p_150718_, true);
+                if (!level.isClientSide && flag && !blockstate.liquid()) {
+                    level.destroyBlock(blockPos, true);
                 }
 
-                if (!p_150717_.setBlock(p_150718_, this.content.defaultFluidState().createLegacyBlock(), 11) && !blockstate.getFluidState().isSource()) {
+                if (!level.setBlock(blockPos, this.content.defaultFluidState().createLegacyBlock(), 11) && !blockstate.getFluidState().isSource()) {
                     return false;
                 } else {
-                    this.playEmptySound(p_150716_, p_150717_, p_150718_);
+                    this.playEmptySound(player, level, blockPos);
                     return true;
                 }
             }

@@ -85,7 +85,7 @@ public class GrowthcraftCropsRopeBlock extends BushBlock implements Bonemealable
 
     public BlockState getStateForAge(Level level, BlockPos pos, int i) {
         BlockState currentState = level.getBlockState(pos);
-        return getActualBlockStateWithAge(level, pos, Integer.valueOf(i));
+        return getActualBlockStateWithAge(level, pos, i);
     }
 
     @Override

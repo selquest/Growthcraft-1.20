@@ -82,9 +82,9 @@ public class MixingVatScreen extends AbstractContainerScreen<MixingVatMenu> {
         int y = (height - imageHeight) / 2;
 
         // Screen Title
-        poseStack.drawString(this.font, this.title, this.titleLabelX, this.titleLabelY, 4210752);
+        poseStack.drawString(this.font, this.title, this.titleLabelX, this.titleLabelY, 4210752, false);
         // Inventory Title
-        poseStack.drawString(this.font, this.playerInventoryTitle, this.inventoryLabelX, this.inventoryLabelY, 4210752);
+        poseStack.drawString(this.font, this.playerInventoryTitle, this.inventoryLabelX, this.inventoryLabelY, 4210752, false);
 
         // FluidTank Tooltips
         renderFluidTankTooltips(poseStack, mouseX, mouseY, x, y);

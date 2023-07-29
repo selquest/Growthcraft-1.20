@@ -56,4 +56,5 @@ public class TickUtils {
     public static int getRandomTickCooldown(int min, int max) {
         return new SecureRandom().nextInt(max - min) + min;
     }
+
 }
