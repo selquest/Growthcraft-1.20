@@ -15,7 +15,7 @@ base {
 
 sonar {
     properties {
-        property "sonar.projectKey", "Growthcraft-1.20"
+        property "sonar.projectKey", "GrowthcraftCE_Growthcraft-1.20"
         property "sonar.organization", "growthcraftce"
         property "sonar.host.url", "https://sonarcloud.io"
     }
