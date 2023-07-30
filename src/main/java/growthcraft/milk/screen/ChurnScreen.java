@@ -75,11 +75,11 @@ public class ChurnScreen extends AbstractContainerScreen<ChurnMenu> {
         // Screen Title
         poseStack.drawString(this.font, this.title,
                 this.titleLabelX, this.titleLabelY,
-                4210752);
+                4210752, false);
         // Inventory Title
         poseStack.drawString(this.font, this.playerInventoryTitle,
                 this.inventoryLabelX, this.inventoryLabelY,
-                4210752);
+                4210752, false);
 
         // FluidTank Tooltips
         renderFluidTankTooltips(poseStack, mouseX, mouseY, x, y);

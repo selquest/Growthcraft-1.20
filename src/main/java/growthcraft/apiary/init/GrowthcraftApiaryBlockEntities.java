@@ -18,9 +18,11 @@ public class GrowthcraftApiaryBlockEntities {
             () -> BlockEntityType.Builder.of(BeeBoxBlockEntity::new,
                     GrowthcraftApiaryBlocks.BEE_BOX_ACACIA.get(),
                     GrowthcraftApiaryBlocks.BEE_BOX_BIRCH.get(),
+                    GrowthcraftApiaryBlocks.BEE_BOX_CHERRY.get(),
                     GrowthcraftApiaryBlocks.BEE_BOX_CRIMSON.get(),
                     GrowthcraftApiaryBlocks.BEE_BOX_DARK_OAK.get(),
                     GrowthcraftApiaryBlocks.BEE_BOX_JUNGLE.get(),
+                    GrowthcraftApiaryBlocks.BEE_BOX_MANGROVE.get(),
                     GrowthcraftApiaryBlocks.BEE_BOX_OAK.get(),
                     GrowthcraftApiaryBlocks.BEE_BOX_SPRUCE.get(),
                     GrowthcraftApiaryBlocks.BEE_BOX_WARPED.get()
