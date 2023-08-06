@@ -102,6 +102,19 @@ public class MixingVatBlock extends BaseEntityBlock {
         FluidTank inputFluidTank = blockEntity.getFluidTank("input");
         FluidTank reagentFluidTank = blockEntity.getFluidTank("reagent");
 
+        if(GrowthcraftMilkConfig.isMixingDebugEnabled()) {
+            GrowthcraftMilk.LOGGER.warn(String.format(
+                    "Mixing Vat Debugging is Enabled\nMixing Vat [%d, %d, %d] (heated = %s, clock = %d/%d)\nActivated with %s (Activation Tools = [%s, %s]).\nBlock Inventory: \n\tItems [%s, %s, %s, %s], \n\tFluids [%s(%dmb), %s(%dmb)].",
+                    blockPos.getX(), blockPos.getY(), blockPos.getZ(), blockEntity.isHeated(), blockEntity.getTickClock("current"),
+                    blockEntity.getTickClock("max"), player.getItemInHand(interactionHand).toString(), blockEntity.getActivationTool().toString(),
+                    blockEntity.getResultActivationTool().toString(),
+                    blockEntity.getInventoryHandler().getStackInSlot(0).toString(), blockEntity.getInventoryHandler().getStackInSlot(1).toString(),
+                    blockEntity.getInventoryHandler().getStackInSlot(2).toString(), blockEntity.getInventoryHandler().getStackInSlot(3).toString(),
+                    blockEntity.getFluidTank(0).getFluid().getFluid().getFluidType(), blockEntity.getFluidTank(0).getFluidAmount(),
+                    blockEntity.getFluidTank(1).getFluid().getFluid().getFluidType(), blockEntity.getFluidTank(1).getFluidAmount()
+            ));
+        }
+
         // Try to do fluid handling first.
         if (player.getItemInHand(interactionHand)
                 .getCapability(ForgeCapabilities.FLUID_HANDLER_ITEM)
@@ -127,13 +140,6 @@ public class MixingVatBlock extends BaseEntityBlock {
 
             return fluidInteractionResult ? InteractionResult.SUCCESS : InteractionResult.FAIL;
         } else if (player.getItemInHand(interactionHand).is(GrowthcraftMilkTags.Items.TAG_MIXING_VAT_TOOLS)) {
-            if(GrowthcraftMilkConfig.isMixingDebugEnabled()) {
-                GrowthcraftMilk.LOGGER.warn(String.format(
-                        "Mixing Vat [%d, %d, %d] (heated = %s) Activated with %s. Block Inventory: Items [], Fluids [].",
-                        blockPos.getX(), blockPos.getY(), blockPos.getZ(), blockEntity.isHeated(), player.getItemInHand(interactionHand).toString()
-                ));
-            }
-
             // TODO Handle tool activation of MixingVat.
             if(blockEntity.activateRecipe(player.getItemInHand(interactionHand))) {
                 player.getItemInHand(interactionHand).shrink(1);
