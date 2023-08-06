@@ -460,11 +460,11 @@ public class MixingVatBlockEntity extends BlockEntity implements BlockEntityTick
         return this.activated;
     }
 
-    private ItemStack getActivationTool() {
+    public ItemStack getActivationTool() {
         return this.activationTool;
     }
 
-    private ItemStack getResultActivationTool() {
+    public ItemStack getResultActivationTool() {
         return this.resultActivationTool;
     }
 

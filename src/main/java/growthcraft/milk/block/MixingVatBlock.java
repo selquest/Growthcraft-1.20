@@ -6,6 +6,7 @@ import growthcraft.milk.GrowthcraftMilk;
 import growthcraft.milk.block.entity.MixingVatBlockEntity;
 import growthcraft.milk.init.GrowthcraftMilkBlockEntities;
 import growthcraft.milk.init.GrowthcraftMilkTags;
+import growthcraft.milk.init.config.GrowthcraftMilkConfig;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
 import net.minecraft.server.level.ServerPlayer;
@@ -100,6 +101,19 @@ public class MixingVatBlock extends BaseEntityBlock {
         assert blockEntity != null;
         FluidTank inputFluidTank = blockEntity.getFluidTank("input");
         FluidTank reagentFluidTank = blockEntity.getFluidTank("reagent");
+
+        if(GrowthcraftMilkConfig.isMixingDebugEnabled()) {
+            GrowthcraftMilk.LOGGER.warn(String.format(
+                    "Mixing Vat Debugging is Enabled\nMixing Vat [%d, %d, %d] (heated = %s, clock = %d/%d)\nActivated with %s (Activation Tools = [%s, %s]).\nBlock Inventory: \n\tItems [%s, %s, %s, %s], \n\tFluids [%s(%dmb), %s(%dmb)].",
+                    blockPos.getX(), blockPos.getY(), blockPos.getZ(), blockEntity.isHeated(), blockEntity.getTickClock("current"),
+                    blockEntity.getTickClock("max"), player.getItemInHand(interactionHand).toString(), blockEntity.getActivationTool().toString(),
+                    blockEntity.getResultActivationTool().toString(),
+                    blockEntity.getInventoryHandler().getStackInSlot(0).toString(), blockEntity.getInventoryHandler().getStackInSlot(1).toString(),
+                    blockEntity.getInventoryHandler().getStackInSlot(2).toString(), blockEntity.getInventoryHandler().getStackInSlot(3).toString(),
+                    blockEntity.getFluidTank(0).getFluid().getFluid().getFluidType(), blockEntity.getFluidTank(0).getFluidAmount(),
+                    blockEntity.getFluidTank(1).getFluid().getFluid().getFluidType(), blockEntity.getFluidTank(1).getFluidAmount()
+            ));
+        }
 
         // Try to do fluid handling first.
         if (player.getItemInHand(interactionHand)

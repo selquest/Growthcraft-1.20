@@ -21,6 +21,8 @@ public class GrowthcraftMilkConfig {
 
     private static ForgeConfigSpec.BooleanValue churnGuiEnabled;
     private static ForgeConfigSpec.BooleanValue mixingVatGuiEnabled;
+    private static ForgeConfigSpec.BooleanValue mixingVatDebugEnabled;
+
     private static ForgeConfigSpec.BooleanValue mixingVatConsumeActivationItem;
     private static ForgeConfigSpec.BooleanValue pancheonGuiEnabled;
     private static ForgeConfigSpec.BooleanValue stomachLootEnabled;
@@ -55,6 +57,9 @@ public class GrowthcraftMilkConfig {
         mixingVatGuiEnabled = specBuilder
                 .comment("Set to true to allow users to access the Mixing Vat GUI.")
                 .define(String.format("%s.%s", CATEGORY_MIXING_VAT, "guiEnabled"), true);
+        mixingVatDebugEnabled = specBuilder
+                .comment("Set to true to add additional logging to debug the missing vat.")
+                .define(String.format("%s.%s", CATEGORY_MIXING_VAT, "debugEnabled"), false);
         mixingVatConsumeActivationItem = specBuilder
                 .comment("Set to true to allow users to access the Mixing Vat GUI.")
                 .define(String.format("%s.%s", CATEGORY_MIXING_VAT, "consumeMixingVatActivator"), false);
@@ -81,6 +86,10 @@ public class GrowthcraftMilkConfig {
     public static boolean isMixingVatGuiEnabled() {
         return mixingVatGuiEnabled.get();
     }
+    public static boolean isMixingDebugEnabled() {
+        return mixingVatDebugEnabled.get();
+    }
+
 
     public static boolean isConsumeMixingVatActivator() {
         return mixingVatConsumeActivationItem.get();
