@@ -1,0 +1,12 @@
+{
+  "type": "patchouli:shapeless_book_recipe",
+  "ingredients": [
+    {
+      "item": "growthcraft:salt"
+    },
+    {
+      "item": "minecraft:book"
+    }
+  ],
+  "book": "growthcraft"
+}
