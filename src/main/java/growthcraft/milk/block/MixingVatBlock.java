@@ -6,6 +6,7 @@ import growthcraft.milk.GrowthcraftMilk;
 import growthcraft.milk.block.entity.MixingVatBlockEntity;
 import growthcraft.milk.init.GrowthcraftMilkBlockEntities;
 import growthcraft.milk.init.GrowthcraftMilkTags;
+import growthcraft.milk.init.config.GrowthcraftMilkConfig;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
 import net.minecraft.server.level.ServerPlayer;
@@ -126,6 +127,13 @@ public class MixingVatBlock extends BaseEntityBlock {
 
             return fluidInteractionResult ? InteractionResult.SUCCESS : InteractionResult.FAIL;
         } else if (player.getItemInHand(interactionHand).is(GrowthcraftMilkTags.Items.TAG_MIXING_VAT_TOOLS)) {
+            if(GrowthcraftMilkConfig.isMixingDebugEnabled()) {
+                GrowthcraftMilk.LOGGER.warn(String.format(
+                        "Mixing Vat [%d, %d, %d] (heated = %s) Activated with %s. Block Inventory: Items [], Fluids [].",
+                        blockPos.getX(), blockPos.getY(), blockPos.getZ(), blockEntity.isHeated(), player.getItemInHand(interactionHand).toString()
+                ));
+            }
+
             // TODO Handle tool activation of MixingVat.
             if(blockEntity.activateRecipe(player.getItemInHand(interactionHand))) {
                 player.getItemInHand(interactionHand).shrink(1);
