@@ -78,10 +78,16 @@ sourceSets.main.resources { srcDir 'src/generated/resources' }
 repositories {
     // Curse Forge
     maven { url "https://www.cursemaven.com" }
+    // JEI, Tinker's Construct, Mantle, Iron Chests, Natura, etc.
+    maven { url = "https://maven.blamejared.com/" }
 }
 
 dependencies {
     minecraft "net.minecraftforge:forge:${minecraft_version}-${forge_version}"
+
+    compileOnly(fg.deobf("mezz.jei:jei-${minecraft_version}-common-api:${jei_version}"))
+    compileOnly(fg.deobf("mezz.jei:jei-${minecraft_version}-forge-api:${jei_version}"))
+
     runtimeOnly fg.deobf("curse.maven:theoneprobe-${curseforge_theoneprobe}")
     runtimeOnly fg.deobf("curse.maven:jei-${curseforge_jei}")
     runtimeOnly fg.deobf("curse.maven:patchouli-${curseforge_patchouli}")
