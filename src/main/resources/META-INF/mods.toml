@@ -39,6 +39,7 @@ side = "BOTH"
 
 [[mods]]
 modId = "growthcraft_apiary"
+version = "${mod_version}"
 versionRange = "[9,)"
 displayName = "Growthcraft Apiary"
 logoFile = "growthcraft_bees_logo.png"

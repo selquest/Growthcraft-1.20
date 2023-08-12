@@ -1,5 +1,5 @@
 # Growthcraft 9 for Minecraft 1.20.1 (Forge)
-[![Growthcraft Version](https://img.shields.io/badge/Growthcraft-9.0.2-orange.svg)](https://github.com/GrowthcraftCE/Growthcraft-1.20)
+[![Growthcraft Version](https://img.shields.io/badge/Growthcraft-9.0.3-orange.svg)](https://github.com/GrowthcraftCE/Growthcraft-1.20)
 [![](http://cf.way2muchnoise.eu/versions/growthcraft-community-edition_latest.svg)](https://minecraft.curseforge.com/projects/growthcraft-community-edition/)
 [![](http://cf.way2muchnoise.eu/short_growthcraft-community-edition.svg)](https://minecraft.curseforge.com/projects/growthcraft-community-edition/)
 [![Forge Version](https://img.shields.io/badge/Minecraft%20Forge-47.1.1-yellow.svg)](http://files.minecraftforge.net/maven/net/minecraftforge/forge/index_1.20.1.html)
@@ -9,7 +9,7 @@
 [![Discord Channel](https://img.shields.io/discord/333690296334548994.svg?color=green)](https://discord.gg/Quh76Jn)
 
 Welcome to Growthcraft. Growthcraft is a collection of Minecraft mods that adds an extra layer of immersion into the
-world of Minecraft. Growthcraft adds the ability to grow Apple tress, collect honey from bees, grow hops and grapes on vines that will crawl along rope. You can make cheese, yogurt, ice cream, butter, rice for a flavorfull meal.  Additionally, you can make Ale, Wine, Juice, Ciders, kumis, and sake and make it extra potent for a stronger affect.
+world of Minecraft. Growthcraft adds the ability to grow Apple tress, collect honey from bees, grow hops and grapes on vines that will crawl along rope. You can make cheese, yogurt, ice cream, butter, rice for a flavorful meal.  Additionally, you can make Ale, Wine, Juice, Ciders, kumis, and sake and make it extra potent for a stronger affect.
 
 ## Getting Started
 
@@ -20,10 +20,10 @@ There are multiple starting points to Growthcraft. As we continue to develop and
 ### Growthcraft 9 (Minecraft 1.20.1)
 
 End of Support: TBD  
-Latest Version: 9.0.2  
+Latest Version: 9.0.3  
 Stable Version: TBD
 
-### Growthcraft 8 (Minecraft 1.19)
+### Growthcraft 8 (Minecraft 1.19.4)
 
 End of Support: TBD  
 Latest Version: 8.1.0  
