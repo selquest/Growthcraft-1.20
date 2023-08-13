@@ -95,5 +95,9 @@
   "item.growthcraft_milk.yogurt_honey": "Honey Yogurt",
   "item.growthcraft_milk.yogurt_plain": "Plain Yogurt",
   "item.growthcraft_milk.yogurt_pumpkin": "Pumpkin Spice Yogurt",
-  "item.growthcraft_milk.yogurt_watermelon": "Watermelon Yogurt"
+  "item.growthcraft_milk.yogurt_watermelon": "Watermelon Yogurt",
+  "jei.growthcraft_milk.category.cheese_press": "Pressing",
+  "jei.growthcraft_milk.category.pancheon": "Pancheon",
+  "jei.growthcraft_milk.category.churn": "Churn",
+  "jei.growthcraft_milk.category.mixing_vat": "Mixing Vat"
 }

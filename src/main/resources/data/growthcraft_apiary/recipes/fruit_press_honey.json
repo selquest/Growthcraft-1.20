@@ -6,7 +6,7 @@
     "count": 1
   },
   "output_fluid": {
-    "fluid": "growthcraft_apiary:honey_fluid",
+    "fluid": "growthcraft_apiary:honey_fluid_source",
     "amount": 250
   },
   "by_product": {
