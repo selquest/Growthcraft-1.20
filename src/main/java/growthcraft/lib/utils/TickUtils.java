@@ -53,6 +53,24 @@ public class TickUtils {
         return hours * 20 * 60 * 60;
     }
 
+    /**
+     * Converts ticks to readable hours:minutes:seconds.
+     *
+     * @param ticks int of ticks to convert.
+     * @return String in HH:MM:SS format.
+     */
+    public static String toHoursMinutesSeconds(int ticks) {
+        // 20 ticks per second.
+        // 1200 ticks per minute.
+        // 72000 ticks per hour.
+
+        int hours = Math.round(ticks / 72000);
+        int minutes = Math.round(ticks / 1200);
+        int seconds = Math.round(ticks / 20 - minutes * 60);
+
+        return hours > 0 ? String.format("%02d:%02d:%02d", hours, minutes, seconds) : String.format("%02d:%02d", minutes, seconds);
+    }
+
     public static int getRandomTickCooldown(int min, int max) {
         return new SecureRandom().nextInt(max - min) + min;
     }

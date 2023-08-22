@@ -18,7 +18,7 @@ public class ChurnScreen extends AbstractContainerScreen<ChurnMenu> {
 
 
     private static final ResourceLocation TEXTURE = new ResourceLocation(
-            Reference.MODID, "textures/gui/churn.png"
+            Reference.MODID, "textures/gui/churn_screen.png"
     );
 
     private FluidTankRenderer fluidTankRenderer0;

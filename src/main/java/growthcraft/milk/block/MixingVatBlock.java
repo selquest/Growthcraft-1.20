@@ -5,6 +5,7 @@ import growthcraft.lib.utils.BlockStateUtils;
 import growthcraft.milk.GrowthcraftMilk;
 import growthcraft.milk.block.entity.MixingVatBlockEntity;
 import growthcraft.milk.init.GrowthcraftMilkBlockEntities;
+import growthcraft.milk.init.GrowthcraftMilkFluids;
 import growthcraft.milk.init.GrowthcraftMilkTags;
 import growthcraft.milk.init.config.GrowthcraftMilkConfig;
 import net.minecraft.core.BlockPos;
@@ -13,6 +14,7 @@ import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.world.InteractionHand;
 import net.minecraft.world.InteractionResult;
 import net.minecraft.world.entity.player.Player;
+import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.Items;
 import net.minecraft.world.item.context.BlockPlaceContext;
 import net.minecraft.world.level.Level;
@@ -25,7 +27,9 @@ import net.minecraft.world.level.block.state.StateDefinition;
 import net.minecraft.world.level.block.state.properties.BooleanProperty;
 import net.minecraft.world.phys.BlockHitResult;
 import net.minecraftforge.common.capabilities.ForgeCapabilities;
+import net.minecraftforge.fluids.FluidStack;
 import net.minecraftforge.fluids.FluidUtil;
+import net.minecraftforge.fluids.capability.IFluidHandler;
 import net.minecraftforge.fluids.capability.templates.FluidTank;
 import net.minecraftforge.network.NetworkHooks;
 import org.jetbrains.annotations.Nullable;
@@ -128,6 +132,19 @@ public class MixingVatBlock extends BaseEntityBlock {
                     fluidInteractionResult = FluidUtil.interactWithFluidHandler(player, interactionHand, level, blockPos, Direction.NORTH);
                 } else if (!inputFluidTank.isEmpty()) {
                     fluidInteractionResult = FluidUtil.interactWithFluidHandler(player, interactionHand, level, blockPos, Direction.UP);
+                }
+            } else if (player.getItemInHand(interactionHand).getItem() == Items.MILK_BUCKET) {
+                int capacity = blockEntity.getFluidTank(0).getCapacity();
+                int amount = blockEntity.getFluidTank(0).getFluidAmount();
+                int remainingFill = capacity - amount;
+
+                if(blockEntity.getFluidTank(0).isEmpty()
+                        || (remainingFill >= 1000
+                        && blockEntity.getFluidStackInTank(0).getFluid().getFluidType() == GrowthcraftMilkFluids.MILK.source.get().getFluidType())
+                ) {
+                    FluidStack fluidStack = new FluidStack( GrowthcraftMilkFluids.MILK.source.get().getSource(), 1000);
+                    blockEntity.getFluidTank(0).fill(fluidStack, IFluidHandler.FluidAction.EXECUTE);
+                    player.setItemInHand(interactionHand, new ItemStack(Items.BUCKET));
                 }
             } else {
                 // Try and fill the input tank first.

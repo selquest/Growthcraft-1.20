@@ -4,6 +4,7 @@ import com.mojang.blaze3d.systems.RenderSystem;
 import growthcraft.cellar.screen.container.FermentationBarrelMenu;
 import growthcraft.cellar.shared.Reference;
 import growthcraft.lib.kaupenjoe.screen.renderer.FluidTankRenderer;
+import growthcraft.lib.utils.TextureHelper;
 import net.minecraft.client.gui.GuiGraphics;
 import net.minecraft.client.gui.screens.inventory.AbstractContainerScreen;
 import net.minecraft.client.renderer.GameRenderer;
@@ -17,9 +18,7 @@ import java.util.Optional;
 
 public class FermentationBarrelScreen extends AbstractContainerScreen<FermentationBarrelMenu> {
 
-    private static final ResourceLocation TEXTURE = new ResourceLocation(
-            Reference.MODID, "textures/gui/fermentation_barrel.png"
-    );
+    private static final ResourceLocation TEXTURE = TextureHelper.getTextureGui(Reference.MODID, Reference.UnlocalizedName.FERMENT_BARREL);
 
     private FluidTankRenderer fluidTankRenderer0;
 
