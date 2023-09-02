@@ -454,8 +454,8 @@ public class MixingVatBlockEntity extends BlockEntity implements BlockEntityTick
         if(this.activated) return false;
         this.activated = this.getActivationTool() != null && this.getActivationTool().getItem() == stack.getItem();
 
-        // Reset the activation tool.
-        this.activationTool = ItemStack.EMPTY;
+        // Reset the activation tool if recipe is activated
+        if (activated) this.activationTool = ItemStack.EMPTY;
 
         return this.activated;
     }
