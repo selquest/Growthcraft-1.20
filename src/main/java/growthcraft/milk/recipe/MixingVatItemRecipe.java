@@ -33,11 +33,14 @@ public class MixingVatItemRecipe implements Recipe<SimpleContainer> {
     private final int processingTime;
     private final ItemStack resultItemStack;
     private final ItemStack resultActivationTool;
+    private final boolean requiresHeat;
+
 
     public MixingVatItemRecipe(ResourceLocation recipeId, RecipeUtils.Category category,
                                FluidStack inputFluidStack, List<ItemStack> ingredients, int processingTime,
                                ItemStack resultItemStack, ItemStack activationTool,
-                               ItemStack resultActivationTool) {
+                               ItemStack resultActivationTool,
+                               boolean requiresHeat) {
         this.recipeId = recipeId;
         this.category = category;
         this.inputFluidStack = inputFluidStack;
@@ -46,6 +49,7 @@ public class MixingVatItemRecipe implements Recipe<SimpleContainer> {
         this.resultItemStack = resultItemStack;
         this.activationTool = activationTool;
         this.resultActivationTool = resultActivationTool;
+        this.requiresHeat = requiresHeat;
     }
 
 
@@ -54,7 +58,7 @@ public class MixingVatItemRecipe implements Recipe<SimpleContainer> {
         return false;
     }
 
-    public boolean matches(FluidStack testFluidStack, List<ItemStack> testIngredients) {
+    public boolean matches(FluidStack testFluidStack, List<ItemStack> testIngredients, boolean hasHeatSource) {
         boolean fluidMatches = false;
         boolean itemMatches = false;
 
@@ -75,7 +79,7 @@ public class MixingVatItemRecipe implements Recipe<SimpleContainer> {
             if (itemCount == matchCount) itemMatches = true;
         }
 
-        return fluidMatches && itemMatches;
+        return fluidMatches && itemMatches && hasHeatSource == isHeatRequired();
     }
 
     public boolean matchResult(ItemStack itemStack) {
@@ -114,6 +118,10 @@ public class MixingVatItemRecipe implements Recipe<SimpleContainer> {
 
     public ItemStack getResultItem(RegistryAccess registryAccess) {
         return resultItemStack;
+    }
+
+    public boolean isHeatRequired() {
+        return this.requiresHeat;
     }
 
     @Override
@@ -166,6 +174,7 @@ public class MixingVatItemRecipe implements Recipe<SimpleContainer> {
                     = RecipeUtils.Category.with(GsonHelper.getAsString(json, "result_type"));
 
             int processingTime = GsonHelper.getAsInt(json, "processing_time", 1200);
+            boolean requiresHeat = GsonHelper.getAsBoolean(json, "requires_heat");
 
             FluidStack inputFluid = CraftingUtils.getFluidStack(
                     GsonHelper.getAsJsonObject(json, "input_fluid"));
@@ -190,7 +199,7 @@ public class MixingVatItemRecipe implements Recipe<SimpleContainer> {
                         GsonHelper.getAsJsonObject(json, "result_activation_tool"), false);
 
                 return new MixingVatItemRecipe(recipeId, RecipeUtils.Category.ITEM,
-                        inputFluid, ingredients, processingTime, resultItemStack, activationTool, resultActivationTool);
+                        inputFluid, ingredients, processingTime, resultItemStack, activationTool, resultActivationTool, requiresHeat);
             }
 
 
@@ -203,6 +212,8 @@ public class MixingVatItemRecipe implements Recipe<SimpleContainer> {
                 RecipeUtils.Category category = RecipeUtils.Category.with(buffer.readUtf());
 
                 int processingTime = buffer.readVarInt();
+                boolean requiresHeat = buffer.readBoolean();
+
                 FluidStack inputFluidStack = buffer.readFluidStack();
                 ItemStack activationTool = buffer.readItem();
 
@@ -217,7 +228,7 @@ public class MixingVatItemRecipe implements Recipe<SimpleContainer> {
                 ItemStack resultActivationTool = buffer.readItem();
 
                 return new MixingVatItemRecipe(recipeId, category, inputFluidStack, ingredients,
-                        processingTime, resultingItemStack, activationTool, resultActivationTool);
+                        processingTime, resultingItemStack, activationTool, resultActivationTool, requiresHeat);
             } catch (Exception ex) {
                 String message = String.format("Unable to read recipe (%s) from network buffer.", recipeId);
                 GrowthcraftMilk.LOGGER.error(message);
@@ -228,9 +239,13 @@ public class MixingVatItemRecipe implements Recipe<SimpleContainer> {
         @Override
         public void toNetwork(FriendlyByteBuf buffer, MixingVatItemRecipe recipe) {
             buffer.writeUtf(recipe.getCategory().toString());
+
             buffer.writeVarInt(recipe.getProcessingTime());
+            buffer.writeBoolean(recipe.isHeatRequired());
+
             buffer.writeFluidStack(recipe.getInputFluidStack());
             buffer.writeItemStack(recipe.getActivationTool(), false);
+
             buffer.writeVarInt(recipe.getIngredientList().size());
 
             for (int i = 0; i < recipe.getIngredientList().size(); i++) {
