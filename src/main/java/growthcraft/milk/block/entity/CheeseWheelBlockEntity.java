@@ -118,10 +118,11 @@ public class CheeseWheelBlockEntity extends BlockEntity implements BlockEntityTi
     }
 
     public void takeSlice(int count) {
-        if (this.sliceCountTop > 0) {
+        if (this.sliceCountTop >= count) {
             this.sliceCountTop -= count;
-        } else if (this.sliceCountBottom > 0) {
-            this.sliceCountBottom -= count;
+        } else if (this.sliceCountBottom >= count - sliceCountTop) {
+            sliceCountBottom -= count - sliceCountTop;
+            sliceCountTop = 0;
         }
         this.setBlockState(this.sliceCountBottom, this.sliceCountTop);
     }
