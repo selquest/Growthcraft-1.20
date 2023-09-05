@@ -126,6 +126,10 @@ public class CheeseWheelBlockEntity extends BlockEntity implements BlockEntityTi
         this.setBlockState(this.sliceCountBottom, this.sliceCountTop);
     }
 
+    public boolean canAddSlice(int count) {
+        return getSliceCount() + count <= 8;
+    }
+
     public void addSlice(int count) {
         int newTotal = this.sliceCountBottom + this.sliceCountTop + count;
 
