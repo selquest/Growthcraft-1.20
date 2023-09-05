@@ -170,8 +170,8 @@ public class CheeseWheelBlockEntity extends BlockEntity implements BlockEntityTi
         super.load(nbt);
         this.tickClock = nbt.getInt("CurrentProcessTicks");
         this.tickMax = nbt.getInt("MaxProcessTicks");
-        this.sliceCountTop = nbt.getInt("SliceCountTop");
-        this.sliceCountBottom = nbt.getInt("SliceCountBottom");
+        this.sliceCountTop = nbt.getInt("slicestop");
+        this.sliceCountBottom = nbt.getInt("slicesbottom");
         this.aged = nbt.getBoolean("aged");
 
         if (nbt.contains("CustomName", 8)) {
