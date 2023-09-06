@@ -120,10 +120,16 @@ public class CheeseWheelBlock extends BaseEntityBlock {
     public InteractionResult use(BlockState blockState, Level level, BlockPos blockPos, Player player, InteractionHand interactionHand, BlockHitResult blockHitResult) {
         if(!level.isClientSide) {
             CheeseWheelBlockEntity blockEntity = (CheeseWheelBlockEntity) level.getBlockEntity(blockPos);
+            assert blockEntity != null;
 
             if(player.getItemInHand(interactionHand).getItem() == this.asItem()) {
-                blockEntity.addSlice(4);
-                player.getItemInHand(interactionHand).shrink(1);
+                if (blockEntity.canAddSlice(4)) {
+                    blockEntity.addSlice(4);
+                    player.getItemInHand(interactionHand).shrink(1);
+                } else {
+                    // Allow the stackage of cheese beyond 1 block high
+                    return InteractionResult.PASS;
+                }
             } else if(!player.isCrouching() && player.getItemInHand(interactionHand).isEmpty()) {
                 if(blockEntity.canTakeSlice()) {
                     player.getInventory().add(blockEntity.takeSlice());

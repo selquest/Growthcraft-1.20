@@ -116,18 +116,9 @@ public class CheeseCurdBlock extends Block implements IForgeShearable {
         ItemStack heldItemStack = player.getItemInHand(interactionHand);
 
         if(level != null && !level.isClientSide && heldItemStack.is(Tags.Items.SHEARS)) {
-            if(blockState.getValue(AGE) != this.getMaxAge()) {
-                ItemStack itemStack = new ItemStack(blockState.getBlock(), 1);
-                ItemEntity itemEntity = new ItemEntity(level, blockPos.getX(), blockPos.getY(), blockPos.getZ(), itemStack);
-                level.addFreshEntity(itemEntity);
-                // Destory the current block.
-                level.destroyBlock(blockPos, true);
-                return InteractionResult.SUCCESS;
-            } else if (blockState.getValue(AGE) == 7)  {
-                // Simply destroy the block and let the loot table figure out the drops.
-                level.destroyBlock(blockPos, true);
-                return InteractionResult.SUCCESS;
-            }
+            // Simply destroy the block and let the loot table figure out the drops.
+            level.destroyBlock(blockPos, true);
+            return InteractionResult.SUCCESS;
         }
 
         return super.use(blockState, level, blockPos, player, interactionHand, blockHitResult);
