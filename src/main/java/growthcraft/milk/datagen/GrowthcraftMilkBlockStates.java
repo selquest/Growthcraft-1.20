@@ -58,19 +58,8 @@ public class GrowthcraftMilkBlockStates extends BlockStateProvider {
 
     private void cheese(Block block, String modelName, String sideTexture, String topTexture) {
         // Generate block models for the cheese
-        for (int i = 0; i < lower.size(); i++) {
-            models().withExistingParent(
-                            "block/cheese_wheel/" + modelName + "_lower_" + (i+1), lower.get(i))
-                    .texture("0", "block/cheese/" + topTexture)
-                    .texture("1", "block/cheese/" + sideTexture);
-
-        }
-        for (int i = 0; i < upper.size(); i++) {
-            models().withExistingParent(
-                    "block/cheese_wheel/" + modelName + "_upper_" + (i + 1), upper.get(i))
-                    .texture("0", "block/cheese/" + topTexture)
-                    .texture("1", "block/cheese/" + sideTexture);
-        }
+        cheeseWheelModel(lower, modelName, "_lower_", topTexture, sideTexture);
+        cheeseWheelModel(upper, modelName, "_upper_", topTexture, sideTexture);
 
         // Generate blockstates for the cheese
         horizontalBlock(block,
@@ -88,6 +77,14 @@ public class GrowthcraftMilkBlockStates extends BlockStateProvider {
         // generate item model for the cheese
         simpleBlockItem(block,
                 models().getExistingFile(modLoc("block/cheese_wheel/" + modelName + "_lower_4")));
+    }
+
+    private void cheeseWheelModel(List<ResourceLocation> sliceModels, String modelName, String slabType, String topTexture, String sideTexture) {
+        for (int sliceIndex = 0; sliceIndex < sliceModels.size(); sliceIndex++) {
+            models().withExistingParent("block/cheese_wheel/" + modelName + slabType + (sliceIndex + 1), sliceModels.get(sliceIndex))
+                    .texture("0", "block/cheese/" + topTexture)
+                    .texture("1", "block/cheese/" + sideTexture);
+        }
     }
 
     private void aged_cheese(RegistryObject<Block> unagedBlock, RegistryObject<Block> agedBlock, String modelName) {
