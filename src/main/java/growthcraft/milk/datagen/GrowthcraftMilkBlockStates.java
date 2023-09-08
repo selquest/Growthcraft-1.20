@@ -105,6 +105,7 @@ public class GrowthcraftMilkBlockStates extends BlockStateProvider {
      * @param lowerModels List of 4 ModelFiles for each stage of the lower wheel of cheese
      * @param upperModels List of 4 Modelfiles for each stage of the upper wheel of cheese
      */
+    @SuppressWarnings("unused")
     private void generateMultipartCheese(List<ModelFile> lowerModels, List<ModelFile> upperModels) {
         MultiPartBlockStateBuilder builder = getMultipartBuilder(GrowthcraftMilkBlocks.WAXED_PROVOLONE_CHEESE.get());
 

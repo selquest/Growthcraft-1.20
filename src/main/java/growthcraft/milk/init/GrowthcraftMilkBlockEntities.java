@@ -34,7 +34,18 @@ public class GrowthcraftMilkBlockEntities {
                     GrowthcraftMilkBlocks.GOUDA_CHEESE.get(),
                     GrowthcraftMilkBlocks.MONTEREY_CHEESE.get(),
                     GrowthcraftMilkBlocks.PARMESAN_CHEESE.get(),
-                    GrowthcraftMilkBlocks.PROVOLONE_CHEESE.get()
+                    GrowthcraftMilkBlocks.PROVOLONE_CHEESE.get(),
+
+                    GrowthcraftMilkBlocks.AGED_APPENZELLER_CHEESE.get(),
+                    GrowthcraftMilkBlocks.AGED_ASIAGO_CHEESE.get(),
+                    GrowthcraftMilkBlocks.AGED_CASU_MARZU_CHEESE.get(),
+                    GrowthcraftMilkBlocks.WAXED_CHEDDAR_CHEESE.get(),
+                    GrowthcraftMilkBlocks.AGED_EMMENTALER_CHEESE.get(),
+                    GrowthcraftMilkBlocks.AGED_GORGONZOLA_CHEESE.get(),
+                    GrowthcraftMilkBlocks.WAXED_GOUDA_CHEESE.get(),
+                    GrowthcraftMilkBlocks.WAXED_MONTEREY_CHEESE.get(),
+                    GrowthcraftMilkBlocks.AGED_PARMESAN_CHEESE.get(),
+                    GrowthcraftMilkBlocks.WAXED_PROVOLONE_CHEESE.get()
             ).build(null)
     );
 
