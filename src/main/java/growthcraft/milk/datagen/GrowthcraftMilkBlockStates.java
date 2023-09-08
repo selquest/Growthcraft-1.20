@@ -5,13 +5,14 @@ import growthcraft.milk.shared.Reference;
 import net.minecraft.core.Direction;
 import net.minecraft.data.PackOutput;
 import net.minecraft.resources.ResourceLocation;
+import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.state.properties.BlockStateProperties;
 import net.minecraftforge.client.model.generators.BlockStateProvider;
 import net.minecraftforge.client.model.generators.ModelFile;
 import net.minecraftforge.client.model.generators.MultiPartBlockStateBuilder;
 import net.minecraftforge.common.data.ExistingFileHelper;
+import net.minecraftforge.registries.RegistryObject;
 
-import java.util.ArrayList;
 import java.util.List;
 
 import static growthcraft.milk.block.CheeseWheelBlock.SLICE_COUNT_BOTTOM;
@@ -43,48 +44,61 @@ public class GrowthcraftMilkBlockStates extends BlockStateProvider {
 
     @Override
     protected void registerStatesAndModels() {
-        aged_cheese("appenzeller");
-        aged_cheese("asiago");
-        aged_cheese("casu_marzu");
-        waxed_cheese("cheddar");
-        aged_cheese("emmentaler");
-        aged_cheese("gorgonzola");
-        waxed_cheese("gouda");
-        waxed_cheese("monterey");
-        aged_cheese("parmesan");
-        //waxed_cheese("provolone");
+        aged_cheese(GrowthcraftMilkBlocks.APPENZELLER_CHEESE, GrowthcraftMilkBlocks.AGED_APPENZELLER_CHEESE, "appenzeller");
+        aged_cheese(GrowthcraftMilkBlocks.ASIAGO_CHEESE, GrowthcraftMilkBlocks.AGED_ASIAGO_CHEESE,  "asiago");
+        aged_cheese(GrowthcraftMilkBlocks.CASU_MARZU_CHEESE, GrowthcraftMilkBlocks.AGED_CASU_MARZU_CHEESE, "casu_marzu");
+        waxed_cheese(GrowthcraftMilkBlocks.CHEDDAR_CHEESE, GrowthcraftMilkBlocks.WAXED_CHEDDAR_CHEESE, "cheddar");
+        aged_cheese(GrowthcraftMilkBlocks.EMMENTALER_CHEESE, GrowthcraftMilkBlocks.AGED_EMMENTALER_CHEESE, "emmentaler");
+        aged_cheese(GrowthcraftMilkBlocks.GORGONZOLA_CHEESE, GrowthcraftMilkBlocks.AGED_GORGONZOLA_CHEESE, "gorgonzola");
+        waxed_cheese(GrowthcraftMilkBlocks.GOUDA_CHEESE, GrowthcraftMilkBlocks.WAXED_GOUDA_CHEESE, "gouda");
+        waxed_cheese(GrowthcraftMilkBlocks.MONTEREY_CHEESE, GrowthcraftMilkBlocks.WAXED_MONTEREY_CHEESE, "monterey");
+        aged_cheese(GrowthcraftMilkBlocks.PARMESAN_CHEESE, GrowthcraftMilkBlocks.AGED_PARMESAN_CHEESE, "parmesan");
+        waxed_cheese(GrowthcraftMilkBlocks.PROVOLONE_CHEESE, GrowthcraftMilkBlocks.WAXED_PROVOLONE_CHEESE, "provolone");
+    }
 
+    private void cheese(Block block, String modelName, String sideTexture, String topTexture) {
+        // Generate block models for the cheese
         for (int i = 0; i < lower.size(); i++) {
             models().withExistingParent(
-                            "block/cheese_wheel/provolone_waxed_lower_" + (i+1), lower.get(i))
-                    .texture("0", "block/cheese/provolone_waxed_top")
-                    .texture("1", "block/cheese/provolone_waxed_side");
+                            "block/cheese_wheel/" + modelName + "_lower_" + (i+1), lower.get(i))
+                    .texture("0", "block/cheese/" + topTexture)
+                    .texture("1", "block/cheese/" + sideTexture);
 
-        } for (int i = 0; i < upper.size(); i++) {
+        }
+        for (int i = 0; i < upper.size(); i++) {
             models().withExistingParent(
-                    "block/cheese_wheel/provolone_waxed_upper_" + (i + 1), upper.get(i))
-                    .texture("0", "block/cheese/provolone_waxed_top")
-                    .texture("1", "block/cheese/provolone_waxed_side");
+                    "block/cheese_wheel/" + modelName + "_upper_" + (i + 1), upper.get(i))
+                    .texture("0", "block/cheese/" + topTexture)
+                    .texture("1", "block/cheese/" + sideTexture);
         }
 
-        horizontalBlock(
-                GrowthcraftMilkBlocks.WAXED_PROVOLONE_CHEESE.get(),
+        // Generate blockstates for the cheese
+        horizontalBlock(block,
                 state -> {
                     if (state.getValue(SLICE_COUNT_TOP) == 0 && state.getValue(SLICE_COUNT_BOTTOM) == 0) {
                         return empty_model;
                     } else if (state.getValue(SLICE_COUNT_TOP) == 0) {
-                        return models().getExistingFile(modLoc("block/cheese_wheel/provolone_waxed_lower_" + state.getValue(SLICE_COUNT_BOTTOM)));
+                        return models().getExistingFile(modLoc("block/cheese_wheel/" + modelName + "_lower_" + state.getValue(SLICE_COUNT_BOTTOM)));
                     } else {
-                        return models().getExistingFile(modLoc("block/cheese_wheel/provolone_waxed_upper_" + state.getValue(SLICE_COUNT_TOP)));
+                        return models().getExistingFile(modLoc("block/cheese_wheel/" + modelName + "_upper_" + state.getValue(SLICE_COUNT_TOP)));
                     }
                 }
         );
 
-        simpleBlockItem(GrowthcraftMilkBlocks.WAXED_PROVOLONE_CHEESE.get(),
-                models().getExistingFile(modLoc("block/cheese_wheel/provolone_waxed_lower_4")));
+        // generate item model for the cheese
+        simpleBlockItem(block,
+                models().getExistingFile(modLoc("block/cheese_wheel/" + modelName + "_lower_4")));
     }
 
+    private void aged_cheese(RegistryObject<Block> unagedBlock, RegistryObject<Block> agedBlock, String modelName) {
+        cheese(unagedBlock.get(),modelName + "_unaged", modelName + "_unaged_side", modelName + "_unaged_top");
+        cheese(agedBlock.get(),modelName + "_aged", modelName + "_aged_side", modelName + "_aged_top");
+    }
 
+    private void waxed_cheese(RegistryObject<Block> unwaxedBlock, RegistryObject<Block> waxedBlock, String modelName) {
+        cheese(unwaxedBlock.get(),modelName + "_unwaxed", modelName + "_unwaxed_side", modelName + "_unwaxed_top");
+        cheese(waxedBlock.get(),modelName + "_waxed", modelName + "_waxed_side", modelName + "_waxed_top");
+    }
 
 
     /**
@@ -123,33 +137,6 @@ public class GrowthcraftMilkBlockStates extends BlockStateProvider {
                         .condition(SLICE_COUNT_TOP, upperModels.indexOf(model) + 1)
                         .end();
             }
-        }
-    }
-
-
-    private void aged_cheese(String modelName) {
-        textured_cheese(modelName + "_unaged", modelName + "_unaged_side", modelName + "_unaged_top");
-        textured_cheese(modelName + "_aged", modelName + "_aged_side", modelName + "_aged_top");
-    }
-
-    private void waxed_cheese(String modelName) {
-        textured_cheese(modelName + "_unwaxed", modelName + "_unwaxed_side", modelName + "_unwaxed_top");
-        textured_cheese(modelName + "_waxed", modelName + "_waxed_side", modelName + "_waxed_top");
-    }
-
-
-
-    private void textured_cheese(String modelName, String sideTexture, String topTexture) {
-        for (int i = 0; i < lower.size(); i++) {
-            models().withExistingParent(
-                    "block/cheese_wheel/" + modelName + "_lower_" + (i+1), lower.get(i))
-                    .texture("0", "block/cheese/" + topTexture)
-                    .texture("1", "block/cheese/" + sideTexture);
-
-        } for (int i = 0; i < upper.size(); i++) {
-            models().withExistingParent("block/cheese_wheel/" + modelName + "_upper_" + (i+1), upper.get(i))
-                    .texture("0", "block/cheese/" + topTexture)
-                    .texture("1", "block/cheese/" + sideTexture);
         }
     }
 }
