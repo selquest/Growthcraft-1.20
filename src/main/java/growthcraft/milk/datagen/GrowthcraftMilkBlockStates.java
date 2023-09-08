@@ -104,6 +104,7 @@ public class GrowthcraftMilkBlockStates extends BlockStateProvider {
     /**
      * Generates the blockstate file for a cheese using a multipart file for separate control over the top and bottom
      * wheel of cheese
+     * Kept here in case we ever want to datagen the old style of cheese blockstates
      * @param lowerModels List of 4 ModelFiles for each stage of the lower wheel of cheese
      * @param upperModels List of 4 Modelfiles for each stage of the upper wheel of cheese
      */
