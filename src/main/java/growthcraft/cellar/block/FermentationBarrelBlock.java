@@ -149,13 +149,14 @@ public class FermentationBarrelBlock extends BaseEntityBlock implements SimpleWa
                 // Drain the fluid and produce the final potion.
                 ItemStack potionItemStack = blockEntity.getResultingPotionItemStack();
 
-                blockEntity.drainFluidTank(0, 500);
-                player.getItemInHand(interactionHand).shrink(1);
+                if (potionItemStack != null) {
+                    blockEntity.drainFluidTank(0, 500);
+                    player.getItemInHand(interactionHand).shrink(1);
 
-                if(potionItemStack != null && !player.getInventory().add(potionItemStack)) {
-                    player.drop(potionItemStack, false);
+                    if(!player.getInventory().add(potionItemStack)) {
+                        player.drop(potionItemStack, false);
+                    }
                 }
-
             } else if (
                     FluidUtil.interactWithFluidHandler(player, interactionHand, level, blockPos, hitResult.getDirection())
                             || player.getItemInHand(interactionHand).getCapability(ForgeCapabilities.FLUID_HANDLER_ITEM).isPresent()

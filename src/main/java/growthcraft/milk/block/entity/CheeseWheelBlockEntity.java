@@ -118,12 +118,17 @@ public class CheeseWheelBlockEntity extends BlockEntity implements BlockEntityTi
     }
 
     public void takeSlice(int count) {
-        if (this.sliceCountTop > 0) {
+        if (this.sliceCountTop >= count) {
             this.sliceCountTop -= count;
-        } else if (this.sliceCountBottom > 0) {
-            this.sliceCountBottom -= count;
+        } else if (this.sliceCountBottom >= count - sliceCountTop) {
+            sliceCountBottom -= count - sliceCountTop;
+            sliceCountTop = 0;
         }
         this.setBlockState(this.sliceCountBottom, this.sliceCountTop);
+    }
+
+    public boolean canAddSlice(int count) {
+        return getSliceCount() + count <= 8;
     }
 
     public void addSlice(int count) {
@@ -166,8 +171,8 @@ public class CheeseWheelBlockEntity extends BlockEntity implements BlockEntityTi
         super.load(nbt);
         this.tickClock = nbt.getInt("CurrentProcessTicks");
         this.tickMax = nbt.getInt("MaxProcessTicks");
-        this.sliceCountTop = nbt.getInt("SliceCountTop");
-        this.sliceCountBottom = nbt.getInt("SliceCountBottom");
+        this.sliceCountTop = nbt.getInt("slicestop");
+        this.sliceCountBottom = nbt.getInt("slicesbottom");
         this.aged = nbt.getBoolean("aged");
 
         if (nbt.contains("CustomName", 8)) {
