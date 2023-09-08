@@ -43,6 +43,9 @@ public class GrowthcraftMilkBlocks {
             true
     );
 
+    //////////////////////////////////
+    ////// Unprocessed Cheeses ///////
+    //////////////////////////////////
     public static final RegistryObject<Block> APPENZELLER_CHEESE = registerBlock(
             CheeseUtils.getCheeseNames(Reference.UnlocalizedName.APPENZELLER).get(CheeseUtils.CHEESE),
             () -> new CheeseWheelBlock(Reference.ItemColor.APPENZELLER_CHEESE.getColor())
@@ -92,6 +95,65 @@ public class GrowthcraftMilkBlocks {
             CheeseUtils.getCheeseNames(Reference.UnlocalizedName.PROVOLONE).get(CheeseUtils.CHEESE),
             () -> new CheeseWheelBlock(Reference.ItemColor.PROVOLONE_CHEESE.getColor())
     );
+
+    /////////////////////////////////////////////////////
+    ////////////////// AGED CHEESES /////////////////////
+    /////////////////////////////////////////////////////
+
+    public static final RegistryObject<Block> AGED_APPENZELLER_CHEESE = registerBlock(
+            CheeseUtils.getCheeseNames(Reference.UnlocalizedName.APPENZELLER).get(CheeseUtils.AGED),
+            () -> new CheeseWheelBlock(Reference.ItemColor.APPENZELLER_CHEESE.getColor())
+    );
+
+    public static final RegistryObject<Block> AGED_ASIAGO_CHEESE = registerBlock(
+            CheeseUtils.getCheeseNames(Reference.UnlocalizedName.ASIAGO).get(CheeseUtils.AGED),
+            () -> new CheeseWheelBlock(Reference.ItemColor.ASIAGO_CHEESE.getColor())
+    );
+
+    public static final RegistryObject<Block> AGED_CASU_MARZU_CHEESE = registerBlock(
+            CheeseUtils.getCheeseNames(Reference.UnlocalizedName.CASU_MARZU).get(CheeseUtils.AGED),
+            () -> new CheeseWheelBlock(Reference.ItemColor.CASU_MARZU_CHEESE.getColor())
+    );
+
+    public static final RegistryObject<Block> WAXED_CHEDDAR_CHEESE = registerBlock(
+            CheeseUtils.getCheeseNames(Reference.UnlocalizedName.CHEDDAR).get(CheeseUtils.WAXED),
+            () -> new CheeseWheelBlock(Reference.ItemColor.CHEDDAR_CHEESE.getColor())
+    );
+
+    public static final RegistryObject<Block> AGED_EMMENTALER_CHEESE = registerBlock(
+            CheeseUtils.getCheeseNames(Reference.UnlocalizedName.EMMENTALER).get(CheeseUtils.AGED),
+            () -> new CheeseWheelBlock(Reference.ItemColor.EMMENTALER_CHEESE.getColor())
+    );
+
+    public static final RegistryObject<Block> AGED_GORGONZOLA_CHEESE = registerBlock(
+            CheeseUtils.getCheeseNames(Reference.UnlocalizedName.GORGONZOLA).get(CheeseUtils.AGED),
+            () -> new CheeseWheelBlock(Reference.ItemColor.GORGONZOLA_CHEESE.getColor())
+    );
+
+    public static final RegistryObject<Block> WAXED_GOUDA_CHEESE = registerBlock(
+            CheeseUtils.getCheeseNames(Reference.UnlocalizedName.GOUDA).get(CheeseUtils.WAXED),
+            () -> new CheeseWheelBlock(Reference.ItemColor.GOUDA_CHEESE.getColor())
+    );
+
+    public static final RegistryObject<Block> WAXED_MONTEREY_CHEESE = registerBlock(
+            CheeseUtils.getCheeseNames(Reference.UnlocalizedName.MONTEREY).get(CheeseUtils.WAXED),
+            () -> new CheeseWheelBlock(Reference.ItemColor.MONTEREY_CHEESE.getColor())
+    );
+
+    public static final RegistryObject<Block> AGED_PARMESAN_CHEESE = registerBlock(
+            CheeseUtils.getCheeseNames(Reference.UnlocalizedName.PARMESAN).get(CheeseUtils.AGED),
+            () -> new CheeseWheelBlock(Reference.ItemColor.PARMESAN_CHEESE.getColor())
+    );
+
+    public static final RegistryObject<Block> WAXED_PROVOLONE_CHEESE = registerBlock(
+            CheeseUtils.getCheeseNames(Reference.UnlocalizedName.PROVOLONE).get(CheeseUtils.WAXED),
+            () -> new CheeseWheelBlock(Reference.ItemColor.PROVOLONE_CHEESE.getColor())
+    );
+
+    //////////////////////////////////
+    /////////// Cheese Curds /////////
+    //////////////////////////////////
+
 
     public static final RegistryObject<Block> APPENZELLER_CHEESE_CURDS = registerBlock(
             CheeseUtils.getCheeseNames(Reference.UnlocalizedName.APPENZELLER).get(CheeseUtils.CURDS),
@@ -147,8 +209,6 @@ public class GrowthcraftMilkBlocks {
             CheeseUtils.getCheeseNames(Reference.UnlocalizedName.PROVOLONE).get(CheeseUtils.CURDS),
             () -> new CheeseCurdBlock(Reference.ItemColor.PROVOLONE_CHEESE.getColor())
     );
-
-    // TODO: Cheese Wheels
 
     private static RegistryObject<Block> registerBlock(String name, Supplier<Block> block) {
         return registerBlock(name, block, false);
