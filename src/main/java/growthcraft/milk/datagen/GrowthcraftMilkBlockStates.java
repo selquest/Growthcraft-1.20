@@ -18,6 +18,9 @@ import static growthcraft.milk.block.CheeseWheelBlock.SLICE_COUNT_BOTTOM;
 import static growthcraft.milk.block.CheeseWheelBlock.SLICE_COUNT_TOP;
 
 public class GrowthcraftMilkBlockStates extends BlockStateProvider {
+
+    private final ModelFile empty_model = models().getExistingFile(new ResourceLocation("growthcraft", "block/empty"));
+
     public GrowthcraftMilkBlockStates(PackOutput output, ExistingFileHelper exFileHelper) {
         super(output, Reference.MODID, exFileHelper);
     }
@@ -51,33 +54,34 @@ public class GrowthcraftMilkBlockStates extends BlockStateProvider {
         aged_cheese("parmesan");
         //waxed_cheese("provolone");
 
-        List<ModelFile> generated_models = new ArrayList<>(9);
-        generated_models.add(models().getExistingFile(new ResourceLocation("growthcraft", "block/empty")));
-
-        ArrayList<ModelFile> lowerModels = new ArrayList<>(4);
-        ArrayList<ModelFile> upperModels = new ArrayList<>(4);
-
         for (int i = 0; i < lower.size(); i++) {
-            lowerModels.add(models().withExistingParent(
+            models().withExistingParent(
                             "block/cheese_wheel/provolone_waxed_lower_" + (i+1), lower.get(i))
                     .texture("0", "block/cheese/provolone_waxed_top")
-                    .texture("1", "block/cheese/provolone_waxed_side"));
-            generated_models.add(lowerModels.get(i));
+                    .texture("1", "block/cheese/provolone_waxed_side");
 
         } for (int i = 0; i < upper.size(); i++) {
-            upperModels.add(models().withExistingParent(
+            models().withExistingParent(
                     "block/cheese_wheel/provolone_waxed_upper_" + (i + 1), upper.get(i))
                     .texture("0", "block/cheese/provolone_waxed_top")
-                    .texture("1", "block/cheese/provolone_waxed_side"));
-            generated_models.add(upperModels.get(i));
+                    .texture("1", "block/cheese/provolone_waxed_side");
         }
 
-        horizontalBlock(GrowthcraftMilkBlocks.WAXED_PROVOLONE_CHEESE.get(),
-                state -> state.getValue(SLICE_COUNT_TOP) == 0 ?
-                        generated_models.get(state.getValue(SLICE_COUNT_BOTTOM)) :
-                        generated_models.get(4+state.getValue(SLICE_COUNT_TOP)));
+        horizontalBlock(
+                GrowthcraftMilkBlocks.WAXED_PROVOLONE_CHEESE.get(),
+                state -> {
+                    if (state.getValue(SLICE_COUNT_TOP) == 0 && state.getValue(SLICE_COUNT_BOTTOM) == 0) {
+                        return empty_model;
+                    } else if (state.getValue(SLICE_COUNT_TOP) == 0) {
+                        return models().getExistingFile(modLoc("block/cheese_wheel/provolone_waxed_lower_" + state.getValue(SLICE_COUNT_BOTTOM)));
+                    } else {
+                        return models().getExistingFile(modLoc("block/cheese_wheel/provolone_waxed_upper_" + state.getValue(SLICE_COUNT_TOP)));
+                    }
+                }
+        );
 
-        simpleBlockItem(GrowthcraftMilkBlocks.WAXED_PROVOLONE_CHEESE.get(), lowerModels.get(3));
+        simpleBlockItem(GrowthcraftMilkBlocks.WAXED_PROVOLONE_CHEESE.get(),
+                models().getExistingFile(modLoc("block/cheese_wheel/provolone_waxed_lower_4")));
     }
 
 
