@@ -1,5 +1,7 @@
 package growthcraft.milk.block.entity;
 
+import growthcraft.milk.block.BaseCheeseWheel;
+import growthcraft.milk.block.CheeseWheelAgeableBlock;
 import growthcraft.milk.block.CheeseWheelBlock;
 import growthcraft.milk.init.GrowthcraftMilkBlockEntities;
 import growthcraft.milk.recipe.CheesePressRecipe;
@@ -43,7 +45,7 @@ public class CheeseWheelBlockEntity extends BlockEntity implements BlockEntityTi
     public CheeseWheelBlockEntity(BlockEntityType<?> blockEntityType, BlockPos blockPos, BlockState blockState) {
         super(blockEntityType, blockPos, blockState);
         this.tickClock = 0;
-        this.tickMax = 24000 * 3;
+        this.tickMax = 60;//24000 * 3;
 
         // TODO: Implement aging process
         this.aged = true;
@@ -59,17 +61,20 @@ public class CheeseWheelBlockEntity extends BlockEntity implements BlockEntityTi
 
     @Override
     public void tick(Level level, BlockPos blockPos, BlockState blockState, CheeseWheelBlockEntity blockEntity) {
-        if (level != null && !level.isClientSide() && Boolean.FALSE.equals(level.getBlockState(blockPos).getValue(CheeseWheelBlock.AGED))) {
-            if (this.tickClock < tickMax) {
-                this.tickClock++;
-            } else if (tickMax != -1){
-                BlockState state = this.level.getBlockState(blockPos);
-                this.level.setBlock(blockPos, state.setValue(CheeseWheelBlock.AGED, true), Block.UPDATE_ALL_IMMEDIATE);
-                this.tickClock = 0;
-                this.tickMax = -1;
+        if (blockState.getBlock() instanceof CheeseWheelAgeableBlock block) {
+            if (!level.isClientSide() && !(level.getBlockState(blockPos).getValue(CheeseWheelBlock.AGED))) {
+                if (this.tickClock < tickMax) {
+                    this.tickClock++;
+                } else if (tickMax != -1) {
+
+                    this.level.setBlock(blockPos, block.getVariant().getProcessed().withPropertiesOf(blockState),
+                            Block.UPDATE_ALL_IMMEDIATE);
+                    this.tickClock = 0;
+                    this.tickMax = -1;
+                }
+            } else {
+                // The cheese is aged, so there's nothing to do.
             }
-        } else {
-            // The cheese is aged, so there's nothing to do.
         }
     }
 
@@ -148,6 +153,10 @@ public class CheeseWheelBlockEntity extends BlockEntity implements BlockEntityTi
 
     public int getSliceCount() {
         return this.sliceCountTop + this.sliceCountBottom;
+    }
+
+    public int getWheelCount() {
+        return this.getSliceCount() / 4;
     }
 
     @Nullable

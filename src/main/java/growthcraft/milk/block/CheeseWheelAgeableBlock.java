@@ -1,4 +1,9 @@
 package growthcraft.milk.block;
 
-public class CheeseWheelAgeableBlock {
+import growthcraft.milk.datagen.Cheese;
+
+public class CheeseWheelAgeableBlock extends BaseCheeseWheel {
+    public CheeseWheelAgeableBlock(Cheese variant) {
+        super(variant);
+    }
 }

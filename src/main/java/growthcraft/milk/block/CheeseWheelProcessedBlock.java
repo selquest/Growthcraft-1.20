@@ -21,13 +21,12 @@ public class CheeseWheelProcessedBlock extends BaseCheeseWheel {
     public InteractionResult use(BlockState blockState, Level level, BlockPos blockPos, Player player, InteractionHand interactionHand, BlockHitResult blockHitResult) {
         if (level.isClientSide()) return InteractionResult.CONSUME;
 
-        CheeseWheelBlockEntity blockEntity = (CheeseWheelBlockEntity) level.getBlockEntity(blockPos);
-        assert blockEntity != null;
-
+        // handle taking slices
         if (!player.isCrouching() && player.getItemInHand(interactionHand).isEmpty()) {
-            blockEntity.takeSlice(1);
+            BlockState newBlock = takeSlice(blockState, 1);
             player.getInventory().add(getVariant().getSlices(1));
-            if (blockEntity.getSliceCount() == 0) level.destroyBlock(blockPos, false);
+            level.setBlockAndUpdate(blockPos, newBlock);
+            if (getSliceCount(newBlock) == 0) level.destroyBlock(blockPos, false);
             return InteractionResult.SUCCESS;
         }
 

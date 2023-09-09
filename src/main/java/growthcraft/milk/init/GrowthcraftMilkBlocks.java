@@ -50,17 +50,17 @@ public class GrowthcraftMilkBlocks {
     //////////////////////////////////
     public static final RegistryObject<Block> APPENZELLER_CHEESE = registerBlock(
             CheeseUtils.getCheeseNames(Reference.UnlocalizedName.APPENZELLER).get(CheeseUtils.CHEESE),
-            () -> new CheeseWheelBlock(Cheese.APPENZELLER)
+            () -> new CheeseWheelAgeableBlock(Cheese.APPENZELLER)
     );
 
     public static final RegistryObject<Block> ASIAGO_CHEESE = registerBlock(
             CheeseUtils.getCheeseNames(Reference.UnlocalizedName.ASIAGO).get(CheeseUtils.CHEESE),
-            () -> new CheeseWheelBlock(Cheese.ASIAGO)
+            () -> new CheeseWheelAgeableBlock(Cheese.ASIAGO)
     );
 
     public static final RegistryObject<Block> CASU_MARZU_CHEESE = registerBlock(
             CheeseUtils.getCheeseNames(Reference.UnlocalizedName.CASU_MARZU).get(CheeseUtils.CHEESE),
-            () -> new CheeseWheelBlock(Cheese.CASU_MARZU)
+            () -> new CheeseWheelAgeableBlock(Cheese.CASU_MARZU)
     );
 
     public static final RegistryObject<Block> CHEDDAR_CHEESE = registerBlock(
@@ -70,12 +70,12 @@ public class GrowthcraftMilkBlocks {
 
     public static final RegistryObject<Block> EMMENTALER_CHEESE = registerBlock(
             CheeseUtils.getCheeseNames(Reference.UnlocalizedName.EMMENTALER).get(CheeseUtils.CHEESE),
-            () -> new CheeseWheelBlock(Cheese.EMMENTALER)
+            () -> new CheeseWheelAgeableBlock(Cheese.EMMENTALER)
     );
 
     public static final RegistryObject<Block> GORGONZOLA_CHEESE = registerBlock(
             CheeseUtils.getCheeseNames(Reference.UnlocalizedName.GORGONZOLA).get(CheeseUtils.CHEESE),
-            () -> new CheeseWheelBlock(Cheese.GORGONZOLA)
+            () -> new CheeseWheelAgeableBlock(Cheese.GORGONZOLA)
     );
 
     public static final RegistryObject<Block> GOUDA_CHEESE = registerBlock(
@@ -90,7 +90,7 @@ public class GrowthcraftMilkBlocks {
 
     public static final RegistryObject<Block> PARMESAN_CHEESE = registerBlock(
             CheeseUtils.getCheeseNames(Reference.UnlocalizedName.PARMESAN).get(CheeseUtils.CHEESE),
-            () -> new CheeseWheelBlock(Cheese.PARMESAN)
+            () -> new CheeseWheelAgeableBlock(Cheese.PARMESAN)
     );
 
     public static final RegistryObject<Block> PROVOLONE_CHEESE = registerBlock(

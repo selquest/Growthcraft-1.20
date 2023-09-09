@@ -2,7 +2,6 @@ package growthcraft.milk.datagen;
 
 
 import growthcraft.apiary.init.GrowthcraftApiaryItems;
-import growthcraft.lib.item.GrowthcraftItem;
 import growthcraft.milk.init.GrowthcraftMilkBlocks;
 import growthcraft.milk.init.GrowthcraftMilkItems;
 import net.minecraft.world.item.Item;
@@ -108,8 +107,8 @@ public enum Cheese {
         return new ItemStack(slice.get(), count);
     }
 
-    public RegistryObject<? extends Block> getProcessed() {
-        return processed;
+    public Block getProcessed() {
+        return processed.get();
     }
 
     private enum Processing {
