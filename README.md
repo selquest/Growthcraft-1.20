@@ -1,5 +1,6 @@
 # Growthcraft 9 for Minecraft 1.20.1 (Forge)
-[![Growthcraft Version](https://img.shields.io/badge/Growthcraft-9.0.3-orange.svg)](https://github.com/GrowthcraftCE/Growthcraft-1.20)
+
+[![Growthcraft Version](https://img.shields.io/badge/Growthcraft-9.0.5-orange.svg)](https://github.com/GrowthcraftCE/Growthcraft-1.20)
 [![](http://cf.way2muchnoise.eu/versions/growthcraft-community-edition_latest.svg)](https://minecraft.curseforge.com/projects/growthcraft-community-edition/)
 [![](http://cf.way2muchnoise.eu/short_growthcraft-community-edition.svg)](https://minecraft.curseforge.com/projects/growthcraft-community-edition/)
 [![Forge Version](https://img.shields.io/badge/Minecraft%20Forge-47.1.1-yellow.svg)](http://files.minecraftforge.net/maven/net/minecraftforge/forge/index_1.20.1.html)
@@ -20,7 +21,7 @@ There are multiple starting points to Growthcraft. As we continue to develop and
 ### Growthcraft 9 (Minecraft 1.20.1)
 
 End of Support: TBD  
-Latest Version: 9.0.3  
+Latest Version: 9.0.5  
 Stable Version: TBD
 
 ### Growthcraft 8 (Minecraft 1.19.4)
