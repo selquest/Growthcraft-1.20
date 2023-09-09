@@ -14,15 +14,16 @@ world of Minecraft. Growthcraft adds the ability to grow Apple tress, collect ho
 
 ## Getting Started
 
-There are multiple starting points to Growthcraft. As we continue to develop and expand Growthcraft, we will be adding to our GitHub wiki documentation.
+There are multiple starting points to Growthcraft. As we continue to develop and expand Growthcraft, we will be adding
+to our GitHub wiki documentation. As of version 9 we have included an in-game manual.
 
 ## History
 
 ### Growthcraft 9 (Minecraft 1.20.1)
 
 End of Support: TBD  
-Latest Version: 9.0.6  
-Stable Version: TBD
+Latest Version: 9.0.7  
+Stable Version: 9.0.6
 
 ### Growthcraft 8 (Minecraft 1.19.4)
 
@@ -41,7 +42,7 @@ Stable Version: TBD
 Going from Minecraft Forge 1.12 to 1.16 made a lot of changes to the MCP mappings to the point that it prompted a
 complete rewrite from the ground.
 
-End of Support: TBD  
+End of Support: 31 DEC 2023  
 Latest Version: 6.1.4  
 Stable Version: 6.1.4
 
