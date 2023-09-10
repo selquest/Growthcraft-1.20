@@ -26,6 +26,7 @@ public class Reference {
         public static final String RICE_WATER = "rice_water";
         public static final String RICE_WINE = "rice_wine";
         public static final String SAKE = "sake";
+        public static final String YEAST_SEISHU = "yeast_seishu";
 
         private UnlocalizedName() {
             /* Disable Automatic Creation of Public Constructor */

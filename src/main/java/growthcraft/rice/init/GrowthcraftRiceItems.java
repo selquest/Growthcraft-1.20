@@ -49,6 +49,10 @@ public class GrowthcraftRiceItems {
             GrowthcraftFoodItem::new
     );
 
+    public static final RegistryObject<GrowthcraftItem> YEAST_SEISHU = ITEMS.register(
+            Reference.UnlocalizedName.YEAST_SEISHU, GrowthcraftItem::new
+    );
+
     public static void registerCompostables() {
         float f = 0.3F;
         float f1 = 0.5F;
@@ -61,7 +65,7 @@ public class GrowthcraftRiceItems {
         ComposterBlock.COMPOSTABLES.put(GrowthcraftRiceItems.RICE_COOKED.get(), f3);
         ComposterBlock.COMPOSTABLES.put(GrowthcraftRiceItems.RICE_STALK.get(), f1);
         ComposterBlock.COMPOSTABLES.put(GrowthcraftRiceItems.SUSHI_ROLL.get(), f4);
-
+        ComposterBlock.COMPOSTABLES.put(GrowthcraftRiceItems.YEAST_SEISHU.get(), f4);
     }
 
     public static boolean excludeItemRegistry(ResourceLocation registryName) {
