@@ -30,6 +30,7 @@ public enum Cheese {
             GrowthcraftMilkItems.CHEESE_CHEDDAR_SLICE,
             GrowthcraftMilkBlocks.CHEDDAR_CHEESE,
             GrowthcraftMilkBlocks.WAXED_CHEDDAR_CHEESE,
+            GrowthcraftMilkBlocks.AGED_CHEDDAR_CHEESE,
             GrowthcraftApiaryItems.BEES_WAX_RED
     ),
     EMMENTALER(
@@ -46,12 +47,14 @@ public enum Cheese {
             GrowthcraftMilkItems.CHEESE_GOUDA_SLICE,
             GrowthcraftMilkBlocks.GOUDA_CHEESE,
             GrowthcraftMilkBlocks.WAXED_GOUDA_CHEESE,
+            GrowthcraftMilkBlocks.AGED_GOUDA_CHEESE,
             GrowthcraftApiaryItems.BEES_WAX
     ),
     MONTEREY(
             GrowthcraftMilkItems.CHEESE_MONTEREY_SLICE,
             GrowthcraftMilkBlocks.MONTEREY_CHEESE,
             GrowthcraftMilkBlocks.WAXED_MONTEREY_CHEESE,
+            GrowthcraftMilkBlocks.AGED_MONTEREY_CHEESE,
             GrowthcraftApiaryItems.BEES_WAX_BLACK
     ),
     PARMESAN(
@@ -63,24 +66,34 @@ public enum Cheese {
             GrowthcraftMilkItems.CHEESE_PROVOLONE_SLICE,
             GrowthcraftMilkBlocks.PROVOLONE_CHEESE,
             GrowthcraftMilkBlocks.WAXED_PROVOLONE_CHEESE,
+            GrowthcraftMilkBlocks.AGED_PROVOLONE_CHEESE,
             GrowthcraftApiaryItems.BEES_WAX_WHITE
     );
 
     Cheese() {}
 
-    Cheese(RegistryObject<? extends Item> slice, RegistryObject<? extends Block> unprocessed, RegistryObject<? extends Block> processed, RegistryObject<? extends Item> wax) {
+    Cheese(
+            RegistryObject<? extends Item> slice,
+            RegistryObject<? extends Block> unprocessed,
+            RegistryObject<? extends Block> waxed,
+            RegistryObject<? extends Block> aged,
+            RegistryObject<? extends Item> wax) {
         this.process = Processing.WAXING;
         this.slice = slice;
         this.wax = wax;
         this.unprocessed = unprocessed;
-        this.processed = processed;
+        this.waxed = waxed;
+        this.aged = aged;
     }
 
-    Cheese(RegistryObject<? extends Item> slice, RegistryObject<? extends Block> unprocessed, RegistryObject<? extends Block> processed) {
+    Cheese(
+            RegistryObject<? extends Item> slice,
+            RegistryObject<? extends Block> unprocessed,
+            RegistryObject<? extends Block> aged) {
         this.process = Processing.AGING;
         this.slice = slice;
         this.unprocessed = unprocessed;
-        this.processed = processed;
+        this.aged = aged;
     }
 
     private Processing process;
@@ -88,7 +101,9 @@ public enum Cheese {
     private RegistryObject<? extends Item> wax;
 
     private RegistryObject<? extends Block> unprocessed;
-    private RegistryObject<? extends Block> processed;
+    private RegistryObject<? extends Block> aged;
+
+    private RegistryObject<? extends Block> waxed;
 
 
     public boolean isAgeable() {
@@ -107,8 +122,17 @@ public enum Cheese {
         return new ItemStack(slice.get(), count);
     }
 
+    @Deprecated
     public Block getProcessed() {
-        return processed.get();
+        return null;
+    }
+
+    public Block getAged() {
+        return aged.get();
+    }
+
+    public Block getWaxed() {
+        return waxed.get();
     }
 
     private enum Processing {

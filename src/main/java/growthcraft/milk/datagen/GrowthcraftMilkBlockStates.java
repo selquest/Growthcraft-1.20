@@ -11,9 +11,11 @@ import net.minecraftforge.client.model.generators.BlockStateProvider;
 import net.minecraftforge.client.model.generators.ModelFile;
 import net.minecraftforge.client.model.generators.MultiPartBlockStateBuilder;
 import net.minecraftforge.common.data.ExistingFileHelper;
+import net.minecraftforge.registries.ForgeRegistries;
 import net.minecraftforge.registries.RegistryObject;
 
 import java.util.List;
+import java.util.Objects;
 
 import static growthcraft.milk.block.CheeseWheelBlock.SLICE_COUNT_BOTTOM;
 import static growthcraft.milk.block.CheeseWheelBlock.SLICE_COUNT_TOP;
@@ -47,16 +49,35 @@ public class GrowthcraftMilkBlockStates extends BlockStateProvider {
         aged_cheese(GrowthcraftMilkBlocks.APPENZELLER_CHEESE, GrowthcraftMilkBlocks.AGED_APPENZELLER_CHEESE, "appenzeller");
         aged_cheese(GrowthcraftMilkBlocks.ASIAGO_CHEESE, GrowthcraftMilkBlocks.AGED_ASIAGO_CHEESE,  "asiago");
         aged_cheese(GrowthcraftMilkBlocks.CASU_MARZU_CHEESE, GrowthcraftMilkBlocks.AGED_CASU_MARZU_CHEESE, "casu_marzu");
-        waxed_cheese(GrowthcraftMilkBlocks.CHEDDAR_CHEESE, GrowthcraftMilkBlocks.WAXED_CHEDDAR_CHEESE, "cheddar");
+        waxed_cheese(
+                GrowthcraftMilkBlocks.CHEDDAR_CHEESE,
+                GrowthcraftMilkBlocks.WAXED_CHEDDAR_CHEESE,
+                GrowthcraftMilkBlocks.AGED_CHEDDAR_CHEESE,
+                "cheddar"
+        );
         aged_cheese(GrowthcraftMilkBlocks.EMMENTALER_CHEESE, GrowthcraftMilkBlocks.AGED_EMMENTALER_CHEESE, "emmentaler");
         aged_cheese(GrowthcraftMilkBlocks.GORGONZOLA_CHEESE, GrowthcraftMilkBlocks.AGED_GORGONZOLA_CHEESE, "gorgonzola");
-        waxed_cheese(GrowthcraftMilkBlocks.GOUDA_CHEESE, GrowthcraftMilkBlocks.WAXED_GOUDA_CHEESE, "gouda");
-        waxed_cheese(GrowthcraftMilkBlocks.MONTEREY_CHEESE, GrowthcraftMilkBlocks.WAXED_MONTEREY_CHEESE, "monterey");
+        waxed_cheese(
+                GrowthcraftMilkBlocks.GOUDA_CHEESE,
+                GrowthcraftMilkBlocks.WAXED_GOUDA_CHEESE,
+                GrowthcraftMilkBlocks.AGED_GOUDA_CHEESE,
+                "gouda"
+        );
+        waxed_cheese(GrowthcraftMilkBlocks.MONTEREY_CHEESE,
+                GrowthcraftMilkBlocks.WAXED_MONTEREY_CHEESE,
+                GrowthcraftMilkBlocks.AGED_MONTEREY_CHEESE,
+                "monterey"
+        );
         aged_cheese(GrowthcraftMilkBlocks.PARMESAN_CHEESE, GrowthcraftMilkBlocks.AGED_PARMESAN_CHEESE, "parmesan");
-        waxed_cheese(GrowthcraftMilkBlocks.PROVOLONE_CHEESE, GrowthcraftMilkBlocks.WAXED_PROVOLONE_CHEESE, "provolone");
+        waxed_cheese(
+                GrowthcraftMilkBlocks.PROVOLONE_CHEESE,
+                GrowthcraftMilkBlocks.WAXED_PROVOLONE_CHEESE,
+                GrowthcraftMilkBlocks.AGED_PROVOLONE_CHEESE,
+                "provolone"
+        );
     }
 
-    private void cheese(Block block, String modelName, String sideTexture, String topTexture) {
+    private void cheese(Block block, String modelName, String sideTexture, String topTexture, String itemTexture) {
         // Generate block models for the cheese
         cheeseWheelModel(lower, modelName, "_lower_", topTexture, sideTexture);
         cheeseWheelModel(upper, modelName, "_upper_", topTexture, sideTexture);
@@ -74,9 +95,21 @@ public class GrowthcraftMilkBlockStates extends BlockStateProvider {
                 }
         );
 
-        // generate item model for the cheese
-        simpleBlockItem(block,
-                models().getExistingFile(modLoc("block/cheese_wheel/" + modelName + "_lower_4")));
+
+        // use block model
+        //ModelFile model =  models().getExistingFile(modLoc("block/cheese_wheel/" + modelName + "_lower_4"));
+        //simpleBlockItem(block, model);
+
+        // use item texture (this is such a stupid hack because for some reason we can't just specify an item texture
+        // for a blockItem model)
+        String path = Objects.requireNonNull(ForgeRegistries.BLOCKS.getKey(block)).getPath();
+        itemModels().getBuilder(path)
+                .parent(new ModelFile.UncheckedModelFile("item/generated"))
+                .texture("layer0", modLoc("item/cheese/" + itemTexture));
+    }
+
+    private void cheese(Block block, String modelName, String sideTexture, String topTexture) {
+        cheese(block, modelName, sideTexture, topTexture, modelName);
     }
 
     private void cheeseWheelModel(List<ResourceLocation> sliceModels, String modelName, String slabType, String topTexture, String sideTexture) {
@@ -92,9 +125,12 @@ public class GrowthcraftMilkBlockStates extends BlockStateProvider {
         cheese(agedBlock.get(),modelName + "_aged", modelName + "_aged_side", modelName + "_aged_top");
     }
 
-    private void waxed_cheese(RegistryObject<Block> unwaxedBlock, RegistryObject<Block> waxedBlock, String modelName) {
+    private void waxed_cheese(RegistryObject<Block> unwaxedBlock, RegistryObject<Block> waxedBlock,
+                              RegistryObject<Block> agedBlock, String modelName) {
         cheese(unwaxedBlock.get(),modelName + "_unwaxed", modelName + "_unwaxed_side", modelName + "_unwaxed_top");
         cheese(waxedBlock.get(),modelName + "_waxed", modelName + "_waxed_side", modelName + "_waxed_top");
+        cheese(agedBlock.get(),modelName + "_aged", modelName + "_waxed_side", modelName + "_waxed_top", modelName +
+                "_waxed");
     }
 
 

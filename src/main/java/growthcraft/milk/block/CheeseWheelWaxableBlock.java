@@ -43,6 +43,6 @@ public class CheeseWheelWaxableBlock extends BaseCheeseWheel {
     }
 
     private Block getWaxedBlock() {
-        return getVariant().getProcessed();
+        return getVariant().getWaxed();
     }
 }

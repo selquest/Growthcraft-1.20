@@ -67,7 +67,7 @@ public class CheeseWheelBlockEntity extends BlockEntity implements BlockEntityTi
                     this.tickClock++;
                 } else if (tickMax != -1) {
 
-                    this.level.setBlock(blockPos, block.getVariant().getProcessed().withPropertiesOf(blockState),
+                    this.level.setBlock(blockPos, block.getVariant().getAged().withPropertiesOf(blockState),
                             Block.UPDATE_ALL_IMMEDIATE);
                     this.tickClock = 0;
                     this.tickMax = -1;
