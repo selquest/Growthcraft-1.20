@@ -7,7 +7,6 @@ import growthcraft.milk.init.GrowthcraftMilkItems;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.block.Block;
-import net.minecraft.world.level.block.state.BlockState;
 import net.minecraftforge.registries.RegistryObject;
 
 public enum Cheese {
@@ -70,8 +69,6 @@ public enum Cheese {
             GrowthcraftApiaryItems.BEES_WAX_WHITE
     );
 
-    Cheese() {}
-
     Cheese(
             RegistryObject<? extends Item> slice,
             RegistryObject<? extends Block> unprocessed,
@@ -96,12 +93,12 @@ public enum Cheese {
         this.aged = aged;
     }
 
-    private Processing process;
-    private RegistryObject<? extends Item> slice ;
+    private final Processing process;
+    private final RegistryObject<? extends Item> slice ;
     private RegistryObject<? extends Item> wax;
 
-    private RegistryObject<? extends Block> unprocessed;
-    private RegistryObject<? extends Block> aged;
+    private final RegistryObject<? extends Block> unprocessed;
+    private final RegistryObject<? extends Block> aged;
 
     private RegistryObject<? extends Block> waxed;
 
@@ -120,11 +117,6 @@ public enum Cheese {
 
     public ItemStack getSlices(int count) {
         return new ItemStack(slice.get(), count);
-    }
-
-    @Deprecated
-    public Block getProcessed() {
-        return null;
     }
 
     public Block getAged() {
