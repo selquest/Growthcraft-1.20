@@ -1,5 +1,6 @@
 # Growthcraft 9 for Minecraft 1.20.1 (Forge)
-[![Growthcraft Version](https://img.shields.io/badge/Growthcraft-9.0.3-orange.svg)](https://github.com/GrowthcraftCE/Growthcraft-1.20)
+
+[![Growthcraft Version](https://img.shields.io/badge/Growthcraft-9.0.6-orange.svg)](https://github.com/GrowthcraftCE/Growthcraft-1.20)
 [![](http://cf.way2muchnoise.eu/versions/growthcraft-community-edition_latest.svg)](https://minecraft.curseforge.com/projects/growthcraft-community-edition/)
 [![](http://cf.way2muchnoise.eu/short_growthcraft-community-edition.svg)](https://minecraft.curseforge.com/projects/growthcraft-community-edition/)
 [![Forge Version](https://img.shields.io/badge/Minecraft%20Forge-47.1.1-yellow.svg)](http://files.minecraftforge.net/maven/net/minecraftforge/forge/index_1.20.1.html)
@@ -13,15 +14,16 @@ world of Minecraft. Growthcraft adds the ability to grow Apple tress, collect ho
 
 ## Getting Started
 
-There are multiple starting points to Growthcraft. As we continue to develop and expand Growthcraft, we will be adding to our GitHub wiki documentation.
+There are multiple starting points to Growthcraft. As we continue to develop and expand Growthcraft, we will be adding
+to our GitHub wiki documentation. As of version 9 we have included an in-game manual.
 
 ## History
 
 ### Growthcraft 9 (Minecraft 1.20.1)
 
 End of Support: TBD  
-Latest Version: 9.0.3  
-Stable Version: TBD
+Latest Version: 9.0.7  
+Stable Version: 9.0.6
 
 ### Growthcraft 8 (Minecraft 1.19.4)
 
@@ -40,7 +42,7 @@ Stable Version: TBD
 Going from Minecraft Forge 1.12 to 1.16 made a lot of changes to the MCP mappings to the point that it prompted a
 complete rewrite from the ground.
 
-End of Support: TBD  
+End of Support: 31 DEC 2023  
 Latest Version: 6.1.4  
 Stable Version: 6.1.4
 

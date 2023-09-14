@@ -17,6 +17,7 @@ import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.Items;
 import net.minecraft.world.item.context.BlockPlaceContext;
+import net.minecraft.world.level.BlockGetter;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.*;
 import net.minecraft.world.level.block.entity.BlockEntity;
@@ -26,6 +27,9 @@ import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.block.state.StateDefinition;
 import net.minecraft.world.level.block.state.properties.BooleanProperty;
 import net.minecraft.world.phys.BlockHitResult;
+import net.minecraft.world.phys.shapes.CollisionContext;
+import net.minecraft.world.phys.shapes.Shapes;
+import net.minecraft.world.phys.shapes.VoxelShape;
 import net.minecraftforge.common.capabilities.ForgeCapabilities;
 import net.minecraftforge.fluids.FluidStack;
 import net.minecraftforge.fluids.FluidUtil;
@@ -34,9 +38,29 @@ import net.minecraftforge.fluids.capability.templates.FluidTank;
 import net.minecraftforge.network.NetworkHooks;
 import org.jetbrains.annotations.Nullable;
 
+import java.util.Arrays;
+
+import static net.minecraft.world.phys.shapes.BooleanOp.OR;
+
 public class MixingVatBlock extends BaseEntityBlock {
-    //TODO[5]: Implement MixingVatBlock
     public static final BooleanProperty LIT = BooleanProperty.create("lit");
+
+    private final VoxelShape[] VOXEL_SHAPES = new VoxelShape[]{
+            Block.box(1, 0, 1, 15, 15, 2),
+            Block.box(1, 0, 2, 2, 15, 14),
+            Block.box(1, 0, 14, 15, 15, 15),
+            Block.box(14, 0, 2, 15, 15, 14),
+            Block.box(2, 0, 2, 14, 1, 14),
+            Block.box(11, 0, 0, 13, 3, 1),
+            Block.box(3, 0, 0, 5, 3, 1),
+            Block.box(0, 0, 11, 1, 3, 13),
+            Block.box(0, 0, 3, 1, 3, 5),
+            Block.box(11, 0, 15, 13, 3, 16),
+            Block.box(3, 0, 15, 5, 3, 16),
+            Block.box(15, 0, 3, 16, 3, 5),
+            Block.box(15, 0, 11, 16, 3, 13),
+            Block.box(2, 12, 2, 14, 14, 14)
+    };
 
     public MixingVatBlock() {
         this(getInitProperties());
@@ -72,6 +96,11 @@ public class MixingVatBlock extends BaseEntityBlock {
     @Override
     public RenderShape getRenderShape(BlockState blockState) {
         return RenderShape.MODEL;
+    }
+
+    @Override
+    public VoxelShape getShape(BlockState blockState, BlockGetter blockGetter, BlockPos blockPos, CollisionContext context) {
+        return Arrays.stream(VOXEL_SHAPES).reduce((v1, v2) -> Shapes.join(v1, v2, OR)).get();
     }
 
     @Nullable
