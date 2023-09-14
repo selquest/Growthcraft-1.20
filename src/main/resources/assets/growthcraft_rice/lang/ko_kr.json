@@ -1,0 +1,17 @@
+{
+  "block.growthcraft_rice.cultivated_farmland": "논",
+  "block.growthcraft_rice.rice_crop": "쌀",
+  "fluid_type.growthcraft_rice.rice_water_fluid": "쌀 끓인 물",
+  "fluid_type.growthcraft_rice.rice_wine_fluid": "Rice Wine",
+  "fluid_type.growthcraft_rice.sake_fluid": "청주",
+  "item.growthcraft_rice.cultivator": "경작기",
+  "item.growthcraft_rice.knife": "Knife",
+  "item.growthcraft_rice.rice": "쌀",
+  "item.growthcraft_rice.rice_cooked": "익힌 쌀",
+  "item.growthcraft_rice.rice_stalk": "Rice Stalk",
+  "item.growthcraft_rice.rice_water_fluid_bucket": "Rice Water Bucket",
+  "item.growthcraft_rice.rice_wine_fluid_bucket": "Rice Wine Bucket",
+  "item.growthcraft_rice.sake_fluid_bucket": "Sake Bucket",
+  "item.growthcraft_rice.sushi_roll": "Sushi Roll",
+  "item.growthcraft_rice.yeast_seishu": "Seishu Yeast"
+}
