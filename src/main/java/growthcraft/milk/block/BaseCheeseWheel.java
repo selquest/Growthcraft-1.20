@@ -1,10 +1,12 @@
 package growthcraft.milk.block;
 
 import growthcraft.apiary.init.GrowthcraftApiaryItems;
+import growthcraft.milk.block.entity.CheeseWheelBlockEntity;
 import growthcraft.milk.init.GrowthcraftMilkBlockEntities;
 import growthcraft.milk.init.GrowthcraftMilkBlocks;
 import growthcraft.milk.init.GrowthcraftMilkItems;
 import net.minecraft.core.BlockPos;
+import net.minecraft.nbt.CompoundTag;
 import net.minecraft.world.InteractionHand;
 import net.minecraft.world.InteractionResult;
 import net.minecraft.world.entity.player.Player;
@@ -31,6 +33,9 @@ import net.minecraftforge.registries.RegistryObject;
 import org.jetbrains.annotations.Nullable;
 
 import java.awt.*;
+import java.util.Arrays;
+import java.util.Objects;
+import java.util.stream.Stream;
 
 public class BaseCheeseWheel extends BaseEntityBlock {
     public static final DirectionProperty FACING = BlockStateProperties.HORIZONTAL_FACING;
@@ -104,7 +109,19 @@ public class BaseCheeseWheel extends BaseEntityBlock {
     @Nullable
     @Override
     public BlockState getStateForPlacement(BlockPlaceContext context) {
-        return this.defaultBlockState().setValue(FACING, context.getHorizontalDirection().getOpposite()).setValue(SLICE_COUNT_BOTTOM, 4).setValue(SLICE_COUNT_TOP, 0).setValue(AGED, false);
+
+        int slicesTop = 0;
+        int slicesBottom = 4;
+        try {
+            CompoundTag nbt = Objects.requireNonNull(context.getItemInHand().getTag().getCompound("BlockEntityTag"));
+            slicesTop = nbt.getInt("slicestop");
+            slicesBottom = nbt.getInt("slicesbottom");
+        } catch (NullPointerException ignored) {}
+
+        return this.defaultBlockState()
+                .setValue(FACING, context.getHorizontalDirection().getOpposite())
+                .setValue(SLICE_COUNT_BOTTOM, slicesBottom)
+                .setValue(SLICE_COUNT_TOP, slicesTop);
     }
 
     @Override
@@ -134,72 +151,27 @@ public class BaseCheeseWheel extends BaseEntityBlock {
             return InteractionResult.CONSUME;
         }
 
+        CheeseWheelBlockEntity entity = (CheeseWheelBlockEntity) level.getBlockEntity(blockPos);
+        assert entity != null; // will only be true if we somehow stack cheese beyond the height limit
+
         // handle stacking wheels
         if (player.getItemInHand(interactionHand).getItem() == this.asItem()) {
-            if (canAddWheel(blockState)) {
-                BlockState newBlock = addSlice(blockState, 4);
+            if (entity.tryAddSlices(4)) {
                 if (!player.isCreative()) player.getItemInHand(interactionHand).shrink(1);
-                level.setBlockAndUpdate(blockPos, newBlock);
                 return InteractionResult.SUCCESS;
             } else {
                 return InteractionResult.PASS;
             }
 
         // handle picking up wheels
-        } else if (player.isCrouching() && canRemoveWheel(blockState)) {
-            BlockState newBlock = takeSlice(blockState, 4);
+        } else if (player.isCrouching() && entity.tryTakeSlices(4)) {
             player.getInventory().add(new ItemStack(this.asItem()));
-            level.setBlockAndUpdate(blockPos, newBlock);
-            if(getSliceCount(newBlock) == 0) level.destroyBlock(blockPos, false);
+            if(entity.getSliceCount() == 0) level.destroyBlock(blockPos, false);
             return InteractionResult.SUCCESS;
         }
         return InteractionResult.PASS;
     }
 
-    public static void updateWheel(Level level, BlockState blockState, BlockPos blockPos) {
-        level.setBlockAndUpdate(blockPos, blockState);
-    };
-
-    public static int getSliceCount(BlockState block) {
-        return block.getValue(SLICE_COUNT_BOTTOM) + block.getValue(SLICE_COUNT_TOP);
-    }
-
-    public boolean canAddWheel(BlockState block) {
-        return getSliceCount(block) <= 4;
-    }
-
-    public boolean canRemoveWheel(BlockState block) {
-        return getSliceCount(block ) >= 4;
-    }
-
-    public int getWheelCount(BlockState block) {
-        return getSliceCount(block) / 4;
-    }
-
-    public BlockState takeSlice(BlockState block, int count) {
-        int sliceCountTop = block.getValue(SLICE_COUNT_TOP);
-        int sliceCountBottom = block.getValue(SLICE_COUNT_BOTTOM);
-        if (sliceCountTop >= count) {
-            sliceCountTop -= count;
-        } else if (sliceCountBottom >= count - sliceCountTop) {
-            sliceCountBottom -= count - sliceCountTop;
-            sliceCountTop = 0;
-        }
-        return block.setValue(SLICE_COUNT_BOTTOM, sliceCountBottom)
-                .setValue(SLICE_COUNT_TOP, sliceCountTop);
-    }
-
-    public BlockState addSlice(BlockState block, int count) {
-        int newTotal = block.getValue(SLICE_COUNT_TOP) + block.getValue(SLICE_COUNT_BOTTOM) + count;
-
-        if (newTotal > 4) {
-            return block.setValue(SLICE_COUNT_BOTTOM, 4)
-                    .setValue(SLICE_COUNT_TOP, newTotal - 4);
-        } else {
-            return block.setValue(SLICE_COUNT_BOTTOM, newTotal)
-                    .setValue(SLICE_COUNT_TOP, 0);
-        }
-    }
 
     @Deprecated
     public int getColor() {
@@ -325,12 +297,31 @@ public class BaseCheeseWheel extends BaseEntityBlock {
             return new ItemStack(slice.get(), count);
         }
 
+        public Block getUnprocessed() {
+            return unprocessed.get();
+        }
+
         public Block getAged() {
             return aged.get();
         }
 
         public Block getWaxed() {
             return waxed.get();
+        }
+
+        public static Stream<Block> allCheeses() {
+            return Arrays.stream(Cheese.values())
+                .flatMap(cheese -> {
+                    Stream<Block> stream = Stream.of(cheese.getUnprocessed(), cheese.getAged());
+                    if (cheese.isWaxable()) {
+                        stream = Stream.concat(stream, Stream.of(cheese.getWaxed()));
+                    }
+                    return stream;
+                });
+        }
+
+        public static Stream<Block> processedCheeses() {
+            return Arrays.stream(Cheese.values()).map(Cheese::getAged);
         }
 
         private enum Processing {

@@ -1,5 +1,6 @@
 package growthcraft.milk.block;
 
+import growthcraft.milk.block.entity.CheeseWheelBlockEntity;
 import net.minecraft.core.BlockPos;
 import net.minecraft.world.InteractionHand;
 import net.minecraft.world.InteractionResult;
@@ -19,13 +20,16 @@ public class CheeseWheelWaxableBlock extends BaseCheeseWheel {
     public InteractionResult use(BlockState blockState, Level level, BlockPos blockPos, Player player, InteractionHand interactionHand, BlockHitResult blockHitResult) {
         if (level.isClientSide()) return InteractionResult.CONSUME;
 
+        CheeseWheelBlockEntity entity = (CheeseWheelBlockEntity) level.getBlockEntity(blockPos);
+        assert entity != null;
+
         ItemStack handItem = player.getItemInHand(interactionHand);
         // handle waxing cheese
-        if (handItem.is(getVariant().getWax()) && handItem.getCount() >= getWheelCount(blockState)) {
+        if (handItem.is(getVariant().getWax()) && handItem.getCount() >= entity.getWheelCount()) {
             BlockState thisBlock = level.getBlockState(blockPos);
             BlockState waxedBlock = getWaxedBlock().withPropertiesOf(thisBlock);
             level.setBlockAndUpdate(blockPos, waxedBlock);
-            if (!player.isCreative()) player.getItemInHand(interactionHand).shrink(getWheelCount(blockState));
+            if (!player.isCreative()) player.getItemInHand(interactionHand).shrink(entity.getWheelCount());
             return InteractionResult.SUCCESS;
         }
 

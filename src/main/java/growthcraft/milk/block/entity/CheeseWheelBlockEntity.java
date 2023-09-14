@@ -61,19 +61,18 @@ public class CheeseWheelBlockEntity extends BlockEntity implements BlockEntityTi
 
     @Override
     public void tick(Level level, BlockPos blockPos, BlockState blockState, CheeseWheelBlockEntity blockEntity) {
+        if (level.isClientSide()) {
+            return;
+        }
         if (blockState.getBlock() instanceof CheeseWheelAgeableBlock block) {
-            if (!level.isClientSide() && !(level.getBlockState(blockPos).getValue(CheeseWheelBlock.AGED))) {
-                if (this.tickClock < tickMax) {
-                    this.tickClock++;
-                } else if (tickMax != -1) {
+            if (this.tickClock < tickMax) {
+                this.tickClock++;
+            } else if (tickMax != -1) {
 
-                    this.level.setBlock(blockPos, block.getVariant().getAged().withPropertiesOf(blockState),
-                            Block.UPDATE_ALL_IMMEDIATE);
-                    this.tickClock = 0;
-                    this.tickMax = -1;
-                }
-            } else {
-                // The cheese is aged, so there's nothing to do.
+                this.level.setBlock(blockPos, block.getVariant().getAged().withPropertiesOf(blockState),
+                        Block.UPDATE_ALL_IMMEDIATE);
+                this.tickClock = 0;
+                this.tickMax = -1;
             }
         }
     }
@@ -88,10 +87,21 @@ public class CheeseWheelBlockEntity extends BlockEntity implements BlockEntityTi
         );
     }
 
+    public void updateBlockState() {
+        level.setBlock(
+                getBlockPos(),
+                getBlockState()
+                        .setValue(BaseCheeseWheel.SLICE_COUNT_TOP, sliceCountTop)
+                        .setValue(BaseCheeseWheel.SLICE_COUNT_BOTTOM, sliceCountBottom),
+                Block.UPDATE_ALL_IMMEDIATE
+        );
+    }
+
     public boolean canTakeSlice() {
         return this.aged && this.getSliceCount() > 0;
     }
 
+    @Deprecated
     public ItemStack takeSlice() {
             List<CheesePressRecipe> cheesePressRecipes = this.getMatchingRecipes(
                     new ItemStack(this.getBlockState().getBlock().asItem())
@@ -107,6 +117,7 @@ public class CheeseWheelBlockEntity extends BlockEntity implements BlockEntityTi
         return null;
     }
 
+    @Deprecated
     private List<CheesePressRecipe> getMatchingRecipes(ItemStack itemStack) {
         List<CheesePressRecipe> matchingRecipes = new ArrayList<>();
 
@@ -122,6 +133,10 @@ public class CheeseWheelBlockEntity extends BlockEntity implements BlockEntityTi
         return matchingRecipes;
     }
 
+    public boolean canTakeSlice(int slices) {
+        return getSliceCount() >= slices;
+    }
+
     public void takeSlice(int count) {
         if (this.sliceCountTop >= count) {
             this.sliceCountTop -= count;
@@ -132,23 +147,36 @@ public class CheeseWheelBlockEntity extends BlockEntity implements BlockEntityTi
         this.setBlockState(this.sliceCountBottom, this.sliceCountTop);
     }
 
+    public boolean tryTakeSlices(int slices) {
+        if (getSliceCount() < slices) {
+            return false;
+        }
+        takeSlice(slices);
+        return true;
+    }
+
     public boolean canAddSlice(int count) {
         return getSliceCount() + count <= 8;
     }
 
-    public void addSlice(int count) {
-        int newTotal = this.sliceCountBottom + this.sliceCountTop + count;
-
+    public void addSlice(int slices) {
+        int newTotal = sliceCountTop + sliceCountBottom + slices;
         if (newTotal > 4) {
-            // Then we have enough room to add the slice to the stack.
-            this.sliceCountBottom = 4;
-            this.sliceCountTop = newTotal - this.sliceCountBottom;
+            sliceCountBottom = 4;
+            sliceCountTop = newTotal - 4;
         } else {
-            this.sliceCountBottom = newTotal;
-            this.sliceCountTop = 0;
+            sliceCountBottom = newTotal;
+            sliceCountTop = 0;
         }
+    }
 
-        this.setBlockState(this.sliceCountBottom, this.sliceCountTop);
+    public boolean tryAddSlices(int slices) {
+        if (!canAddSlice(slices)) {
+            return false;
+        }
+        addSlice(slices);
+        updateBlockState();
+        return true;
     }
 
     public int getSliceCount() {

@@ -1,5 +1,6 @@
 package growthcraft.milk.block;
 
+import growthcraft.milk.block.entity.CheeseWheelBlockEntity;
 import net.minecraft.core.BlockPos;
 import net.minecraft.world.InteractionHand;
 import net.minecraft.world.InteractionResult;
@@ -18,12 +19,14 @@ public class CheeseWheelProcessedBlock extends BaseCheeseWheel {
     public InteractionResult use(BlockState blockState, Level level, BlockPos blockPos, Player player, InteractionHand interactionHand, BlockHitResult blockHitResult) {
         if (level.isClientSide()) return InteractionResult.CONSUME;
 
+        CheeseWheelBlockEntity entity = (CheeseWheelBlockEntity) level.getBlockEntity(blockPos);
+        assert entity != null;
+
         // handle taking slices
         if (!player.isCrouching() && player.getItemInHand(interactionHand).isEmpty()) {
-            BlockState newBlock = takeSlice(blockState, 1);
+            entity.takeSlice(1);
             player.getInventory().add(getVariant().getSlices(1));
-            level.setBlockAndUpdate(blockPos, newBlock);
-            if (getSliceCount(newBlock) == 0) level.destroyBlock(blockPos, false);
+            if (entity.getSliceCount() == 0) level.destroyBlock(blockPos, false);
             return InteractionResult.SUCCESS;
         }
 
