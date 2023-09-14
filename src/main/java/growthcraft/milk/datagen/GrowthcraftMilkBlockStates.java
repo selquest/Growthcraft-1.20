@@ -11,11 +11,9 @@ import net.minecraftforge.client.model.generators.BlockStateProvider;
 import net.minecraftforge.client.model.generators.ModelFile;
 import net.minecraftforge.client.model.generators.MultiPartBlockStateBuilder;
 import net.minecraftforge.common.data.ExistingFileHelper;
-import net.minecraftforge.registries.ForgeRegistries;
 import net.minecraftforge.registries.RegistryObject;
 
 import java.util.List;
-import java.util.Objects;
 
 import static growthcraft.milk.block.CheeseWheelBlock.SLICE_COUNT_BOTTOM;
 import static growthcraft.milk.block.CheeseWheelBlock.SLICE_COUNT_TOP;
@@ -77,7 +75,7 @@ public class GrowthcraftMilkBlockStates extends BlockStateProvider {
         );
     }
 
-    private void cheese(Block block, String modelName, String sideTexture, String topTexture, String itemTexture) {
+    private void cheese(Block block, String modelName, String sideTexture, String topTexture) {
         // Generate block models for the cheese
         cheeseWheelModel(lower, modelName, "_lower_", topTexture, sideTexture);
         cheeseWheelModel(upper, modelName, "_upper_", topTexture, sideTexture);
@@ -99,17 +97,6 @@ public class GrowthcraftMilkBlockStates extends BlockStateProvider {
         // use block model
         //ModelFile model =  models().getExistingFile(modLoc("block/cheese_wheel/" + modelName + "_lower_4"));
         //simpleBlockItem(block, model);
-
-        // use item texture (this is such a stupid hack because for some reason we can't just specify an item texture
-        // for a blockItem model)
-        String path = Objects.requireNonNull(ForgeRegistries.BLOCKS.getKey(block)).getPath();
-        itemModels().getBuilder(path)
-                .parent(new ModelFile.UncheckedModelFile("item/generated"))
-                .texture("layer0", modLoc("item/cheese/" + itemTexture));
-    }
-
-    private void cheese(Block block, String modelName, String sideTexture, String topTexture) {
-        cheese(block, modelName, sideTexture, topTexture, modelName);
     }
 
     private void cheeseWheelModel(List<ResourceLocation> sliceModels, String modelName, String slabType, String topTexture, String sideTexture) {
@@ -120,17 +107,45 @@ public class GrowthcraftMilkBlockStates extends BlockStateProvider {
         }
     }
 
+    private ModelFile cheeseItemModel(RegistryObject<Block> block, String itemTexture) {
+        return itemModels().getBuilder(block.getId().getPath())
+                .parent(new ModelFile.UncheckedModelFile("item/generated"))
+                .texture("layer0", modLoc("item/cheese/" + itemTexture));
+    }
+
+    private ModelFile cheeseItemModel(RegistryObject<Block> block, String itemTexture, String slicedTexture) {
+        ModelFile sliced_model = itemModels().getBuilder(slicedTexture)
+                .parent(new ModelFile.UncheckedModelFile("item/generated"))
+                .texture("layer0", modLoc("item/cheese/" + slicedTexture));
+
+        return itemModels().getBuilder(block.getId().getPath())
+                .parent(new ModelFile.UncheckedModelFile("item/generated"))
+                .texture("layer0", modLoc("item/cheese/" + itemTexture))
+                .override()
+                .predicate(modLoc("cheese_sliced"), 1)
+                .model(sliced_model)
+                .end();
+    }
+
+
     private void aged_cheese(RegistryObject<Block> unagedBlock, RegistryObject<Block> agedBlock, String modelName) {
         cheese(unagedBlock.get(),modelName + "_unaged", modelName + "_unaged_side", modelName + "_unaged_top");
+        cheeseItemModel(unagedBlock, modelName + "_unaged");
+
         cheese(agedBlock.get(),modelName + "_aged", modelName + "_aged_side", modelName + "_aged_top");
+        cheeseItemModel(agedBlock, modelName + "_aged", modelName + "_cut");
     }
 
     private void waxed_cheese(RegistryObject<Block> unwaxedBlock, RegistryObject<Block> waxedBlock,
                               RegistryObject<Block> agedBlock, String modelName) {
         cheese(unwaxedBlock.get(),modelName + "_unwaxed", modelName + "_unwaxed_side", modelName + "_unwaxed_top");
+        cheeseItemModel(unwaxedBlock, modelName + "_unwaxed");
+
         cheese(waxedBlock.get(),modelName + "_waxed", modelName + "_waxed_side", modelName + "_waxed_top");
-        cheese(agedBlock.get(),modelName + "_aged", modelName + "_waxed_side", modelName + "_waxed_top", modelName +
-                "_waxed");
+        cheeseItemModel(waxedBlock, modelName + "_waxed");
+
+        cheese(agedBlock.get(),modelName + "_aged", modelName + "_waxed_side", modelName + "_waxed_top");
+        cheeseItemModel(agedBlock, modelName + "_waxed", modelName + "_cut");
     }
 
 

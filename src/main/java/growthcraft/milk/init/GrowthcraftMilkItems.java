@@ -4,10 +4,12 @@ import growthcraft.lib.item.GrowthcraftBowlFoodItem;
 import growthcraft.lib.item.GrowthcraftFoodItem;
 import growthcraft.lib.item.GrowthcraftItem;
 import growthcraft.lib.utils.CheeseUtils;
+import growthcraft.milk.block.BaseCheeseWheel;
 import growthcraft.milk.item.CheeseCurdsDrainedItem;
 import growthcraft.milk.item.MilkingBucketItem;
 import growthcraft.milk.item.ThistleSeedItem;
 import growthcraft.milk.shared.Reference;
+import net.minecraft.client.renderer.item.ItemProperties;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.level.material.Fluids;
@@ -16,6 +18,7 @@ import net.minecraftforge.registries.ForgeRegistries;
 import net.minecraftforge.registries.RegistryObject;
 
 import java.util.ArrayList;
+import java.util.Optional;
 
 public class GrowthcraftMilkItems {
 
@@ -254,5 +257,24 @@ public class GrowthcraftMilkItems {
 
     private GrowthcraftMilkItems() {
         /* Prevent default public constructor */
+    }
+
+    public static void addItemModelProperties() {
+        BaseCheeseWheel.Cheese.processedCheeses().forEach(cheese -> {
+            ItemProperties.register(
+                    cheese.asItem(),
+                    new ResourceLocation(Reference.MODID, "cheese_sliced"),
+                    (itemStack, clientLevel, livingEntity, seed) -> {
+                        // If we have a tag, use it, otherwise assume we've got 4 slices :)
+                        int slicesbottom = Optional.ofNullable(itemStack.getTag())
+                                .map(tag -> tag.getCompound("BlockEntityTag"))
+                                .map(tag -> tag.getInt("slicesbottom"))
+                                .orElse(4);
+                        return slicesbottom == 4 ? 0 : 1;
+                    }
+
+            );
+        });
+
     }
 }
