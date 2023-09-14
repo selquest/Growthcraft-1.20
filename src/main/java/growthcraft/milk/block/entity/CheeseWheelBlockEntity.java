@@ -46,7 +46,7 @@ public class CheeseWheelBlockEntity extends BlockEntity implements BlockEntityTi
     public CheeseWheelBlockEntity(BlockEntityType<?> blockEntityType, BlockPos blockPos, BlockState blockState) {
         super(blockEntityType, blockPos, blockState);
         this.tickClock = 0;
-        this.tickMax = 60;//24000 * 3;
+        this.tickMax = 24000 * 3;
 
         // TODO: Implement aging process
         this.aged = true;
