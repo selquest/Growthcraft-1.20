@@ -47,6 +47,12 @@ public class CheeseWheelLoot extends BlockLootSubProvider {
                                         CopyNbtFunction
                                         .copyData(ContextNbtProvider.BLOCK_ENTITY)
                                         .copy("slicesbottom", "BlockEntityTag.slicesbottom")
+                                        .when(LootItemBlockStatePropertyCondition.hasBlockStateProperties(block)
+                                                .setProperties(
+                                                        StatePropertiesPredicate.Builder.properties()
+                                                                .hasProperty(BaseCheeseWheel.SLICE_COUNT_BOTTOM, 4)
+                                                ).invert()
+                                        )
                                 )
 
                         )
@@ -67,6 +73,12 @@ public class CheeseWheelLoot extends BlockLootSubProvider {
                                         CopyNbtFunction
                                                 .copyData(ContextNbtProvider.BLOCK_ENTITY)
                                                 .copy("slicestop", "BlockEntityTag.slicesbottom")
+                                                .when(LootItemBlockStatePropertyCondition.hasBlockStateProperties(block)
+                                                        .setProperties(
+                                                                StatePropertiesPredicate.Builder.properties()
+                                                                        .hasProperty(BaseCheeseWheel.SLICE_COUNT_TOP, 4)
+                                                        ).invert()
+                                                )
                                 )
                         )
                 );
