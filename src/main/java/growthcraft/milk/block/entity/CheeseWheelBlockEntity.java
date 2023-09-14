@@ -70,22 +70,23 @@ public class CheeseWheelBlockEntity extends BlockEntity implements BlockEntityTi
             if (this.tickClock < tickMax) {
                 this.tickClock++;
             } else if (tickMax != -1) {
-
-
-                // This is kind of a hack
-                CompoundTag nbt = this.serializeNBT();
+                // Age the cheese
                 this.level.setBlock(blockPos, block.getVariant().getAged().withPropertiesOf(blockState),
                         Block.UPDATE_ALL_IMMEDIATE);
+                // Transfer nbt data from this blockEntity to the new block entity, this is kind of a hack
                 BlockEntity newEntity = level.getBlockEntity(blockPos);
                 if (newEntity == null) {
                     GrowthcraftMilk.LOGGER.warn(("Aging cheese at %s failed, block entity of new block was null")
                             .formatted(blockPos.toString()));
                     return;
                 }
+                CompoundTag nbt = this.serializeNBT();
                 newEntity.deserializeNBT(nbt);
-
+            } else {
+                // This is probably broken cheese that was aged before 9.0.6
+                // lets start the aging process over again, and this time do it properly
+                this.tickMax = 3 * 24000;
                 this.tickClock = 0;
-                this.tickMax = -1;
             }
         }
     }
