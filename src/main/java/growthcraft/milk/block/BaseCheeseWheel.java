@@ -35,6 +35,7 @@ import org.jetbrains.annotations.Nullable;
 import java.awt.*;
 import java.util.Arrays;
 import java.util.Objects;
+import java.util.Optional;
 import java.util.stream.Stream;
 
 public class BaseCheeseWheel extends BaseEntityBlock {
@@ -154,11 +155,16 @@ public class BaseCheeseWheel extends BaseEntityBlock {
         CheeseWheelBlockEntity entity = (CheeseWheelBlockEntity) level.getBlockEntity(blockPos);
         assert entity != null; // will only be true if we somehow stack cheese beyond the height limit
 
-        // handle stacking wheels
-        if (player.getItemInHand(interactionHand).getItem() == this.asItem()) {
+        ItemStack item = player.getItemInHand(interactionHand);
 
-            if (entity.tryAddSlices(4)) {
-                if (!player.isCreative()) player.getItemInHand(interactionHand).shrink(1);
+        // handle stacking wheels
+        if (item.getItem() == this.asItem()) {
+            int slices = Optional.ofNullable(item.getTag())
+                    .map(tag -> tag.getCompound("BlockEntityTag"))
+                    .map(tag -> tag.getInt("slicesbottom"))
+                    .orElse(4);
+            if (entity.tryAddSlices(slices)) {
+                if (!player.isCreative()) item.shrink(1);
                 return InteractionResult.SUCCESS;
             } else {
                 return InteractionResult.PASS;
