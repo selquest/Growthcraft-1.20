@@ -156,6 +156,7 @@ public class BaseCheeseWheel extends BaseEntityBlock {
 
         // handle stacking wheels
         if (player.getItemInHand(interactionHand).getItem() == this.asItem()) {
+
             if (entity.tryAddSlices(4)) {
                 if (!player.isCreative()) player.getItemInHand(interactionHand).shrink(1);
                 return InteractionResult.SUCCESS;

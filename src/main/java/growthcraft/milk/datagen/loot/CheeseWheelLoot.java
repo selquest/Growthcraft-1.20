@@ -1,7 +1,6 @@
 package growthcraft.milk.datagen.loot;
 
 import growthcraft.milk.block.BaseCheeseWheel;
-import growthcraft.milk.init.GrowthcraftMilkBlocks;
 import net.minecraft.advancements.critereon.StatePropertiesPredicate;
 import net.minecraft.data.loot.BlockLootSubProvider;
 import net.minecraft.world.flag.FeatureFlags;
@@ -13,9 +12,9 @@ import net.minecraft.world.level.storage.loot.functions.CopyNbtFunction;
 import net.minecraft.world.level.storage.loot.predicates.LootItemBlockStatePropertyCondition;
 import net.minecraft.world.level.storage.loot.providers.nbt.ContextNbtProvider;
 import net.minecraft.world.level.storage.loot.providers.number.ConstantValue;
+import org.jetbrains.annotations.NotNull;
 
 import java.util.Collections;
-import java.util.stream.Stream;
 
 public class CheeseWheelLoot extends BlockLootSubProvider {
 
@@ -25,9 +24,9 @@ public class CheeseWheelLoot extends BlockLootSubProvider {
 
     @Override
     protected void generate() {
-        dropSelf(GrowthcraftMilkBlocks.APPENZELLER_CHEESE.get());
-        add(GrowthcraftMilkBlocks.AGED_APPENZELLER_CHEESE.get(),
-                cheeseBlockDrop(GrowthcraftMilkBlocks.AGED_APPENZELLER_CHEESE.get()));
+        BaseCheeseWheel.Cheese.allCheeses().forEach(
+                cheese -> add(cheese, cheeseBlockDrop(cheese))
+        );
     }
 
     private static LootTable.Builder cheeseBlockDrop(Block block) {
@@ -74,19 +73,7 @@ public class CheeseWheelLoot extends BlockLootSubProvider {
     }
 
     @Override
-    protected Iterable<Block> getKnownBlocks() {
-        return Stream.of(
-                GrowthcraftMilkBlocks.AGED_APPENZELLER_CHEESE.get(),
-                GrowthcraftMilkBlocks.APPENZELLER_CHEESE.get()
-        )::iterator;
-//        return Arrays.stream(BaseCheeseWheel.Cheese.values())
-//                .flatMap(cheese -> {
-//                    Stream<Block> stream = Stream.of(cheese.getUnprocessed(), cheese.getAged());
-//                    if (cheese.isWaxable()) {
-//                        stream = Stream.concat(stream, Stream.of(cheese.getWaxed()));
-//                    }
-//                    return stream;
-//                })
-//                ::iterator;
+    protected @NotNull Iterable<Block> getKnownBlocks() {
+        return BaseCheeseWheel.Cheese.allCheeses()::iterator;
     }
 }
