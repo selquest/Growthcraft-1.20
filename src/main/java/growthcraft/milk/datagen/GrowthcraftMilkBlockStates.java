@@ -15,8 +15,8 @@ import net.minecraftforge.registries.RegistryObject;
 
 import java.util.List;
 
-import static growthcraft.milk.block.CheeseWheelBlock.SLICE_COUNT_BOTTOM;
-import static growthcraft.milk.block.CheeseWheelBlock.SLICE_COUNT_TOP;
+import static growthcraft.milk.block.BaseCheeseWheel.SLICE_COUNT_BOTTOM;
+import static growthcraft.milk.block.BaseCheeseWheel.SLICE_COUNT_TOP;
 
 public class GrowthcraftMilkBlockStates extends BlockStateProvider {
 
@@ -103,7 +103,8 @@ public class GrowthcraftMilkBlockStates extends BlockStateProvider {
         for (int sliceIndex = 0; sliceIndex < sliceModels.size(); sliceIndex++) {
             models().withExistingParent("block/cheese_wheel/" + modelName + slabType + (sliceIndex + 1), sliceModels.get(sliceIndex))
                     .texture("0", "block/cheese/" + topTexture)
-                    .texture("1", "block/cheese/" + sideTexture);
+                    .texture("1", "block/cheese/" + sideTexture)
+                    .texture("particle", "block/cheese/" + topTexture);
         }
     }
 
