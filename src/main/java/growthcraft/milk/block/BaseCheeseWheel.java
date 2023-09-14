@@ -22,7 +22,6 @@ import net.minecraft.world.level.block.entity.BlockEntityType;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.block.state.StateDefinition;
 import net.minecraft.world.level.block.state.properties.BlockStateProperties;
-import net.minecraft.world.level.block.state.properties.BooleanProperty;
 import net.minecraft.world.level.block.state.properties.DirectionProperty;
 import net.minecraft.world.level.block.state.properties.IntegerProperty;
 import net.minecraft.world.level.material.PushReaction;
@@ -32,7 +31,6 @@ import net.minecraft.world.phys.shapes.VoxelShape;
 import net.minecraftforge.registries.RegistryObject;
 import org.jetbrains.annotations.Nullable;
 
-import java.awt.*;
 import java.util.Arrays;
 import java.util.Objects;
 import java.util.Optional;
@@ -40,7 +38,6 @@ import java.util.stream.Stream;
 
 public class BaseCheeseWheel extends BaseEntityBlock {
     public static final DirectionProperty FACING = BlockStateProperties.HORIZONTAL_FACING;
-    public static final BooleanProperty AGED = BooleanProperty.create("aged");
     public static final IntegerProperty SLICE_COUNT_TOP = IntegerProperty.create("slicestop", 0, 4);
     public static final IntegerProperty SLICE_COUNT_BOTTOM = IntegerProperty.create("slicesbottom", 0, 4);
 
@@ -54,18 +51,11 @@ public class BaseCheeseWheel extends BaseEntityBlock {
             15.0F, 8.0F, 15.0F
     );
 
-    private final int color;
     private final Cheese variant;
 
-    public BaseCheeseWheel(Color color) {
-        super(getInitProperties());
-        this.color = color.getRGB();
-        this.variant = null;
-    }
 
     public BaseCheeseWheel(Cheese variant) {
         super(getInitProperties());
-        this.color = 0;
         this.variant = variant;
     }
 
@@ -104,7 +94,7 @@ public class BaseCheeseWheel extends BaseEntityBlock {
 
     @Override
     protected void createBlockStateDefinition(StateDefinition.Builder<Block, BlockState> stateBuilder) {
-        super.createBlockStateDefinition(stateBuilder.add(FACING, AGED, SLICE_COUNT_BOTTOM, SLICE_COUNT_TOP));
+        super.createBlockStateDefinition(stateBuilder.add(FACING, SLICE_COUNT_BOTTOM, SLICE_COUNT_TOP));
     }
 
     @Nullable
@@ -134,16 +124,14 @@ public class BaseCheeseWheel extends BaseEntityBlock {
     public BlockState rotate(BlockState state, Rotation rotation) {
         return state.setValue(FACING, rotation.rotate(state.getValue(FACING)))
                 .setValue(SLICE_COUNT_BOTTOM, state.getValue(SLICE_COUNT_BOTTOM))
-                .setValue(SLICE_COUNT_TOP, state.getValue(SLICE_COUNT_TOP))
-                .setValue(AGED, state.getValue(AGED));
+                .setValue(SLICE_COUNT_TOP, state.getValue(SLICE_COUNT_TOP));
     }
 
     @Override
     public BlockState mirror(BlockState state, Mirror mirror) {
         return state.rotate(mirror.getRotation(state.getValue(FACING)))
                 .setValue(SLICE_COUNT_BOTTOM, state.getValue(SLICE_COUNT_BOTTOM))
-                .setValue(SLICE_COUNT_TOP, state.getValue(SLICE_COUNT_TOP))
-                .setValue(AGED, state.getValue(AGED));
+                .setValue(SLICE_COUNT_TOP, state.getValue(SLICE_COUNT_TOP));
     }
 
     @Override
@@ -177,17 +165,6 @@ public class BaseCheeseWheel extends BaseEntityBlock {
             return InteractionResult.SUCCESS;
         }
         return InteractionResult.PASS;
-    }
-
-
-    @Deprecated
-    public int getColor() {
-        return this.color;
-    }
-
-    @Deprecated
-    public int getColor(int i) {
-        return i == 0 ? this.color : 0xFFFFFF;
     }
 
     public Cheese getVariant() {

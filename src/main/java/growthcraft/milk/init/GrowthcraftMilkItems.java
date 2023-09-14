@@ -260,21 +260,19 @@ public class GrowthcraftMilkItems {
     }
 
     public static void addItemModelProperties() {
-        BaseCheeseWheel.Cheese.processedCheeses().forEach(cheese -> {
-            ItemProperties.register(
-                    cheese.asItem(),
-                    new ResourceLocation(Reference.MODID, "cheese_sliced"),
-                    (itemStack, clientLevel, livingEntity, seed) -> {
-                        // If we have a tag, use it, otherwise assume we've got 4 slices :)
-                        int slicesbottom = Optional.ofNullable(itemStack.getTag())
-                                .map(tag -> tag.getCompound("BlockEntityTag"))
-                                .map(tag -> tag.getInt("slicesbottom"))
-                                .orElse(4);
-                        return slicesbottom == 4 ? 0 : 1;
-                    }
+        BaseCheeseWheel.Cheese.processedCheeses().forEach(cheese -> ItemProperties.register(
+                cheese.asItem(),
+                new ResourceLocation(Reference.MODID, "cheese_sliced"),
+                (itemStack, clientLevel, livingEntity, seed) -> {
+                    // If we have a tag, use it, otherwise assume we've got 4 slices :)
+                    int slicesbottom = Optional.ofNullable(itemStack.getTag())
+                            .map(tag -> tag.getCompound("BlockEntityTag"))
+                            .map(tag -> tag.getInt("slicesbottom"))
+                            .orElse(4);
+                    return slicesbottom == 4 ? 0 : 1;
+                }
 
-            );
-        });
+        ));
 
     }
 }

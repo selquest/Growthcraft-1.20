@@ -1,5 +1,6 @@
 package growthcraft.milk.block;
 
+import growthcraft.milk.GrowthcraftMilk;
 import growthcraft.milk.block.entity.CheeseWheelBlockEntity;
 import net.minecraft.core.BlockPos;
 import net.minecraft.nbt.CompoundTag;
@@ -33,6 +34,10 @@ public class CheeseWheelWaxableBlock extends BaseCheeseWheel {
             BlockState waxedBlock = getWaxedBlock().withPropertiesOf(thisBlock);
             level.setBlockAndUpdate(blockPos, waxedBlock);
             BlockEntity newEntity = level.getBlockEntity(blockPos);
+            if (newEntity == null) {
+                GrowthcraftMilk.LOGGER.warn("Waxing cheese at %s failed as newly created block entity was null".formatted(blockPos.toString()));
+                return InteractionResult.FAIL;
+            }
             newEntity.deserializeNBT(nbt);
             if (!player.isCreative()) player.getItemInHand(interactionHand).shrink(entity.getWheelCount());
             return InteractionResult.SUCCESS;
