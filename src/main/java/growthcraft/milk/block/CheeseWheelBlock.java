@@ -28,6 +28,7 @@ import org.jetbrains.annotations.Nullable;
 
 import java.awt.*;
 
+@Deprecated
 public class CheeseWheelBlock extends BaseEntityBlock {
     public static final DirectionProperty FACING = BlockStateProperties.HORIZONTAL_FACING;
     public static final BooleanProperty AGED = BooleanProperty.create("aged");
