@@ -1,0 +1,379 @@
+{
+  "variants": {
+    "facing=east,slicesbottom=0,slicestop=0": {
+      "model": "growthcraft:block/empty",
+      "y": 90
+    },
+    "facing=east,slicesbottom=0,slicestop=1": {
+      "model": "growthcraft_milk:block/cheese_wheel/gorgonzola_aged_upper_1",
+      "y": 90
+    },
+    "facing=east,slicesbottom=0,slicestop=2": {
+      "model": "growthcraft_milk:block/cheese_wheel/gorgonzola_aged_upper_2",
+      "y": 90
+    },
+    "facing=east,slicesbottom=0,slicestop=3": {
+      "model": "growthcraft_milk:block/cheese_wheel/gorgonzola_aged_upper_3",
+      "y": 90
+    },
+    "facing=east,slicesbottom=0,slicestop=4": {
+      "model": "growthcraft_milk:block/cheese_wheel/gorgonzola_aged_upper_4",
+      "y": 90
+    },
+    "facing=east,slicesbottom=1,slicestop=0": {
+      "model": "growthcraft_milk:block/cheese_wheel/gorgonzola_aged_lower_1",
+      "y": 90
+    },
+    "facing=east,slicesbottom=1,slicestop=1": {
+      "model": "growthcraft_milk:block/cheese_wheel/gorgonzola_aged_upper_1",
+      "y": 90
+    },
+    "facing=east,slicesbottom=1,slicestop=2": {
+      "model": "growthcraft_milk:block/cheese_wheel/gorgonzola_aged_upper_2",
+      "y": 90
+    },
+    "facing=east,slicesbottom=1,slicestop=3": {
+      "model": "growthcraft_milk:block/cheese_wheel/gorgonzola_aged_upper_3",
+      "y": 90
+    },
+    "facing=east,slicesbottom=1,slicestop=4": {
+      "model": "growthcraft_milk:block/cheese_wheel/gorgonzola_aged_upper_4",
+      "y": 90
+    },
+    "facing=east,slicesbottom=2,slicestop=0": {
+      "model": "growthcraft_milk:block/cheese_wheel/gorgonzola_aged_lower_2",
+      "y": 90
+    },
+    "facing=east,slicesbottom=2,slicestop=1": {
+      "model": "growthcraft_milk:block/cheese_wheel/gorgonzola_aged_upper_1",
+      "y": 90
+    },
+    "facing=east,slicesbottom=2,slicestop=2": {
+      "model": "growthcraft_milk:block/cheese_wheel/gorgonzola_aged_upper_2",
+      "y": 90
+    },
+    "facing=east,slicesbottom=2,slicestop=3": {
+      "model": "growthcraft_milk:block/cheese_wheel/gorgonzola_aged_upper_3",
+      "y": 90
+    },
+    "facing=east,slicesbottom=2,slicestop=4": {
+      "model": "growthcraft_milk:block/cheese_wheel/gorgonzola_aged_upper_4",
+      "y": 90
+    },
+    "facing=east,slicesbottom=3,slicestop=0": {
+      "model": "growthcraft_milk:block/cheese_wheel/gorgonzola_aged_lower_3",
+      "y": 90
+    },
+    "facing=east,slicesbottom=3,slicestop=1": {
+      "model": "growthcraft_milk:block/cheese_wheel/gorgonzola_aged_upper_1",
+      "y": 90
+    },
+    "facing=east,slicesbottom=3,slicestop=2": {
+      "model": "growthcraft_milk:block/cheese_wheel/gorgonzola_aged_upper_2",
+      "y": 90
+    },
+    "facing=east,slicesbottom=3,slicestop=3": {
+      "model": "growthcraft_milk:block/cheese_wheel/gorgonzola_aged_upper_3",
+      "y": 90
+    },
+    "facing=east,slicesbottom=3,slicestop=4": {
+      "model": "growthcraft_milk:block/cheese_wheel/gorgonzola_aged_upper_4",
+      "y": 90
+    },
+    "facing=east,slicesbottom=4,slicestop=0": {
+      "model": "growthcraft_milk:block/cheese_wheel/gorgonzola_aged_lower_4",
+      "y": 90
+    },
+    "facing=east,slicesbottom=4,slicestop=1": {
+      "model": "growthcraft_milk:block/cheese_wheel/gorgonzola_aged_upper_1",
+      "y": 90
+    },
+    "facing=east,slicesbottom=4,slicestop=2": {
+      "model": "growthcraft_milk:block/cheese_wheel/gorgonzola_aged_upper_2",
+      "y": 90
+    },
+    "facing=east,slicesbottom=4,slicestop=3": {
+      "model": "growthcraft_milk:block/cheese_wheel/gorgonzola_aged_upper_3",
+      "y": 90
+    },
+    "facing=east,slicesbottom=4,slicestop=4": {
+      "model": "growthcraft_milk:block/cheese_wheel/gorgonzola_aged_upper_4",
+      "y": 90
+    },
+    "facing=north,slicesbottom=0,slicestop=0": {
+      "model": "growthcraft:block/empty"
+    },
+    "facing=north,slicesbottom=0,slicestop=1": {
+      "model": "growthcraft_milk:block/cheese_wheel/gorgonzola_aged_upper_1"
+    },
+    "facing=north,slicesbottom=0,slicestop=2": {
+      "model": "growthcraft_milk:block/cheese_wheel/gorgonzola_aged_upper_2"
+    },
+    "facing=north,slicesbottom=0,slicestop=3": {
+      "model": "growthcraft_milk:block/cheese_wheel/gorgonzola_aged_upper_3"
+    },
+    "facing=north,slicesbottom=0,slicestop=4": {
+      "model": "growthcraft_milk:block/cheese_wheel/gorgonzola_aged_upper_4"
+    },
+    "facing=north,slicesbottom=1,slicestop=0": {
+      "model": "growthcraft_milk:block/cheese_wheel/gorgonzola_aged_lower_1"
+    },
+    "facing=north,slicesbottom=1,slicestop=1": {
+      "model": "growthcraft_milk:block/cheese_wheel/gorgonzola_aged_upper_1"
+    },
+    "facing=north,slicesbottom=1,slicestop=2": {
+      "model": "growthcraft_milk:block/cheese_wheel/gorgonzola_aged_upper_2"
+    },
+    "facing=north,slicesbottom=1,slicestop=3": {
+      "model": "growthcraft_milk:block/cheese_wheel/gorgonzola_aged_upper_3"
+    },
+    "facing=north,slicesbottom=1,slicestop=4": {
+      "model": "growthcraft_milk:block/cheese_wheel/gorgonzola_aged_upper_4"
+    },
+    "facing=north,slicesbottom=2,slicestop=0": {
+      "model": "growthcraft_milk:block/cheese_wheel/gorgonzola_aged_lower_2"
+    },
+    "facing=north,slicesbottom=2,slicestop=1": {
+      "model": "growthcraft_milk:block/cheese_wheel/gorgonzola_aged_upper_1"
+    },
+    "facing=north,slicesbottom=2,slicestop=2": {
+      "model": "growthcraft_milk:block/cheese_wheel/gorgonzola_aged_upper_2"
+    },
+    "facing=north,slicesbottom=2,slicestop=3": {
+      "model": "growthcraft_milk:block/cheese_wheel/gorgonzola_aged_upper_3"
+    },
+    "facing=north,slicesbottom=2,slicestop=4": {
+      "model": "growthcraft_milk:block/cheese_wheel/gorgonzola_aged_upper_4"
+    },
+    "facing=north,slicesbottom=3,slicestop=0": {
+      "model": "growthcraft_milk:block/cheese_wheel/gorgonzola_aged_lower_3"
+    },
+    "facing=north,slicesbottom=3,slicestop=1": {
+      "model": "growthcraft_milk:block/cheese_wheel/gorgonzola_aged_upper_1"
+    },
+    "facing=north,slicesbottom=3,slicestop=2": {
+      "model": "growthcraft_milk:block/cheese_wheel/gorgonzola_aged_upper_2"
+    },
+    "facing=north,slicesbottom=3,slicestop=3": {
+      "model": "growthcraft_milk:block/cheese_wheel/gorgonzola_aged_upper_3"
+    },
+    "facing=north,slicesbottom=3,slicestop=4": {
+      "model": "growthcraft_milk:block/cheese_wheel/gorgonzola_aged_upper_4"
+    },
+    "facing=north,slicesbottom=4,slicestop=0": {
+      "model": "growthcraft_milk:block/cheese_wheel/gorgonzola_aged_lower_4"
+    },
+    "facing=north,slicesbottom=4,slicestop=1": {
+      "model": "growthcraft_milk:block/cheese_wheel/gorgonzola_aged_upper_1"
+    },
+    "facing=north,slicesbottom=4,slicestop=2": {
+      "model": "growthcraft_milk:block/cheese_wheel/gorgonzola_aged_upper_2"
+    },
+    "facing=north,slicesbottom=4,slicestop=3": {
+      "model": "growthcraft_milk:block/cheese_wheel/gorgonzola_aged_upper_3"
+    },
+    "facing=north,slicesbottom=4,slicestop=4": {
+      "model": "growthcraft_milk:block/cheese_wheel/gorgonzola_aged_upper_4"
+    },
+    "facing=south,slicesbottom=0,slicestop=0": {
+      "model": "growthcraft:block/empty",
+      "y": 180
+    },
+    "facing=south,slicesbottom=0,slicestop=1": {
+      "model": "growthcraft_milk:block/cheese_wheel/gorgonzola_aged_upper_1",
+      "y": 180
+    },
+    "facing=south,slicesbottom=0,slicestop=2": {
+      "model": "growthcraft_milk:block/cheese_wheel/gorgonzola_aged_upper_2",
+      "y": 180
+    },
+    "facing=south,slicesbottom=0,slicestop=3": {
+      "model": "growthcraft_milk:block/cheese_wheel/gorgonzola_aged_upper_3",
+      "y": 180
+    },
+    "facing=south,slicesbottom=0,slicestop=4": {
+      "model": "growthcraft_milk:block/cheese_wheel/gorgonzola_aged_upper_4",
+      "y": 180
+    },
+    "facing=south,slicesbottom=1,slicestop=0": {
+      "model": "growthcraft_milk:block/cheese_wheel/gorgonzola_aged_lower_1",
+      "y": 180
+    },
+    "facing=south,slicesbottom=1,slicestop=1": {
+      "model": "growthcraft_milk:block/cheese_wheel/gorgonzola_aged_upper_1",
+      "y": 180
+    },
+    "facing=south,slicesbottom=1,slicestop=2": {
+      "model": "growthcraft_milk:block/cheese_wheel/gorgonzola_aged_upper_2",
+      "y": 180
+    },
+    "facing=south,slicesbottom=1,slicestop=3": {
+      "model": "growthcraft_milk:block/cheese_wheel/gorgonzola_aged_upper_3",
+      "y": 180
+    },
+    "facing=south,slicesbottom=1,slicestop=4": {
+      "model": "growthcraft_milk:block/cheese_wheel/gorgonzola_aged_upper_4",
+      "y": 180
+    },
+    "facing=south,slicesbottom=2,slicestop=0": {
+      "model": "growthcraft_milk:block/cheese_wheel/gorgonzola_aged_lower_2",
+      "y": 180
+    },
+    "facing=south,slicesbottom=2,slicestop=1": {
+      "model": "growthcraft_milk:block/cheese_wheel/gorgonzola_aged_upper_1",
+      "y": 180
+    },
+    "facing=south,slicesbottom=2,slicestop=2": {
+      "model": "growthcraft_milk:block/cheese_wheel/gorgonzola_aged_upper_2",
+      "y": 180
+    },
+    "facing=south,slicesbottom=2,slicestop=3": {
+      "model": "growthcraft_milk:block/cheese_wheel/gorgonzola_aged_upper_3",
+      "y": 180
+    },
+    "facing=south,slicesbottom=2,slicestop=4": {
+      "model": "growthcraft_milk:block/cheese_wheel/gorgonzola_aged_upper_4",
+      "y": 180
+    },
+    "facing=south,slicesbottom=3,slicestop=0": {
+      "model": "growthcraft_milk:block/cheese_wheel/gorgonzola_aged_lower_3",
+      "y": 180
+    },
+    "facing=south,slicesbottom=3,slicestop=1": {
+      "model": "growthcraft_milk:block/cheese_wheel/gorgonzola_aged_upper_1",
+      "y": 180
+    },
+    "facing=south,slicesbottom=3,slicestop=2": {
+      "model": "growthcraft_milk:block/cheese_wheel/gorgonzola_aged_upper_2",
+      "y": 180
+    },
+    "facing=south,slicesbottom=3,slicestop=3": {
+      "model": "growthcraft_milk:block/cheese_wheel/gorgonzola_aged_upper_3",
+      "y": 180
+    },
+    "facing=south,slicesbottom=3,slicestop=4": {
+      "model": "growthcraft_milk:block/cheese_wheel/gorgonzola_aged_upper_4",
+      "y": 180
+    },
+    "facing=south,slicesbottom=4,slicestop=0": {
+      "model": "growthcraft_milk:block/cheese_wheel/gorgonzola_aged_lower_4",
+      "y": 180
+    },
+    "facing=south,slicesbottom=4,slicestop=1": {
+      "model": "growthcraft_milk:block/cheese_wheel/gorgonzola_aged_upper_1",
+      "y": 180
+    },
+    "facing=south,slicesbottom=4,slicestop=2": {
+      "model": "growthcraft_milk:block/cheese_wheel/gorgonzola_aged_upper_2",
+      "y": 180
+    },
+    "facing=south,slicesbottom=4,slicestop=3": {
+      "model": "growthcraft_milk:block/cheese_wheel/gorgonzola_aged_upper_3",
+      "y": 180
+    },
+    "facing=south,slicesbottom=4,slicestop=4": {
+      "model": "growthcraft_milk:block/cheese_wheel/gorgonzola_aged_upper_4",
+      "y": 180
+    },
+    "facing=west,slicesbottom=0,slicestop=0": {
+      "model": "growthcraft:block/empty",
+      "y": 270
+    },
+    "facing=west,slicesbottom=0,slicestop=1": {
+      "model": "growthcraft_milk:block/cheese_wheel/gorgonzola_aged_upper_1",
+      "y": 270
+    },
+    "facing=west,slicesbottom=0,slicestop=2": {
+      "model": "growthcraft_milk:block/cheese_wheel/gorgonzola_aged_upper_2",
+      "y": 270
+    },
+    "facing=west,slicesbottom=0,slicestop=3": {
+      "model": "growthcraft_milk:block/cheese_wheel/gorgonzola_aged_upper_3",
+      "y": 270
+    },
+    "facing=west,slicesbottom=0,slicestop=4": {
+      "model": "growthcraft_milk:block/cheese_wheel/gorgonzola_aged_upper_4",
+      "y": 270
+    },
+    "facing=west,slicesbottom=1,slicestop=0": {
+      "model": "growthcraft_milk:block/cheese_wheel/gorgonzola_aged_lower_1",
+      "y": 270
+    },
+    "facing=west,slicesbottom=1,slicestop=1": {
+      "model": "growthcraft_milk:block/cheese_wheel/gorgonzola_aged_upper_1",
+      "y": 270
+    },
+    "facing=west,slicesbottom=1,slicestop=2": {
+      "model": "growthcraft_milk:block/cheese_wheel/gorgonzola_aged_upper_2",
+      "y": 270
+    },
+    "facing=west,slicesbottom=1,slicestop=3": {
+      "model": "growthcraft_milk:block/cheese_wheel/gorgonzola_aged_upper_3",
+      "y": 270
+    },
+    "facing=west,slicesbottom=1,slicestop=4": {
+      "model": "growthcraft_milk:block/cheese_wheel/gorgonzola_aged_upper_4",
+      "y": 270
+    },
+    "facing=west,slicesbottom=2,slicestop=0": {
+      "model": "growthcraft_milk:block/cheese_wheel/gorgonzola_aged_lower_2",
+      "y": 270
+    },
+    "facing=west,slicesbottom=2,slicestop=1": {
+      "model": "growthcraft_milk:block/cheese_wheel/gorgonzola_aged_upper_1",
+      "y": 270
+    },
+    "facing=west,slicesbottom=2,slicestop=2": {
+      "model": "growthcraft_milk:block/cheese_wheel/gorgonzola_aged_upper_2",
+      "y": 270
+    },
+    "facing=west,slicesbottom=2,slicestop=3": {
+      "model": "growthcraft_milk:block/cheese_wheel/gorgonzola_aged_upper_3",
+      "y": 270
+    },
+    "facing=west,slicesbottom=2,slicestop=4": {
+      "model": "growthcraft_milk:block/cheese_wheel/gorgonzola_aged_upper_4",
+      "y": 270
+    },
+    "facing=west,slicesbottom=3,slicestop=0": {
+      "model": "growthcraft_milk:block/cheese_wheel/gorgonzola_aged_lower_3",
+      "y": 270
+    },
+    "facing=west,slicesbottom=3,slicestop=1": {
+      "model": "growthcraft_milk:block/cheese_wheel/gorgonzola_aged_upper_1",
+      "y": 270
+    },
+    "facing=west,slicesbottom=3,slicestop=2": {
+      "model": "growthcraft_milk:block/cheese_wheel/gorgonzola_aged_upper_2",
+      "y": 270
+    },
+    "facing=west,slicesbottom=3,slicestop=3": {
+      "model": "growthcraft_milk:block/cheese_wheel/gorgonzola_aged_upper_3",
+      "y": 270
+    },
+    "facing=west,slicesbottom=3,slicestop=4": {
+      "model": "growthcraft_milk:block/cheese_wheel/gorgonzola_aged_upper_4",
+      "y": 270
+    },
+    "facing=west,slicesbottom=4,slicestop=0": {
+      "model": "growthcraft_milk:block/cheese_wheel/gorgonzola_aged_lower_4",
+      "y": 270
+    },
+    "facing=west,slicesbottom=4,slicestop=1": {
+      "model": "growthcraft_milk:block/cheese_wheel/gorgonzola_aged_upper_1",
+      "y": 270
+    },
+    "facing=west,slicesbottom=4,slicestop=2": {
+      "model": "growthcraft_milk:block/cheese_wheel/gorgonzola_aged_upper_2",
+      "y": 270
+    },
+    "facing=west,slicesbottom=4,slicestop=3": {
+      "model": "growthcraft_milk:block/cheese_wheel/gorgonzola_aged_upper_3",
+      "y": 270
+    },
+    "facing=west,slicesbottom=4,slicestop=4": {
+      "model": "growthcraft_milk:block/cheese_wheel/gorgonzola_aged_upper_4",
+      "y": 270
+    }
+  }
+}
