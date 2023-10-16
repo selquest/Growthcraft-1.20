@@ -1,0 +1,100 @@
+{
+  "type": "minecraft:block",
+  "pools": [
+    {
+      "bonus_rolls": 0.0,
+      "entries": [
+        {
+          "type": "minecraft:item",
+          "conditions": [
+            {
+              "condition": "minecraft:inverted",
+              "term": {
+                "block": "growthcraft_milk:cheddar_cheese",
+                "condition": "minecraft:block_state_property",
+                "properties": {
+                  "slicesbottom": "0"
+                }
+              }
+            }
+          ],
+          "functions": [
+            {
+              "conditions": [
+                {
+                  "condition": "minecraft:inverted",
+                  "term": {
+                    "block": "growthcraft_milk:cheddar_cheese",
+                    "condition": "minecraft:block_state_property",
+                    "properties": {
+                      "slicesbottom": "4"
+                    }
+                  }
+                }
+              ],
+              "function": "minecraft:copy_nbt",
+              "ops": [
+                {
+                  "op": "replace",
+                  "source": "slicesbottom",
+                  "target": "BlockEntityTag.slicesbottom"
+                }
+              ],
+              "source": "block_entity"
+            }
+          ],
+          "name": "growthcraft_milk:cheddar_cheese"
+        }
+      ],
+      "rolls": 1.0
+    },
+    {
+      "bonus_rolls": 0.0,
+      "entries": [
+        {
+          "type": "minecraft:item",
+          "conditions": [
+            {
+              "condition": "minecraft:inverted",
+              "term": {
+                "block": "growthcraft_milk:cheddar_cheese",
+                "condition": "minecraft:block_state_property",
+                "properties": {
+                  "slicestop": "0"
+                }
+              }
+            }
+          ],
+          "functions": [
+            {
+              "conditions": [
+                {
+                  "condition": "minecraft:inverted",
+                  "term": {
+                    "block": "growthcraft_milk:cheddar_cheese",
+                    "condition": "minecraft:block_state_property",
+                    "properties": {
+                      "slicestop": "4"
+                    }
+                  }
+                }
+              ],
+              "function": "minecraft:copy_nbt",
+              "ops": [
+                {
+                  "op": "replace",
+                  "source": "slicestop",
+                  "target": "BlockEntityTag.slicesbottom"
+                }
+              ],
+              "source": "block_entity"
+            }
+          ],
+          "name": "growthcraft_milk:cheddar_cheese"
+        }
+      ],
+      "rolls": 1.0
+    }
+  ],
+  "random_sequence": "growthcraft_milk:blocks/cheddar_cheese"
+}

@@ -1,5 +1,6 @@
 {
   "name": "Mystical Agriculture",
+  "flag": "mod:mysticalagriculture",
   "icon": "mysticalagriculture:textures/item/guide_book.png",
   "category": "growthcraft:mystical_agriculture",
   "sortnum": 1,

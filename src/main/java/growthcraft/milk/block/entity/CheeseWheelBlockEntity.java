@@ -1,5 +1,8 @@
 package growthcraft.milk.block.entity;
 
+import growthcraft.milk.GrowthcraftMilk;
+import growthcraft.milk.block.BaseCheeseWheel;
+import growthcraft.milk.block.CheeseWheelAgeableBlock;
 import growthcraft.milk.block.CheeseWheelBlock;
 import growthcraft.milk.init.GrowthcraftMilkBlockEntities;
 import growthcraft.milk.recipe.CheesePressRecipe;
@@ -30,9 +33,9 @@ public class CheeseWheelBlockEntity extends BlockEntity implements BlockEntityTi
     private int sliceCountTop;
     private int sliceCountBottom;
 
-    private int tickClock = 0;
+    private int tickClock;
     //TODO: Make max aging for CheeseWheel come from a config
-    private int tickMax = -1;
+    private int tickMax;
 
     private Component customName;
 
@@ -58,21 +61,37 @@ public class CheeseWheelBlockEntity extends BlockEntity implements BlockEntityTi
     }
 
     @Override
+    @ParametersAreNonnullByDefault
     public void tick(Level level, BlockPos blockPos, BlockState blockState, CheeseWheelBlockEntity blockEntity) {
-        if (level != null && !level.isClientSide() && Boolean.FALSE.equals(level.getBlockState(blockPos).getValue(CheeseWheelBlock.AGED))) {
+        if (level.isClientSide()) {
+            return;
+        }
+        if (blockState.getBlock() instanceof CheeseWheelAgeableBlock block) {
             if (this.tickClock < tickMax) {
                 this.tickClock++;
-            } else if (tickMax != -1){
-                BlockState state = this.level.getBlockState(blockPos);
-                this.level.setBlock(blockPos, state.setValue(CheeseWheelBlock.AGED, true), Block.UPDATE_ALL_IMMEDIATE);
+            } else if (tickMax != -1) {
+                // Age the cheese
+                this.level.setBlock(blockPos, block.getVariant().getAged().withPropertiesOf(blockState),
+                        Block.UPDATE_ALL_IMMEDIATE);
+                // Transfer nbt data from this blockEntity to the new block entity, this is kind of a hack
+                BlockEntity newEntity = level.getBlockEntity(blockPos);
+                if (newEntity == null) {
+                    GrowthcraftMilk.LOGGER.warn(("Aging cheese at %s failed, block entity of new block was null")
+                            .formatted(blockPos.toString()));
+                    return;
+                }
+                CompoundTag nbt = this.serializeNBT();
+                newEntity.deserializeNBT(nbt);
+            } else {
+                // This is probably broken cheese that was aged before 9.0.6
+                // lets start the aging process over again, and this time do it properly
+                this.tickMax = 3 * 24000;
                 this.tickClock = 0;
-                this.tickMax = -1;
             }
-        } else {
-            // The cheese is aged, so there's nothing to do.
         }
     }
 
+    @Deprecated
     private void setBlockState(int bottomSlices, int topSlices) {
         this.level.setBlock(
                 this.getBlockPos(),
@@ -83,10 +102,22 @@ public class CheeseWheelBlockEntity extends BlockEntity implements BlockEntityTi
         );
     }
 
+    public void updateBlockState() {
+        level.setBlock(
+                getBlockPos(),
+                getBlockState()
+                        .setValue(BaseCheeseWheel.SLICE_COUNT_TOP, sliceCountTop)
+                        .setValue(BaseCheeseWheel.SLICE_COUNT_BOTTOM, sliceCountBottom),
+                Block.UPDATE_ALL_IMMEDIATE
+        );
+    }
+
+    @Deprecated
     public boolean canTakeSlice() {
         return this.aged && this.getSliceCount() > 0;
     }
 
+    @Deprecated
     public ItemStack takeSlice() {
             List<CheesePressRecipe> cheesePressRecipes = this.getMatchingRecipes(
                     new ItemStack(this.getBlockState().getBlock().asItem())
@@ -102,6 +133,7 @@ public class CheeseWheelBlockEntity extends BlockEntity implements BlockEntityTi
         return null;
     }
 
+    @Deprecated
     private List<CheesePressRecipe> getMatchingRecipes(ItemStack itemStack) {
         List<CheesePressRecipe> matchingRecipes = new ArrayList<>();
 
@@ -127,27 +159,44 @@ public class CheeseWheelBlockEntity extends BlockEntity implements BlockEntityTi
         this.setBlockState(this.sliceCountBottom, this.sliceCountTop);
     }
 
+    public boolean tryTakeSlices(int slices) {
+        if (getSliceCount() < slices) {
+            return false;
+        }
+        takeSlice(slices);
+        return true;
+    }
+
     public boolean canAddSlice(int count) {
         return getSliceCount() + count <= 8;
     }
 
-    public void addSlice(int count) {
-        int newTotal = this.sliceCountBottom + this.sliceCountTop + count;
-
+    public void addSlice(int slices) {
+        int newTotal = sliceCountTop + sliceCountBottom + slices;
         if (newTotal > 4) {
-            // Then we have enough room to add the slice to the stack.
-            this.sliceCountBottom = 4;
-            this.sliceCountTop = newTotal - this.sliceCountBottom;
+            sliceCountBottom = 4;
+            sliceCountTop = newTotal - 4;
         } else {
-            this.sliceCountBottom = newTotal;
-            this.sliceCountTop = 0;
+            sliceCountBottom = newTotal;
+            sliceCountTop = 0;
         }
+    }
 
-        this.setBlockState(this.sliceCountBottom, this.sliceCountTop);
+    public boolean tryAddSlices(int slices) {
+        if (!canAddSlice(slices)) {
+            return false;
+        }
+        addSlice(slices);
+        updateBlockState();
+        return true;
     }
 
     public int getSliceCount() {
         return this.sliceCountTop + this.sliceCountBottom;
+    }
+
+    public int getWheelCount() {
+        return this.getSliceCount() / 4;
     }
 
     @Nullable
