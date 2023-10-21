@@ -24,29 +24,29 @@
       "type": "patchouli:spotlight",
       "item": "growthcraft_cellar:potion_ale",
       "title": "Ales",
-      "text": "$(bold)Amber Ale$()$(li)Brewer's Yeast$(li)Haste II (3:00)$(br2)$(bold)Brown Ale$()$(li)Brewer's Yeast$(li)Haste III (7200)$(br2)$(bold)Copper Ale$()$(li)Brewer's Yeast$(li)Regeneration II (3:00)"
+      "text": "$(bold)Amber Ale$()$(li)Brewer's Yeast$(li)Haste III (3:00)$(br2)$(bold)Brown Ale$()$(li)Brewer's Yeast$(li)Haste IV (7200)$(br2)$(bold)Copper Ale$()$(li)Brewer's Yeast$(li)Regeneration III (3:00)"
     },
     {
       "type": "patchouli:text",
       "title": "Ales (cont.)",
-      "text": "$(bold)IPA$()$(li)Brewer's Yeast$(li)Regeneration I (3:00)$(br2)$(bold)Old Port Ale$()$(li)Brewer's Yeast$(li)Luck (5:00)$(br2)$(bold)Pale Ale$()$(li)Brewer's Yeast$(li)Haste I (0:30)$(bold)$(br2)Stout$()$(li)Brewer's Yeast$(li)Hero of the Village (10:00)"
+      "text": "$(bold)IPA$()$(li)Brewer's Yeast$(li)Regeneration II (3:00)$(br2)$(bold)Old Port Ale$()$(li)Brewer's Yeast$(li)Luck (5:00)$(br2)$(bold)Pale Ale$()$(li)Brewer's Yeast$(li)Haste II (0:30)$(bold)$(br2)Stout$()$(li)Brewer's Yeast$(li)Hero of the Village (10:00)"
     },
     {
       "type": "patchouli:spotlight",
       "item": "growthcraft_cellar:potion_lager",
       "title": "Lagers",
-      "text": "$(bold)Amber Lager$()$(li)Lager Yeast$(li)Speed II (3:00)$(br2)$(bold)Black Lager$()$(li)Lager Yeast$(li)Resistance I (5:00)$(br2)$(bold)Brown Lager$()$(li)Lager Yeast$(li)Speed III (5:00)"
+      "text": "$(bold)Amber Lager$()$(li)Lager Yeast$(li)Speed III (3:00)$(br2)$(bold)Black Lager$()$(li)Lager Yeast$(li)Resistance II (5:00)$(br2)$(bold)Brown Lager$()$(li)Lager Yeast$(li)Speed IV (5:00)"
     },
     {
       "type": "patchouli:text",
       "title": "Lagers (cont.)",
-      "text": "$(bold)Copper Lager$()$(li)Lager Yeast$(li)Resistance II (3:00)$(br2)$(bold)Pale Lager$()$(li)Lager Yeast$(li)Speed I (0:30)$(br2)$(bold)Pilsner Lager$()$(li)Lager Yeast$(li)Resistance I (0:30)$(br2)$(bold)Viena Lager$()$(li)Lager Yeast$(li)Luck I (1:00)"
+      "text": "$(bold)Copper Lager$()$(li)Lager Yeast$(li)Resistance III (3:00)$(br2)$(bold)Pale Lager$()$(li)Lager Yeast$(li)Speed II (0:30)$(br2)$(bold)Pilsner Lager$()$(li)Lager Yeast$(li)Resistance II (0:30)$(br2)$(bold)Viena Lager$()$(li)Lager Yeast$(li)Luck II (1:00)"
     },
     {
       "type": "patchouli:spotlight",
       "item": "growthcraft_cellar:potion_wine",
       "title": "Wine",
-      "text": "$(bold)Port Wine$()$(li)Bayanus Yeast$(li)Absoption I (1:00)$(br2)$(bold)Red Wine$()$(li)Bayanus Yeast$(li)Health I (1:00)$(br2)$(bold)White Wine$()$(li)Bayanus Yeast$(li)Saturation I (1:00)"
+      "text": "$(bold)Port Wine$()$(li)Bayanus Yeast$(li)Absoption II (1:00)$(br2)$(bold)Red Wine$()$(li)Bayanus Yeast$(li)Health II (1:00)$(br2)$(bold)White Wine$()$(li)Bayanus Yeast$(li)Saturation II (1:00)"
     }
   ]
 }
