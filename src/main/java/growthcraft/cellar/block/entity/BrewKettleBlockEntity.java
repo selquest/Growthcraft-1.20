@@ -168,7 +168,7 @@ public class BrewKettleBlockEntity extends BlockEntity implements BlockEntityTic
                 List<BrewKettleRecipe> recipes = this.getMatchingRecipes();
                 BrewKettleRecipe recipe = recipes.isEmpty() ? null : recipes.get(0);
 
-                if(recipe != null) {
+                if (recipe != null && this.getFluidTank(1).canFluidStackFit(recipe.getOutputFluidStack())) {
                     if(this.tickClock <= this.tickMax) {
                         this.tickClock++;
                     } else if(this.tickMax > 0) {
@@ -399,6 +399,10 @@ public class BrewKettleBlockEntity extends BlockEntity implements BlockEntityTic
 
     public boolean isProcessing() {
         return this.tickClock > 0;
+    }
+
+    private boolean isOutputTankFull() {
+        return (this.getFluidStackInTank(1).getAmount() == this.getFluidTank(1).getCapacity());
     }
 
     public int getPercentProgress() {
