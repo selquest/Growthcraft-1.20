@@ -3,7 +3,7 @@
   "requires_heat": true,
   "requires_lid": "false",
   "processing_time": 600,
-  "by_product_chance": 10,
+  "by_product_chance": 100,
   "input_fluid": {
     "fluid": "minecraft:water",
     "amount": 500
