@@ -58,6 +58,11 @@ public class RoasterBlockEntity extends BlockEntity implements BlockEntityTicker
         protected void onContentsChanged(int slot) {
             setChanged();
         }
+
+        @Override
+        public boolean isItemValid(int slot, @NotNull ItemStack stack) {
+            return slot != 1;
+        }
     };
 
     private LazyOptional<IItemHandler> itemHandlerLazyOptional = LazyOptional.empty();
