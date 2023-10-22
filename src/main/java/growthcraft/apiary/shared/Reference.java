@@ -46,6 +46,7 @@ public class Reference {
         public static final String HONEY_COMB_FULL = "honey_comb_full";
         public static final String HONEY_COMB = "honey_comb";
         public static final String HONEY_MEAD = "honey_mead";
+        public static final String HONEY_MEAD_MUST = "honey_mead_must";
         public static final String LOOT_SERIALIZER_BLOCK = "global_block_loot_modifier";
         public static final String WAX_BLACK = "wax_black";
         public static final String WAX_BLUE = "wax_blue";
@@ -72,6 +73,7 @@ public class Reference {
     public static class FluidColor {
         public static final ColorUtils.GrowthcraftColor HONEY = new ColorUtils.GrowthcraftColor(0xFFF5A61A);
         public static final ColorUtils.GrowthcraftColor HONEY_MEAD = new ColorUtils.GrowthcraftColor(0xFFD79334);
+        public static final ColorUtils.GrowthcraftColor HONEY_MEAD_MUST = new ColorUtils.GrowthcraftColor(0xFFCD7A00);
         public static final ColorUtils.GrowthcraftColor WAX_BLACK_COLOR = new ColorUtils.GrowthcraftColor(0xFF232323);
         public static final ColorUtils.GrowthcraftColor WAX_BLUE_COLOR = new ColorUtils.GrowthcraftColor(0xFF0000FF);
         public static final ColorUtils.GrowthcraftColor WAX_BROWN_COLOR = new ColorUtils.GrowthcraftColor(0xFF964B00);

@@ -6,12 +6,37 @@
   "pages": [
     {
       "type": "patchouli:text",
-      "text": "9.0.2 - TBD$(br)9.0.1 - Jul 29, 2023$(br)9.0.0 - Jul 26, 2023"
+      "text": "9.1.1 - Oct 22, 2023$(br)9.1.0 - Oct 9, 2023$(br)9.0.6 - Sep 10, 2023$(br)9.0.5 - Sep 3, 2023$(br)9.0.4 - Aug 21, 2023$(br)9.0.3 - Aug 11, 2023$(br)9.0.2 - Aug 6, 2023$(br)9.0.1 - Jul 29, 2023$(br)9.0.0 - Jul 26, 2023"
+    },
+    {
+      "type": "patchouli:text",
+      "title": "9.1.0",
+      "text": "$(li)Aged Cheese returns!$(li)Rebalanced Mystical Agriculture$(li)Fixed book if MA is missing"
+    },
+    {
+      "type": "patchouli:text",
+      "title": "9.0.6",
+      "text": "$(li)Mystical Agriculture compat$(li)Added Seishu yeast for sake$(li)Fixed Wine/Sake recipes"
+    },
+    {
+      "type": "patchouli:text",
+      "title": "9.0.5",
+      "text": "$(li)Added needs_heatsource to Vat recipes$(li)Adjusted Vat collision box$(li)Fixed Fermentation Barrel bottle issues$(li)Fixed cheese wheel stacking$(li)Fixed cheese wheel drops$(li)Fixed drained curds drops"
+    },
+    {
+      "type": "patchouli:text",
+      "title": "9.0.4",
+      "text": "$(li)JEI Support!$(li)Fixed Apple Cider recipe$(li)Added Vanilla Milk bucket support"
+    },
+    {
+      "type": "patchouli:text",
+      "title": "9.0.3",
+      "text": "$(li)More in-game documentation$(li)Rebalanced food items$(li)Changed effects for Stout and Old Port Ale"
     },
     {
       "type": "patchouli:text",
       "title": "9.0.2",
-      "text": "$(li)Growthcraft In-Game Manual$(li)Fixed Mixing Vat activation"
+      "text": "$(li)Growthcraft In-Game Manual$(li)Fixed Mixing Vat activation$(li)Fixed Vat activation$(li)Fixed in-game manual's recipe)"
     },
     {
       "type": "patchouli:text",
