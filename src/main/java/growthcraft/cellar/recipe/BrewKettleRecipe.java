@@ -97,7 +97,7 @@ public class BrewKettleRecipe implements Recipe<SimpleContainer> {
     }
 
     public ItemStack getByProduct() {
-        return byProduct;
+        return byProduct.copy();
     }
 
     public int getByProductChance() {
