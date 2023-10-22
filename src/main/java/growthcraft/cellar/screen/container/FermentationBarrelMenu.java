@@ -155,4 +155,7 @@ public class FermentationBarrelMenu extends AbstractContainerMenu {
         }
     }
 
+    public int getPercentProgress() {
+        return this.blockEntity.getPercentProgress();
+    }
 }

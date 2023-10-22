@@ -47,6 +47,12 @@
       "item": "growthcraft_cellar:potion_wine",
       "title": "Wine",
       "text": "$(bold)Port Wine$()$(li)Bayanus Yeast$(li)Absoption II (1:00)$(br2)$(bold)Red Wine$()$(li)Bayanus Yeast$(li)Health II (1:00)$(br2)$(bold)White Wine$()$(li)Bayanus Yeast$(li)Saturation II (1:00)"
+    },
+    {
+      "type": "patchouli:spotlight",
+      "item": "growthcraft_cellar:potion_wine",
+      "title": "Mead",
+      "text": "$(bold)Honey Mead$()$(li)Bayanus Yeast$(li)Health Boost II (3:00)"
     }
   ]
 }

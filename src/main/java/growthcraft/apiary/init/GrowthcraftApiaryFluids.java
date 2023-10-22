@@ -61,6 +61,24 @@ public class GrowthcraftApiaryFluids {
             new Item.Properties().stacksTo(1)
     );
 
+    public static final GrowthcraftApiaryFluidRegistryContainer HONEY_MEAD_MUST = new GrowthcraftApiaryFluidRegistryContainer(
+            FluidUtils.getFluidNames(Reference.UnlocalizedName.HONEY_MEAD_MUST).get(FluidUtils.STILL),
+            FluidType.Properties.create().canSwim(true).canDrown(true).canPushEntity(true).supportsBoating(true),
+            () -> GrowthcraftApiaryFluidRegistryContainer.createExtension(
+                    new ClientFluidTypeExtensions(
+                            Reference.MODID,
+                            FluidUtils.getFluidNames(Reference.UnlocalizedName.HONEY_MEAD_MUST).get(FluidUtils.STILL)
+                    ).tint(Reference.FluidColor.HONEY_MEAD_MUST.toIntValue())
+                            .fogColor(
+                                    Reference.FluidColor.HONEY_MEAD_MUST.toFloatValues().get("red"),
+                                    Reference.FluidColor.HONEY_MEAD_MUST.toFloatValues().get("green"),
+                                    Reference.FluidColor.HONEY_MEAD_MUST.toFloatValues().get("blue")
+                            )
+            ),
+            BlockBehaviour.Properties.copy(Blocks.WATER),
+            new Item.Properties().stacksTo(1)
+    );
+
     private GrowthcraftApiaryFluids() {
         /* Prevent default public constructor */
     }
