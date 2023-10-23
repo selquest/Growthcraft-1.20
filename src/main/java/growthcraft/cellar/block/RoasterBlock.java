@@ -10,8 +10,6 @@ import net.minecraft.core.Direction;
 import net.minecraft.core.particles.ParticleTypes;
 import net.minecraft.core.particles.SimpleParticleType;
 import net.minecraft.server.level.ServerPlayer;
-import net.minecraft.sounds.SoundEvents;
-import net.minecraft.sounds.SoundSource;
 import net.minecraft.util.RandomSource;
 import net.minecraft.world.InteractionHand;
 import net.minecraft.world.InteractionResult;
@@ -131,12 +129,19 @@ public class RoasterBlock extends BaseEntityBlock {
     @Override
     public InteractionResult use(BlockState state, Level level, BlockPos blockPos, Player player, InteractionHand hand, BlockHitResult hitResult) {
         if (!level.isClientSide) {
-            if (player.isCrouching()) {
+            if (player.getItemInHand(hand).is(GrowthcraftTags.Items.ROASTER_WRENCH)) {
+                // Then cycle the roaster level
+                RoasterBlockEntity blockEntity = (RoasterBlockEntity) level.getBlockEntity(blockPos);
+                // If the tick current is 0 then we are not currently processing anything.
+                if (blockEntity.getTickClock("current") == 0) {
+                    blockEntity.incrementRoastingLevel();
+                }
+            } else {
                 // Open the GUI
                 try {
                     // Play sound
-                    level.playSound(player, blockPos, SoundEvents.IRON_DOOR_OPEN, SoundSource.BLOCKS, 1.0F, 1.0F);
                     RoasterBlockEntity blockEntity = (RoasterBlockEntity) level.getBlockEntity(blockPos);
+                    blockEntity.playSound("open");
                     NetworkHooks.openScreen(((ServerPlayer) player), blockEntity, blockPos);
                 } catch (Exception ex) {
                     GrowthcraftCellar.LOGGER.error(String.format("%s unable to open RoasterBlockEntity GUI at %s.", player.getDisplayName().getString(), blockPos));
@@ -144,13 +149,6 @@ public class RoasterBlock extends BaseEntityBlock {
                     GrowthcraftCellar.LOGGER.error(ex.fillInStackTrace());
                 }
                 return InteractionResult.SUCCESS;
-            } else if (player.getItemInHand(hand).is(GrowthcraftTags.Items.ROASTER_WRENCH)) {
-                // Then cycle the roaster level
-                RoasterBlockEntity blockEntity = (RoasterBlockEntity) level.getBlockEntity(blockPos);
-                // If the tick current is 0 then we are not currently processing anything.
-                if (blockEntity.getTickClock("current") == 0) {
-                    blockEntity.incrementRoastingLevel();
-                }
             }
         }
 

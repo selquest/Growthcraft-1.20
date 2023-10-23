@@ -321,4 +321,9 @@ public class FermentationBarrelBlockEntity extends BlockEntity implements BlockE
         this.level.sendBlockUpdated(this.getBlockPos(), this.getBlockState(), this.getBlockState(), Block.UPDATE_ALL);
     }
 
+    public int getPercentProgress() {
+        float progress = (float) this.tickClock / this.tickMax;
+        float percentage = progress * 100;
+        return Math.round(percentage);
+    }
 }

@@ -9,11 +9,14 @@ import net.minecraft.client.gui.GuiGraphics;
 import net.minecraft.client.gui.screens.inventory.AbstractContainerScreen;
 import net.minecraft.client.renderer.GameRenderer;
 import net.minecraft.network.chat.Component;
+import net.minecraft.network.chat.MutableComponent;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.entity.player.Inventory;
 import net.minecraft.world.item.TooltipFlag;
 import org.jetbrains.annotations.NotNull;
 
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Optional;
 
 public class FermentationBarrelScreen extends AbstractContainerScreen<FermentationBarrelMenu> {
@@ -77,8 +80,28 @@ public class FermentationBarrelScreen extends AbstractContainerScreen<Fermentati
 
         // FluidTank Tooltips
         renderFluidTankTooltips(poseStack, mouseX, mouseY, x, y);
+
+        // Fermentation progress Tooltips
+        renderProgressToolTip(poseStack, mouseX, mouseY, x, y);
+
     }
 
+    private void renderProgressToolTip(GuiGraphics poseStack, int mouseX, int mouseY, int x, int y) {
+        List<Component> tooltip = new ArrayList<>();
+
+        MutableComponent progressString = Component.translatable(Reference.MODID.concat(".tooltip.fermentation.progress"), menu.getPercentProgress());
+        tooltip.add(progressString);
+
+        if (isMouseAboveArea(mouseX, mouseY, x + 48, y + 18, 20, 30, 20, 30)) {
+            poseStack.renderTooltip(
+                    this.font,
+                    tooltip,
+                    Optional.empty(),
+                    mouseX - x,
+                    mouseY - y
+            );
+        }
+    }
 
     private void renderFluidTankTooltips(GuiGraphics poseStack, int mouseX, int mouseY, int x, int y) {
         if (isMouseAboveArea(mouseX, mouseY, x + 72, y + 17, 50, 52, fluidTankRenderer0.getWidth(), fluidTankRenderer0.getHeight())) {
