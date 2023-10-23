@@ -4,6 +4,7 @@ import growthcraft.cellar.block.RoasterBlock;
 import growthcraft.cellar.init.GrowthcraftCellarBlockEntities;
 import growthcraft.cellar.recipe.RoasterRecipe;
 import growthcraft.cellar.screen.container.RoasterMenu;
+import growthcraft.lib.noeppi.block.entity.handler.WrappedHandler;
 import growthcraft.lib.utils.BlockStateUtils;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
@@ -39,6 +40,7 @@ import org.jetbrains.annotations.Nullable;
 import javax.annotation.ParametersAreNonnullByDefault;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
 import java.util.Objects;
 
 import static growthcraft.cellar.block.RoasterBlock.*;
@@ -63,9 +65,44 @@ public class RoasterBlockEntity extends BlockEntity implements BlockEntityTicker
         public boolean isItemValid(int slot, @NotNull ItemStack stack) {
             return slot != 1;
         }
+
     };
 
     private LazyOptional<IItemHandler> itemHandlerLazyOptional = LazyOptional.empty();
+
+    private final Map<Direction, LazyOptional<WrappedHandler>> itemHandlerLazyDirectionalMap =
+            Map.of(
+                    Direction.UP, LazyOptional.of(
+                            () -> new WrappedHandler(itemStackHandler,
+                                    (i) -> i == 0,
+                                    (i, stack) -> this.tickClock == 0 && itemStackHandler.isItemValid(0, stack))
+                    ),
+                    Direction.DOWN, LazyOptional.of(
+                            () -> new WrappedHandler(itemStackHandler,
+                                    (i) -> i == 0,
+                                    (i, stack) -> this.tickClock == 0 && itemStackHandler.isItemValid(0, stack))
+                    ),
+                    Direction.NORTH, LazyOptional.of(
+                            () -> new WrappedHandler(itemStackHandler,
+                                    (index) -> index == 1,
+                                    (index, stack) -> false)
+                    ),
+                    Direction.SOUTH, LazyOptional.of(
+                            () -> new WrappedHandler(itemStackHandler,
+                                    (i) -> i == 1,
+                                    (i, s) -> false)
+                    ),
+                    Direction.EAST, LazyOptional.of(
+                            () -> new WrappedHandler(itemStackHandler,
+                                    (i) -> i == 1,
+                                    (index, stack) -> false)
+                    ),
+                    Direction.WEST, LazyOptional.of(
+                            () -> new WrappedHandler(itemStackHandler,
+                                    (index) -> index == 0 || index == 1,
+                                    (index, stack) -> false)
+                    )
+            );
 
     public RoasterBlockEntity(BlockPos blockPos, BlockState blockState) {
         this(GrowthcraftCellarBlockEntities.ROASTER_BLOCK_ENTITY.get(), blockPos, blockState);
@@ -281,7 +318,24 @@ public class RoasterBlockEntity extends BlockEntity implements BlockEntityTicker
     @Override
     public @NotNull <T> LazyOptional<T> getCapability(@NotNull Capability<T> cap, @Nullable Direction side) {
         if (cap == ForgeCapabilities.ITEM_HANDLER) {
-            return itemHandlerLazyOptional.cast();
+            if (side == null) {
+                return itemHandlerLazyOptional.cast();
+            }
+
+            if (itemHandlerLazyDirectionalMap.containsKey(side)) {
+                Direction localDir = this.getBlockState().getValue(RoasterBlock.FACING);
+
+                if (side == Direction.UP || side == Direction.DOWN) {
+                    return itemHandlerLazyDirectionalMap.get(side).cast();
+                }
+
+                return switch (localDir) {
+                    default -> itemHandlerLazyDirectionalMap.get(side.getOpposite()).cast();
+                    case EAST -> itemHandlerLazyDirectionalMap.get(side.getClockWise()).cast();
+                    case SOUTH -> itemHandlerLazyDirectionalMap.get(side).cast();
+                    case WEST -> itemHandlerLazyDirectionalMap.get(side.getCounterClockWise()).cast();
+                };
+            }
         }
         return super.getCapability(cap, side);
     }
