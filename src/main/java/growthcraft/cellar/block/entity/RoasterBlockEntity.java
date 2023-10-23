@@ -99,7 +99,7 @@ public class RoasterBlockEntity extends BlockEntity implements BlockEntityTicker
                     ),
                     Direction.WEST, LazyOptional.of(
                             () -> new WrappedHandler(itemStackHandler,
-                                    (index) -> index == 0 || index == 1,
+                                    (index) -> index == 1,
                                     (index, stack) -> false)
                     )
             );
@@ -137,7 +137,6 @@ public class RoasterBlockEntity extends BlockEntity implements BlockEntityTicker
             }
         };
     }
-
 
     public boolean isHeated() {
         boolean heated = BlockStateUtils.isHeated(this.level, this.getBlockPos());
