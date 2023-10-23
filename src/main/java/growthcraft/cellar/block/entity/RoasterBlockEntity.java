@@ -14,6 +14,8 @@ import net.minecraft.network.chat.Component;
 import net.minecraft.network.protocol.Packet;
 import net.minecraft.network.protocol.game.ClientGamePacketListener;
 import net.minecraft.network.protocol.game.ClientboundBlockEntityDataPacket;
+import net.minecraft.sounds.SoundEvents;
+import net.minecraft.sounds.SoundSource;
 import net.minecraft.util.RandomSource;
 import net.minecraft.world.Containers;
 import net.minecraft.world.MenuProvider;
@@ -377,5 +379,11 @@ public class RoasterBlockEntity extends BlockEntity implements BlockEntityTicker
         float percentage = progress * 100;
 
         return Math.round(percentage);
+    }
+
+    public void playSound(String sound) {
+        if (Objects.equals(sound, "open") && this.level != null) {
+            this.level.playSound(null, this.getBlockPos(), SoundEvents.IRON_DOOR_OPEN, SoundSource.BLOCKS);
+        }
     }
 }
