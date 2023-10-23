@@ -10,6 +10,11 @@
     },
     {
       "type": "patchouli:text",
+      "title": "9.1.1",
+      "text": "$(li)Fixed shift click inventory$(li)Fixed Honey Mead recipe$(li)Fixed Brew Kettle processing$(li)Update in-game entries$(li)Fixed Roaster sided inventory$(li)Fixed Bees Wax recipe$(br2)Updated the Brew Kettle and Roaster inventory open. Shift+Empty Hand is no longer needed."
+    },
+    {
+      "type": "patchouli:text",
       "title": "9.1.0",
       "text": "$(li)Aged Cheese returns!$(li)Rebalanced Mystical Agriculture$(li)Fixed book if MA is missing"
     },
