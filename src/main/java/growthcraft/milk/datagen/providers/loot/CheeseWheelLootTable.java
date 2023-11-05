@@ -1,4 +1,4 @@
-package growthcraft.milk.datagen.loot;
+package growthcraft.milk.datagen.providers.loot;
 
 import growthcraft.milk.block.BaseCheeseWheel;
 import net.minecraft.advancements.critereon.StatePropertiesPredicate;
@@ -16,9 +16,9 @@ import org.jetbrains.annotations.NotNull;
 
 import java.util.Collections;
 
-public class CheeseWheelLoot extends BlockLootSubProvider {
+public class CheeseWheelLootTable extends BlockLootSubProvider {
 
-    protected CheeseWheelLoot() {
+    public CheeseWheelLootTable() {
         super(Collections.emptySet(), FeatureFlags.REGISTRY.allFlags());
     }
 
