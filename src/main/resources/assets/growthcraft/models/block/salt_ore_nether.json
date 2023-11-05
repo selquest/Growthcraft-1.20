@@ -2,9 +2,9 @@
     "parent": "minecraft:block/block",
 	"render_type": "cutout_mipped",
     "textures": {
-    "all": "minecraft:block/stone",
-    "overlay": "growthcraft:block/salt_rock_ore_overlay",
-	"particle": "minecraft:block/stone"
+	    "all": "minecraft:block/netherrack",
+	    "overlay": "growthcraft:block/salt_rock_ore_overlay",
+	    "particle": "minecraft:block/netherrack"
     },
     "elements": [
         {
