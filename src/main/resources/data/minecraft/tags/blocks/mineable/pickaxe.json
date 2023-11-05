@@ -8,6 +8,9 @@
     "growthcraft_cellar:fruit_press_piston",
     "growthcraft_cellar:brew_kettle",
     "growthcraft_milk:mixing_vat",
-    "growthcraft_cellar:roaster"
+    "growthcraft_cellar:roaster",
+   	"growthcraft:salt_ore_deepslate",
+	"growthcraft:salt_ore_nether",
+    "growthcraft:salt_ore_end"
   ]
 }

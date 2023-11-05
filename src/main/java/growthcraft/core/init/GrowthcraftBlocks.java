@@ -69,6 +69,21 @@ public class GrowthcraftBlocks {
             Reference.UnlocalizedName.SALT_ORE,
             () -> new GrowthcraftBlock(BlockBehaviour.Properties.copy(Blocks.IRON_ORE))
     );
+    
+    public static final RegistryObject<Block> SALT_ORE_DEEPSLATE = registerBlock(
+            Reference.UnlocalizedName.SALT_ORE + "_deepslate",
+            () -> new GrowthcraftBlock(BlockBehaviour.Properties.copy(Blocks.DEEPSLATE_IRON_ORE))
+    );
+    
+    public static final RegistryObject<Block> SALT_ORE_NETHER = registerBlock(
+            Reference.UnlocalizedName.SALT_ORE + "_nether",
+            () -> new GrowthcraftBlock(BlockBehaviour.Properties.copy(Blocks.NETHER_GOLD_ORE))
+    );
+    
+    public static final RegistryObject<Block> SALT_ORE_END = registerBlock(
+            Reference.UnlocalizedName.SALT_ORE + "_end",
+            () -> new GrowthcraftBlock(BlockBehaviour.Properties.copy(Blocks.IRON_ORE))
+    );
 
     private static RegistryObject<Block> registerBlock(String name, Supplier<Block> block) {
         return registerBlock(name, block, false);
