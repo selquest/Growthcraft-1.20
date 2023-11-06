@@ -210,6 +210,8 @@ public class BrewKettleBlockEntity extends BlockEntity implements BlockEntityTic
                 } else {
                     this.resetTickClock();
                 }
+            } else {
+                this.resetTickClock();
             }
         } else {
             // Do nothing on the client side.

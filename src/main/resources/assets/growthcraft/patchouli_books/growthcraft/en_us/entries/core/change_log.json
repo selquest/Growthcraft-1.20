@@ -11,7 +11,7 @@
     {
       "type": "patchouli:text",
       "title": "9.1.2",
-      "text": "$(li)Fixed #58 Grape Seeds Recipes"
+      "text": "$(li)Fixed #58 Grape Seeds Recipes$(li)Fixed #11 Tags for Brew Kettle recipes$(li)Fixed #61 Apple Tree Leaves drops"
     },
     {
       "type": "patchouli:text",
