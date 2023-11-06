@@ -9,7 +9,7 @@
     "amount": 250
   },
   "input_item": {
-    "item": "minecraft:wheat",
+    "tag": "forge:crops/wheat",
     "count": 1
   },
   "output_fluid": {
