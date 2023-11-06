@@ -35,15 +35,15 @@ public class GrowthcraftConfiguredFeatures {
         List<OreConfiguration.TargetBlockState> overworldSaltOres = List.of(
                 OreConfiguration.target(stoneReplaceable, GrowthcraftBlocks.SALT_ORE.get().defaultBlockState()),
                 // TODO: Create a deepslate version of SALT_ORE
-                OreConfiguration.target(deepslateReplaceable, GrowthcraftBlocks.SALT_ORE.get().defaultBlockState())
+                OreConfiguration.target(deepslateReplaceable, GrowthcraftBlocks.SALT_ORE_DEEPSLATE.get().defaultBlockState())
         );
 
         register(context, OVERWORLD_SALT_ORE_KEY, Feature.ORE, new OreConfiguration(
                 overworldSaltOres, SALT_ORE_GEN_VEIN_SIZE));
         register(context, END_SALT_ORE_KEY, Feature.ORE, new OreConfiguration(endstoneReplaceable,
-                GrowthcraftBlocks.SALT_ORE.get().defaultBlockState(), 9));
+                GrowthcraftBlocks.SALT_ORE_END.get().defaultBlockState(), 9));
         register(context, NETHER_SALT_ORE_KEY, Feature.ORE, new OreConfiguration(netherrackReplaceable,
-                GrowthcraftBlocks.SALT_ORE.get().defaultBlockState(), 9));
+                GrowthcraftBlocks.SALT_ORE_NETHER.get().defaultBlockState(), 9));
     }
 
     private static ResourceKey<ConfiguredFeature<?, ?>> registerKey(String name) {

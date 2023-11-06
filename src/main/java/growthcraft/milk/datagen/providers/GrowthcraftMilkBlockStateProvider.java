@@ -1,4 +1,4 @@
-package growthcraft.milk.datagen;
+package growthcraft.milk.datagen.providers;
 
 import growthcraft.milk.init.GrowthcraftMilkBlocks;
 import growthcraft.milk.shared.Reference;
@@ -18,11 +18,11 @@ import java.util.List;
 import static growthcraft.milk.block.BaseCheeseWheel.SLICE_COUNT_BOTTOM;
 import static growthcraft.milk.block.BaseCheeseWheel.SLICE_COUNT_TOP;
 
-public class GrowthcraftMilkBlockStates extends BlockStateProvider {
+public class GrowthcraftMilkBlockStateProvider extends BlockStateProvider {
 
     private final ModelFile empty_model = models().getExistingFile(new ResourceLocation("growthcraft", "block/empty"));
 
-    public GrowthcraftMilkBlockStates(PackOutput output, ExistingFileHelper exFileHelper) {
+    public GrowthcraftMilkBlockStateProvider(PackOutput output, ExistingFileHelper exFileHelper) {
         super(output, Reference.MODID, exFileHelper);
     }
 
