@@ -1,11 +1,11 @@
 package growthcraft.milk.recipe;
 
-import com.google.gson.JsonArray;
 import com.google.gson.JsonObject;
 import growthcraft.lib.utils.CraftingUtils;
 import growthcraft.lib.utils.RecipeUtils;
 import growthcraft.milk.GrowthcraftMilk;
 import growthcraft.milk.shared.Reference;
+import net.minecraft.core.NonNullList;
 import net.minecraft.core.RegistryAccess;
 import net.minecraft.network.FriendlyByteBuf;
 import net.minecraft.resources.ResourceLocation;
@@ -13,22 +13,26 @@ import net.minecraft.util.GsonHelper;
 import net.minecraft.world.SimpleContainer;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.item.crafting.Ingredient;
 import net.minecraft.world.item.crafting.Recipe;
 import net.minecraft.world.item.crafting.RecipeSerializer;
 import net.minecraft.world.item.crafting.RecipeType;
 import net.minecraft.world.level.Level;
 import net.minecraftforge.common.crafting.CraftingHelper;
 import net.minecraftforge.fluids.FluidStack;
+import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 
 public class MixingVatFluidRecipe implements Recipe<SimpleContainer> {
     private final ResourceLocation recipeId;
     private final RecipeUtils.Category category;
     private final ItemStack activationTool;
-    private final List<ItemStack> ingredients;
+    private final NonNullList<Ingredient> ingredients;
+
     private final FluidStack inputFluidStack;
     private final int processingTime;
 
@@ -40,7 +44,7 @@ public class MixingVatFluidRecipe implements Recipe<SimpleContainer> {
 
     public MixingVatFluidRecipe(ResourceLocation recipeId, RecipeUtils.Category category,
                                 FluidStack inputFluidStack, FluidStack reagentFluidStack,
-                                List<ItemStack> ingredients, int processingTime,
+                                NonNullList<Ingredient> inputIngredients, int processingTime,
                                 FluidStack outputFluidStack, FluidStack wasteFluidStack,
                                 ItemStack activationTool,
                                 boolean requiresHeat) {
@@ -48,7 +52,7 @@ public class MixingVatFluidRecipe implements Recipe<SimpleContainer> {
         this.category = category;
         this.inputFluidStack = inputFluidStack;
         this.reagentFluidStack = reagentFluidStack;
-        this.ingredients = ingredients;
+        this.ingredients = inputIngredients;
         this.processingTime = processingTime;
         this.outputFluidStack = outputFluidStack;
         this.wasteFluidStack = wasteFluidStack;
@@ -57,25 +61,19 @@ public class MixingVatFluidRecipe implements Recipe<SimpleContainer> {
     }
 
     @Override
-    public boolean matches(SimpleContainer container, Level level) {
+    public boolean matches(@NotNull SimpleContainer container, @NotNull Level level) {
         return false;
     }
 
     public boolean matches(FluidStack testBaseFluidStack, FluidStack testReagentFluidStack,
                            List<ItemStack> testIngredients, boolean hasHeatSource) {
 
-        boolean inputFluidTypeMatches = testBaseFluidStack.getFluid() == this.getInputFluidStack().getFluid();
-        boolean inputFluidAmountMatches = testBaseFluidStack.getAmount() == this.getInputFluidStack().getAmount();
-
-        boolean reagentFluidTypeMatches = testReagentFluidStack.getFluid() == this.getReagentFluidStack().getFluid();
-        boolean reagentFluidAmountMatches = testReagentFluidStack.getAmount() == this.getReagentFluidStack().getAmount();
-
-        boolean fluidMatches = inputFluidTypeMatches && inputFluidAmountMatches
-                && reagentFluidTypeMatches && reagentFluidAmountMatches;
+        boolean fluidMatches = CraftingUtils.doesFluidMatch(testBaseFluidStack, this.getInputFluidStack())
+                && CraftingUtils.doesFluidMatch(reagentFluidStack, this.getReagentFluidStack());
 
         boolean ingredientMatches = false;
 
-        if (this.getIngredientList().size() == testIngredients.size()) {
+        if (this.getIngredients().size() == testIngredients.size()) {
             int itemCount = this.getIngredientList().size();
             int matchCount = 0;
             for (int i = 0; i < this.getIngredientList().size(); i++) {
@@ -142,8 +140,13 @@ public class MixingVatFluidRecipe implements Recipe<SimpleContainer> {
         return this.activationTool.getItem() == tool.getItem();
     }
 
+    @Override
+    public @NotNull NonNullList<Ingredient> getIngredients() {
+        return this.ingredients;
+    }
+
     public List<ItemStack> getIngredientList() {
-        return ingredients;
+        return Arrays.stream(ingredients.get(0).getItems()).toList();
     }
 
     public List<Item> getIngredientItems() {
@@ -203,15 +206,7 @@ public class MixingVatFluidRecipe implements Recipe<SimpleContainer> {
             ItemStack activationTool = CraftingHelper.getItemStack(
                     GsonHelper.getAsJsonObject(json, "activation_tool"), false);
 
-            List<ItemStack> ingredients = new ArrayList<>();
-            JsonArray jsonIngredients = GsonHelper.getAsJsonArray(json, "ingredients");
-
-            if (jsonIngredients.size() <= maxIngredients) {
-                for (int i = 0; i < jsonIngredients.size(); i++) {
-                    ItemStack itemStack = CraftingHelper.getItemStack(jsonIngredients.get(i).getAsJsonObject(), false);
-                    ingredients.add(itemStack);
-                }
-            }
+            NonNullList<Ingredient> inputIngredient = CraftingUtils.readIngredients(GsonHelper.getAsJsonArray(json, "ingredients"));
 
             FluidStack reagentFluid = CraftingUtils.getFluidStack(
                     GsonHelper.getAsJsonObject(json, "reagent_fluid"));
@@ -221,7 +216,7 @@ public class MixingVatFluidRecipe implements Recipe<SimpleContainer> {
                     GsonHelper.getAsJsonObject(json, "result_fluid_waste"));
 
             return new MixingVatFluidRecipe(recipeId, RecipeUtils.Category.FLUID,
-                    inputFluid, reagentFluid, ingredients, processingTime, resultFluid, wasteFluid, activationTool, requiresHeat);
+                    inputFluid, reagentFluid, inputIngredient, processingTime, resultFluid, wasteFluid, activationTool, requiresHeat);
 
         }
 
@@ -237,10 +232,10 @@ public class MixingVatFluidRecipe implements Recipe<SimpleContainer> {
                 ItemStack activationTool = buffer.readItem();
 
                 int ingredientSize = buffer.readVarInt();
+                NonNullList<Ingredient> ingredients = NonNullList.withSize(ingredientSize, Ingredient.EMPTY);
 
-                List<ItemStack> ingredients = new ArrayList<>();
                 for (int i = 0; i < ingredientSize; i++) {
-                    ingredients.add(buffer.readItem());
+                    ingredients.set(i, Ingredient.fromNetwork(buffer));
                 }
 
                 FluidStack reagentFluidStack = buffer.readFluidStack();
@@ -268,8 +263,8 @@ public class MixingVatFluidRecipe implements Recipe<SimpleContainer> {
 
             buffer.writeVarInt(recipe.getIngredientList().size());
 
-            for (int i = 0; i < recipe.getIngredientList().size(); i++) {
-                buffer.writeItemStack(recipe.getIngredientList().get(i), false);
+            for (Ingredient ingredient : recipe.getIngredients()) {
+                ingredient.toNetwork(buffer);
             }
 
             buffer.writeFluidStack(recipe.getReagentFluidStack());

@@ -6,7 +6,6 @@ import growthcraft.milk.GrowthcraftMilk;
 import growthcraft.milk.block.entity.MixingVatBlockEntity;
 import growthcraft.milk.init.GrowthcraftMilkBlockEntities;
 import growthcraft.milk.init.GrowthcraftMilkFluids;
-import growthcraft.milk.init.GrowthcraftMilkTags;
 import growthcraft.milk.init.config.GrowthcraftMilkConfig;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
@@ -36,8 +35,10 @@ import net.minecraftforge.fluids.FluidUtil;
 import net.minecraftforge.fluids.capability.IFluidHandler;
 import net.minecraftforge.fluids.capability.templates.FluidTank;
 import net.minecraftforge.network.NetworkHooks;
+import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 
+import javax.annotation.ParametersAreNonnullByDefault;
 import java.util.Arrays;
 
 import static net.minecraft.world.phys.shapes.BooleanOp.OR;
@@ -124,7 +125,8 @@ public class MixingVatBlock extends BaseEntityBlock {
     }
 
     @Override
-    public InteractionResult use(BlockState blockState, Level level, BlockPos blockPos, Player player, InteractionHand interactionHand, BlockHitResult hitResult) {
+    @ParametersAreNonnullByDefault
+    public @NotNull InteractionResult use(BlockState blockState, Level level, BlockPos blockPos, Player player, InteractionHand interactionHand, BlockHitResult hitResult) {
         if (level.isClientSide) {
             return InteractionResult.SUCCESS;
         }
@@ -185,13 +187,18 @@ public class MixingVatBlock extends BaseEntityBlock {
             }
 
             return fluidInteractionResult ? InteractionResult.SUCCESS : InteractionResult.FAIL;
-        } else if (player.getItemInHand(interactionHand).is(GrowthcraftMilkTags.Items.TAG_MIXING_VAT_TOOLS)) {
-            // TODO Handle tool activation of MixingVat.
+        } else if (!player.getItemInHand(interactionHand).isEmpty()
+                && (player.getItemInHand(interactionHand).is(blockEntity.getActivationTool().getItem())
+                || player.getItemInHand(interactionHand).is(blockEntity.getResultActivationTool().getItem()))
+        ) {
+            // Try and activate the recipe.
             if(blockEntity.activateRecipe(player.getItemInHand(interactionHand))) {
-                player.getItemInHand(interactionHand).shrink(1);
+                if (GrowthcraftMilkConfig.isConsumeMixingVatActivator())
+                    player.getItemInHand(interactionHand).shrink(1);
                 return InteractionResult.SUCCESS;
             }
 
+            // Process the Cheese Curds extraction.
             if(!blockEntity.getInventoryHandler().getStackInSlot(3).isEmpty()
                 && blockEntity.activateResult(player, player.getItemInHand(interactionHand))) {
                 player.getItemInHand(interactionHand).shrink(1);
