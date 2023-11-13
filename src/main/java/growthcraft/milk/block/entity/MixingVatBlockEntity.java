@@ -67,6 +67,11 @@ public class MixingVatBlockEntity extends BlockEntity implements BlockEntityTick
         protected void onContentsChanged(int slot) {
             setChanged();
         }
+
+        @Override
+        public int getSlotLimit(int slot) {
+            return 1;
+        }
     };
 
     private LazyOptional<IItemHandler> inventoryHandler = LazyOptional.empty();
@@ -478,7 +483,7 @@ public class MixingVatBlockEntity extends BlockEntity implements BlockEntityTick
                 && isHeated() == this.requiresHeatSource;
 
         // Reset the activation tool if recipe is activated
-        if (activated) this.activationTool = ItemStack.EMPTY;
+        if (this.activated) this.activationTool = ItemStack.EMPTY;
 
         return this.activated;
     }

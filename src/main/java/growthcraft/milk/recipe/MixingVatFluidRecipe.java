@@ -31,7 +31,7 @@ public class MixingVatFluidRecipe implements Recipe<SimpleContainer> {
     private final ResourceLocation recipeId;
     private final RecipeUtils.Category category;
     private final ItemStack activationTool;
-    private final NonNullList<Ingredient> inputIngredients;
+    private final NonNullList<Ingredient> ingredients;
 
     private final FluidStack inputFluidStack;
     private final int processingTime;
@@ -52,7 +52,7 @@ public class MixingVatFluidRecipe implements Recipe<SimpleContainer> {
         this.category = category;
         this.inputFluidStack = inputFluidStack;
         this.reagentFluidStack = reagentFluidStack;
-        this.inputIngredients = inputIngredients;
+        this.ingredients = inputIngredients;
         this.processingTime = processingTime;
         this.outputFluidStack = outputFluidStack;
         this.wasteFluidStack = wasteFluidStack;
@@ -142,11 +142,11 @@ public class MixingVatFluidRecipe implements Recipe<SimpleContainer> {
 
     @Override
     public @NotNull NonNullList<Ingredient> getIngredients() {
-        return this.inputIngredients;
+        return this.ingredients;
     }
 
     public List<ItemStack> getIngredientList() {
-        return Arrays.stream(inputIngredients.get(0).getItems()).toList();
+        return Arrays.stream(ingredients.get(0).getItems()).toList();
     }
 
     public List<Item> getIngredientItems() {
