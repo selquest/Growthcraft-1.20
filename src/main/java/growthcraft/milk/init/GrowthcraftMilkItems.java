@@ -1,5 +1,6 @@
 package growthcraft.milk.init;
 
+import growthcraft.core.utils.CompostableUtils;
 import growthcraft.lib.item.GrowthcraftBowlFoodItem;
 import growthcraft.lib.item.GrowthcraftFoodItem;
 import growthcraft.lib.item.GrowthcraftItem;
@@ -239,14 +240,20 @@ public class GrowthcraftMilkItems {
     );
 
     public static void registerCompostables() {
-        float f = 0.3F;
-        float f1 = 0.5F;
-        float f2 = 0.65F;
-        float f3 = 0.85F;
-        float f4 = 1.0F;
-
-        // ComposterBlock.COMPOSTABLES.put(GrowthcraftRiceItems.RICE.get(), f2);
-
+        CompostableUtils.registerCompostable(THISTLE.get(), CompostableUtils.COMPOSTABLE.HIGH);
+        CompostableUtils.registerCompostable(THISTLE_SEED.get(), CompostableUtils.COMPOSTABLE.NORMAL);
+        CompostableUtils.registerCompostable(STARTER_CULTURE.get(), CompostableUtils.COMPOSTABLE.LOW);
+        CompostableUtils.registerCompostable(CHEESE_APPENZELLER_SLICE.get(), CompostableUtils.COMPOSTABLE.HIGH);
+        CompostableUtils.registerCompostable(CHEESE_ASIAGO_SLICE.get(), CompostableUtils.COMPOSTABLE.HIGH);
+        CompostableUtils.registerCompostable(CHEESE_CASU_MARZU_SLICE.get(), CompostableUtils.COMPOSTABLE.HIGH);
+        CompostableUtils.registerCompostable(CHEESE_CHEDDAR_SLICE.get(), CompostableUtils.COMPOSTABLE.HIGH);
+        CompostableUtils.registerCompostable(CHEESE_EMMENTALER_SLICE.get(), CompostableUtils.COMPOSTABLE.HIGH);
+        CompostableUtils.registerCompostable(CHEESE_GORGONZOLA_SLICE.get(), CompostableUtils.COMPOSTABLE.HIGH);
+        CompostableUtils.registerCompostable(CHEESE_GOUDA_SLICE.get(), CompostableUtils.COMPOSTABLE.HIGH);
+        CompostableUtils.registerCompostable(CHEESE_MONTEREY_SLICE.get(), CompostableUtils.COMPOSTABLE.HIGH);
+        CompostableUtils.registerCompostable(CHEESE_PARMESAN_SLICE.get(), CompostableUtils.COMPOSTABLE.HIGH);
+        CompostableUtils.registerCompostable(CHEESE_PROVOLONE_SLICE.get(), CompostableUtils.COMPOSTABLE.HIGH);
+        CompostableUtils.registerCompostable(CHEESE_RICOTTA_SLICE.get(), CompostableUtils.COMPOSTABLE.HIGH);
     }
 
     public static boolean excludeItemRegistry(ResourceLocation registryName) {

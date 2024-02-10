@@ -1,6 +1,7 @@
 package growthcraft.apiary.init;
 
 import growthcraft.apiary.shared.Reference;
+import growthcraft.core.utils.CompostableUtils;
 import growthcraft.lib.item.GrowthcraftItem;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.item.Item;
@@ -98,6 +99,12 @@ public class GrowthcraftApiaryItems {
 
     private GrowthcraftApiaryItems() {
         /* Prevent default public constructor */
+    }
+
+    public static void registerCompostables() {
+        CompostableUtils.registerCompostable(HONEY_COMB_FULL.get(), CompostableUtils.COMPOSTABLE.HIGHEST);
+        CompostableUtils.registerCompostable(HONEY_COMB_EMPTY.get(), CompostableUtils.COMPOSTABLE.LOW);
+        CompostableUtils.registerCompostable(BEE.get(), CompostableUtils.COMPOSTABLE.HIGH);
     }
 
     public static boolean excludeItemRegistry(ResourceLocation registryName) {

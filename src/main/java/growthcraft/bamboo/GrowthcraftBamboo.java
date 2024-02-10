@@ -57,7 +57,7 @@ public class GrowthcraftBamboo {
     }
 
     private void setup(final FMLCommonSetupEvent event) {
-        // Do Nothing for now ...
+        GrowthcraftBambooItems.registerCompostables();
     }
 
     @SubscribeEvent

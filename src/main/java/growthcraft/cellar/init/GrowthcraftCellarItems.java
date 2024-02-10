@@ -4,6 +4,7 @@ import growthcraft.cellar.item.CellarPotionItem;
 import growthcraft.cellar.item.GrapeSeedsItem;
 import growthcraft.cellar.item.HopsSeedsItem;
 import growthcraft.cellar.shared.Reference;
+import growthcraft.core.utils.CompostableUtils;
 import growthcraft.lib.item.GrowthcraftFoodItem;
 import growthcraft.lib.item.GrowthcraftItem;
 import net.minecraft.resources.ResourceLocation;
@@ -69,7 +70,7 @@ public class GrowthcraftCellarItems {
             Reference.UnlocalizedName.GRAPE_PURPLE, GrowthcraftFoodItem::new
     );
 
-    public static final RegistryObject<GrapeSeedsItem> PURPLE_RED_SEEDS = ITEMS.register(
+    public static final RegistryObject<GrapeSeedsItem> GRAPE_PURPLE_SEEDS = ITEMS.register(
             Reference.UnlocalizedName.GRAPE_SEEDS_PURPLE,
             () -> new GrapeSeedsItem(
                     GrowthcraftCellarBlocks.PURPLE_GRAPE_VINE.get(),
@@ -93,7 +94,7 @@ public class GrowthcraftCellarItems {
             Reference.UnlocalizedName.GRAPE_WHITE, GrowthcraftFoodItem::new
     );
 
-    public static final RegistryObject<GrapeSeedsItem> WHITE_RED_SEEDS = ITEMS.register(
+    public static final RegistryObject<GrapeSeedsItem> GRAPE_WHITE_SEEDS = ITEMS.register(
             Reference.UnlocalizedName.GRAPE_SEEDS_WHITE,
             () -> new GrapeSeedsItem(
                     GrowthcraftCellarBlocks.WHITE_GRAPE_VINE.get(),
@@ -159,14 +160,34 @@ public class GrowthcraftCellarItems {
             GRAIN_DEEP_COPPER, GRAIN_GOLDEN, GRAIN_PALE_GOLDEN
     );
 
+    /**
+     * Registers the compostable items for GrowthcraftCellarItems.
+     */
     public static void registerCompostables() {
-        float f = 0.3F;
-        float f1 = 0.5F;
-        float f2 = 0.65F;
-        float f3 = 0.85F;
-        float f4 = 1.0F;
 
-        // ComposterBlock.COMPOSTABLES.put(GrowthcraftRiceItems.RICE.get(), f2);
+        for (RegistryObject<? extends Item> grain : GrowthcraftCellarItems.GRAINS) {
+            CompostableUtils.registerCompostable(grain.get(), CompostableUtils.COMPOSTABLE.HIGH);
+        }
+
+        CompostableUtils.registerCompostable(GRAIN.get(), CompostableUtils.COMPOSTABLE.NORMAL);
+
+        CompostableUtils.registerCompostable(GRAPE_PURPLE.get(), CompostableUtils.COMPOSTABLE.HIGHEST);
+        CompostableUtils.registerCompostable(GRAPE_RED.get(), CompostableUtils.COMPOSTABLE.HIGHEST);
+        CompostableUtils.registerCompostable(GRAPE_WHITE.get(), CompostableUtils.COMPOSTABLE.HIGHEST);
+        CompostableUtils.registerCompostable(GRAPE_PURPLE_SEEDS.get(), CompostableUtils.COMPOSTABLE.NORMAL);
+        CompostableUtils.registerCompostable(GRAPE_RED_SEEDS.get(), CompostableUtils.COMPOSTABLE.NORMAL);
+        CompostableUtils.registerCompostable(GRAPE_WHITE_SEEDS.get(), CompostableUtils.COMPOSTABLE.NORMAL);
+
+        CompostableUtils.registerCompostable(HOPS.get(), CompostableUtils.COMPOSTABLE.HIGHEST);
+        CompostableUtils.registerCompostable(HOPS_SEED.get(), CompostableUtils.COMPOSTABLE.NORMAL);
+
+        CompostableUtils.registerCompostable(YEAST_BAYANUS.get(), CompostableUtils.COMPOSTABLE.NORMAL);
+        CompostableUtils.registerCompostable(YEAST_BAYANUS_ETHEREAL.get(), CompostableUtils.COMPOSTABLE.HIGHEST);
+        CompostableUtils.registerCompostable(YEAST_BREWERS.get(), CompostableUtils.COMPOSTABLE.NORMAL);
+        CompostableUtils.registerCompostable(YEAST_BREWERS_ETHEREAL.get(), CompostableUtils.COMPOSTABLE.HIGHEST);
+        CompostableUtils.registerCompostable(YEAST_ETHEREAL.get(), CompostableUtils.COMPOSTABLE.HIGHEST);
+        CompostableUtils.registerCompostable(YEAST_LAGER.get(), CompostableUtils.COMPOSTABLE.NORMAL);
+        CompostableUtils.registerCompostable(YEAST_LAGER_ETHEREAL.get(), CompostableUtils.COMPOSTABLE.HIGHEST);
 
     }
 

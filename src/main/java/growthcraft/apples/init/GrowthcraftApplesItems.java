@@ -2,6 +2,8 @@ package growthcraft.apples.init;
 
 import growthcraft.apples.item.AppleSeedsItem;
 import growthcraft.apples.shared.Reference;
+import growthcraft.core.utils.CompostableUtils;
+import growthcraft.lib.item.GrowthcraftItem;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.level.block.ComposterBlock;
@@ -23,13 +25,7 @@ public class GrowthcraftApplesItems {
     );
 
     public static void registerCompostables() {
-        float f = 0.3F;
-        float f1 = 0.5F;
-        float f2 = 0.65F;
-        float f3 = 0.85F;
-        float f4 = 1.0F;
-
-        ComposterBlock.COMPOSTABLES.put(GrowthcraftApplesItems.APPLE_SEEDS.get(), f1);
+        CompostableUtils.registerCompostable(GrowthcraftApplesItems.APPLE_SEEDS.get(), CompostableUtils.COMPOSTABLE.LOW);
     }
 
     public static boolean excludeItemRegistry(ResourceLocation registryName) {

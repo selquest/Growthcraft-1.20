@@ -1,5 +1,6 @@
 package growthcraft.rice.init;
 
+import growthcraft.core.utils.CompostableUtils;
 import growthcraft.lib.item.GrowthcraftFoodItem;
 import growthcraft.lib.item.GrowthcraftItem;
 import growthcraft.rice.item.CultivatorItem;
@@ -54,18 +55,17 @@ public class GrowthcraftRiceItems {
     );
 
     public static void registerCompostables() {
-        float f = 0.3F;
-        float f1 = 0.5F;
-        float f2 = 0.65F;
-        float f3 = 0.85F;
-        float f4 = 1.0F;
-
-        // Add rice as a compostable
-        ComposterBlock.COMPOSTABLES.put(GrowthcraftRiceItems.RICE.get(), f2);
-        ComposterBlock.COMPOSTABLES.put(GrowthcraftRiceItems.RICE_COOKED.get(), f3);
-        ComposterBlock.COMPOSTABLES.put(GrowthcraftRiceItems.RICE_STALK.get(), f1);
-        ComposterBlock.COMPOSTABLES.put(GrowthcraftRiceItems.SUSHI_ROLL.get(), f4);
-        ComposterBlock.COMPOSTABLES.put(GrowthcraftRiceItems.YEAST_SEISHU.get(), f4);
+        // Add rice as a compostables
+        CompostableUtils.registerCompostable(
+                GrowthcraftRiceItems.RICE.get(), CompostableUtils.COMPOSTABLE.NORMAL);
+        CompostableUtils.registerCompostable(
+                GrowthcraftRiceItems.RICE_COOKED.get(), CompostableUtils.COMPOSTABLE.HIGH);
+        CompostableUtils.registerCompostable(
+                GrowthcraftRiceItems.RICE_STALK.get(), CompostableUtils.COMPOSTABLE.LOW);
+        CompostableUtils.registerCompostable(
+                GrowthcraftRiceItems.SUSHI_ROLL.get(), CompostableUtils.COMPOSTABLE.HIGHEST);
+        CompostableUtils.registerCompostable(
+                GrowthcraftRiceItems.YEAST_SEISHU.get(), CompostableUtils.COMPOSTABLE.HIGHEST);
     }
 
     public static boolean excludeItemRegistry(ResourceLocation registryName) {

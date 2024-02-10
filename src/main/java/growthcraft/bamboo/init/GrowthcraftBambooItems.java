@@ -14,14 +14,7 @@ public class GrowthcraftBambooItems {
     );
 
     public static void registerCompostables() {
-        float f = 0.3F;
-        float f1 = 0.5F;
-        float f2 = 0.65F;
-        float f3 = 0.85F;
-        float f4 = 1.0F;
-
-        // ComposterBlock.COMPOSTABLES.put(GrowthcraftRiceItems.RICE.get(), f2);
-
+        // Do nothing at this time.
     }
 
     public static boolean excludeItemRegistry(ResourceLocation registryName) {

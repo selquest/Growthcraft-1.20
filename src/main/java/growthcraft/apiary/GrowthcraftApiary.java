@@ -48,9 +48,7 @@ public class GrowthcraftApiary {
     }
 
     private void setup(final FMLCommonSetupEvent event) {
-        //event.enqueueWork( () -> {
-        //   GrowthcraftOreGeneration.registerConfiguredFeatures();
-        //});
+        GrowthcraftApiaryItems.registerCompostables();
     }
 
     @SubscribeEvent
