@@ -99,7 +99,7 @@ public class GrowthcraftCellar {
 
     @SubscribeEvent
     public void onServerStarting(ServerStartingEvent event) {
-        LOGGER.info("Growthcraft Cellar starting up ...");
+        LOGGER.info(String.format("%s starting up ...", Reference.NAME));
     }
 
     public void onRegisterRenderers(EntityRenderersEvent.RegisterRenderers event) {

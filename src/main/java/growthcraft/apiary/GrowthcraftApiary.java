@@ -53,7 +53,7 @@ public class GrowthcraftApiary {
 
     @SubscribeEvent
     public void onServerStarting(ServerStartingEvent event) {
-        LOGGER.info("Growthcraft Apiary starting up server-side ...");
+        LOGGER.info(String.format("%s starting up ...", Reference.NAME));
     }
 
     public void buildCreativeTabContents(BuildCreativeModeTabContentsEvent event) {

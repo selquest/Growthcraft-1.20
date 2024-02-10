@@ -8,7 +8,6 @@ import growthcraft.rice.item.RiceSeedItem;
 import growthcraft.rice.shared.Reference;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.item.Item;
-import net.minecraft.world.level.block.ComposterBlock;
 import net.minecraftforge.registries.DeferredRegister;
 import net.minecraftforge.registries.ForgeRegistries;
 import net.minecraftforge.registries.RegistryObject;
@@ -21,8 +20,8 @@ public class GrowthcraftRiceItems {
     );
 
     public static final RegistryObject<CultivatorItem> CULTIVATOR = ITEMS.register(
-      Reference.UnlocalizedName.CULTIVATOR,
-      CultivatorItem::new
+            Reference.UnlocalizedName.CULTIVATOR,
+            CultivatorItem::new
     );
 
     public static final RegistryObject<GrowthcraftItem> KNIFE = ITEMS.register(
@@ -54,6 +53,10 @@ public class GrowthcraftRiceItems {
             Reference.UnlocalizedName.YEAST_SEISHU, GrowthcraftItem::new
     );
 
+    private GrowthcraftRiceItems() {
+        /* Prevent default public constructor */
+    }
+
     public static void registerCompostables() {
         // Add rice as a compostables
         CompostableUtils.registerCompostable(
@@ -72,9 +75,5 @@ public class GrowthcraftRiceItems {
         ArrayList<String> excludeItems = new ArrayList<>();
         //excludeItems.add(Reference.MODID + ":" + Reference.UnlocalizedName.APPLE_TREE_FRUIT);
         return excludeItems.contains(registryName.toString());
-    }
-
-    private GrowthcraftRiceItems() {
-        /* Prevent default public constructor */
     }
 }

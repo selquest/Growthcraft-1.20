@@ -32,18 +32,13 @@ public class CompostableUtils {
      * @return the compostable value associated with the given key, or NORMAL if no matching key is found
      */
     public static COMPOSTABLE getCompostableByString(String key) {
-        switch (key) {
-            case "lowest":
-                return COMPOSTABLE.LOWEST;
-            case "low":
-                return COMPOSTABLE.LOW;
-            case "high":
-                return COMPOSTABLE.HIGH;
-            case "highest":
-                return COMPOSTABLE.HIGHEST;
-            default:
-                return COMPOSTABLE.NORMAL;
-        }
+        return switch (key) {
+            case "lowest" -> COMPOSTABLE.LOWEST;
+            case "low" -> COMPOSTABLE.LOW;
+            case "high" -> COMPOSTABLE.HIGH;
+            case "highest" -> COMPOSTABLE.HIGHEST;
+            default -> COMPOSTABLE.NORMAL;
+        };
     }
 
     public enum COMPOSTABLE {

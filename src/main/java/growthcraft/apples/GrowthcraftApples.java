@@ -55,7 +55,7 @@ public class GrowthcraftApples {
 
     @SubscribeEvent
     public void onServerStarting(ServerStartingEvent event) {
-        LOGGER.info("Growthcraft Apples starting up ...");
+        LOGGER.info(String.format("%s starting up ...", Reference.NAME));
     }
 
     public void buildCreativeTabContents(BuildCreativeModeTabContentsEvent event) {

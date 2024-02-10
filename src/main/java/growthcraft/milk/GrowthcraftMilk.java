@@ -78,7 +78,7 @@ public class GrowthcraftMilk {
 
     @SubscribeEvent
     public void onServerStarting(ServerStartingEvent event) {
-        LOGGER.info("Growthcraft Milk starting up ...");
+        LOGGER.info(String.format("%s starting up ...", Reference.NAME));
     }
 
     public void onRegisterRenderers(EntityRenderersEvent.RegisterRenderers event) {

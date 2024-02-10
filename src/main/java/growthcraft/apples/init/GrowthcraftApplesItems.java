@@ -3,10 +3,8 @@ package growthcraft.apples.init;
 import growthcraft.apples.item.AppleSeedsItem;
 import growthcraft.apples.shared.Reference;
 import growthcraft.core.utils.CompostableUtils;
-import growthcraft.lib.item.GrowthcraftItem;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.item.Item;
-import net.minecraft.world.level.block.ComposterBlock;
 import net.minecraftforge.registries.DeferredRegister;
 import net.minecraftforge.registries.ForgeRegistries;
 import net.minecraftforge.registries.RegistryObject;
@@ -24,6 +22,10 @@ public class GrowthcraftApplesItems {
             AppleSeedsItem::new
     );
 
+    private GrowthcraftApplesItems() {
+        /* Prevent default public constructor */
+    }
+
     public static void registerCompostables() {
         CompostableUtils.registerCompostable(GrowthcraftApplesItems.APPLE_SEEDS.get(), CompostableUtils.COMPOSTABLE.LOW);
     }
@@ -32,9 +34,5 @@ public class GrowthcraftApplesItems {
         ArrayList<String> excludeItems = new ArrayList<>();
         //excludeBlocks.add(Reference.MODID + ":" + Reference.UnlocalizedName.APPLE_TREE_FRUIT);
         return excludeItems.contains(registryName.toString());
-    }
-
-    private GrowthcraftApplesItems() {
-        /* Prevent default public constructor */
     }
 }

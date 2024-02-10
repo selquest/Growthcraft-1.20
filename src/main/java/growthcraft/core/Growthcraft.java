@@ -47,7 +47,7 @@ public class Growthcraft {
 
     @SubscribeEvent
     public void onServerStarting(ServerStartingEvent event) {
-        // Do nothing
+        LOGGER.info(String.format("%s starting up ...", Reference.NAME));
     }
 
 }

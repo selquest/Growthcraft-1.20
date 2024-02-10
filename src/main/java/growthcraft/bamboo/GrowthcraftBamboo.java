@@ -62,7 +62,7 @@ public class GrowthcraftBamboo {
 
     @SubscribeEvent
     public void onServerStarting(ServerStartingEvent event) {
-        LOGGER.info("Growthcraft Bamboo starting up ...");
+        LOGGER.info(String.format("%s starting up ...", Reference.NAME));
     }
 
 }
