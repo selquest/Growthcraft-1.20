@@ -68,7 +68,7 @@ minecraft {
 
         data {
             workingDirectory project.file('run-data')
-            args '--mod', mod_id+',growthcraft_milk', '--all', '--output', file('src/generated/resources/'),
+            args '--mod', mod_id+',growthcraft_apiary'+',growthcraft_apples'+',growthcraft_bamboo'+',growthcraft_cellar'+',growthcraft_milk'+',growthcraft_rice', '--all', '--output', file('src/generated/resources/'),
             '--existing', file('src/main/resources/'), '--flat'
         }
     }
