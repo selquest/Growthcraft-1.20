@@ -1,5 +1,6 @@
 package growthcraft.cellar.block.entity;
 
+import growthcraft.cellar.GrowthcraftCellar;
 import growthcraft.cellar.block.BrewKettleBlock;
 import growthcraft.cellar.init.GrowthcraftCellarBlockEntities;
 import growthcraft.cellar.init.GrowthcraftCellarItems;
@@ -25,6 +26,9 @@ import net.minecraft.util.RandomSource;
 import net.minecraft.world.Containers;
 import net.minecraft.world.MenuProvider;
 import net.minecraft.world.SimpleContainer;
+import net.minecraft.world.entity.Entity;
+import net.minecraft.world.entity.EntitySelector;
+import net.minecraft.world.entity.item.ItemEntity;
 import net.minecraft.world.entity.player.Inventory;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.inventory.AbstractContainerMenu;
@@ -32,28 +36,41 @@ import net.minecraft.world.inventory.ContainerData;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.Block;
+import net.minecraft.world.level.block.Blocks;
 import net.minecraft.world.level.block.entity.BlockEntity;
 import net.minecraft.world.level.block.entity.BlockEntityTicker;
 import net.minecraft.world.level.block.entity.BlockEntityType;
+import net.minecraft.world.level.block.entity.Hopper;
 import net.minecraft.world.level.block.state.BlockState;
+import net.minecraft.world.phys.AABB;
+import net.minecraft.world.phys.shapes.Shapes;
+import net.minecraft.world.phys.shapes.VoxelShape;
 import net.minecraftforge.common.capabilities.Capability;
 import net.minecraftforge.common.capabilities.ForgeCapabilities;
 import net.minecraftforge.common.util.LazyOptional;
 import net.minecraftforge.fluids.FluidStack;
 import net.minecraftforge.fluids.capability.IFluidHandler;
 import net.minecraftforge.items.IItemHandler;
+import net.minecraftforge.items.ItemHandlerHelper;
 import net.minecraftforge.items.ItemStackHandler;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 
 import javax.annotation.ParametersAreNonnullByDefault;
 import java.util.ArrayList;
+import java.util.Iterator;
 import java.util.List;
 import java.util.Objects;
+import java.util.stream.Collectors;
 
 import static growthcraft.cellar.block.CultureJarBlock.LIT;
 
 public class BrewKettleBlockEntity extends BlockEntity implements BlockEntityTicker<BrewKettleBlockEntity>, MenuProvider {
+
+    VoxelShape COLLECTION_BOX = Block.box(
+            0.0, 0.0, 0.0,
+            16.0, 2.0, 16.0
+    );
 
     private int tickClock = 0;
     private int tickMax = -1;
@@ -65,7 +82,7 @@ public class BrewKettleBlockEntity extends BlockEntity implements BlockEntityTic
     private final ItemStackHandler itemStackHandler = new ItemStackHandler(3) {
         @Override
         protected void onContentsChanged(int slot) {
-            setChanged();
+            super.onContentsChanged(slot);
         }
 
         @Override
@@ -154,6 +171,58 @@ public class BrewKettleBlockEntity extends BlockEntity implements BlockEntityTic
                 : Component.translatable("container.growthcraft_cellar.brew_kettle");
     }
 
+    public void tryVacuumItems(Level level, BrewKettleBlockEntity blockEntity) {
+
+        List<ItemEntity> items = COLLECTION_BOX.toAabbs().stream().flatMap(
+                (blockPos) -> {
+                    return level.getEntitiesOfClass(
+                            ItemEntity.class,
+                            blockPos.move(
+                                    blockEntity.getBlockPos().getX(),
+                                    blockEntity.getBlockPos().getY() + 0.5,
+                                    blockEntity.getBlockPos().getZ()
+                            ),
+                            EntitySelector.ENTITY_STILL_ALIVE
+                    ).stream();
+                }
+        ).collect(Collectors.toList());
+
+        if(!items.isEmpty()) {
+            for (ItemEntity itemEntity : items) {
+                GrowthcraftCellar.LOGGER.debug(String.format("Found: %s", itemEntity));
+                ItemStack itemStack = itemEntity.getItem().copy();
+
+                boolean removeItemEntity = false;
+
+                if(this.itemStackHandler.getStackInSlot(1).isEmpty()) {
+                    this.itemStackHandler.setStackInSlot(1, itemStack);
+                    removeItemEntity = true;
+                } else if(ItemHandlerHelper.canItemStacksStack(this.itemStackHandler.getStackInSlot(1), itemStack)) {
+                    this.itemStackHandler.getStackInSlot(1).grow(itemStack.getCount());
+                    removeItemEntity = true;
+                }
+
+                //if(this.itemStackHandler.insertItem(1, itemStack, false).isEmpty()) {
+                //    this.itemStackHandler.setStackInSlot(1, itemStack);
+                //}
+
+                if(removeItemEntity) itemEntity.remove(Entity.RemovalReason.DISCARDED);
+            }
+        }
+    }
+
+    protected static int getEntityCount(Level p_289656_, AABB p_289647_, Class<? extends Entity> p_289686_) {
+        return p_289656_.getEntitiesOfClass(p_289686_, p_289647_, EntitySelector.NO_SPECTATORS.and((p_289691_) -> {
+            return !p_289691_.isIgnoringBlockTriggers();
+        })).size();
+    }
+
+    public static List<ItemEntity> getItemsAtAndAbove(Level p_155590_, Hopper p_155591_) {
+        return p_155591_.getSuckShape().toAabbs().stream().flatMap((p_155558_) -> {
+            return p_155590_.getEntitiesOfClass(ItemEntity.class, p_155558_.move(p_155591_.getLevelX() - 0.5D, p_155591_.getLevelY() - 0.5D, p_155591_.getLevelZ() - 0.5D), EntitySelector.ENTITY_STILL_ALIVE).stream();
+        }).collect(Collectors.toList());
+    }
+
     public void tick() {
         if (this.getLevel() != null) {
             this.tick(this.getLevel(), this.getBlockPos(), this.getBlockState(), this);
@@ -163,7 +232,11 @@ public class BrewKettleBlockEntity extends BlockEntity implements BlockEntityTic
     @Override
     public void tick(Level level, BlockPos blockPos, BlockState blockState, BrewKettleBlockEntity blockEntity) {
         if(!level.isClientSide) {
-            
+            if(this.itemStackHandler.getStackInSlot(1).isEmpty()
+                || this.itemStackHandler.getStackInSlot(1).getCount() < 64) {
+                tryVacuumItems(level, blockEntity);
+            }
+
             if(!this.itemStackHandler.getStackInSlot(1).isEmpty() 
                 && !this.FLUID_TANK_0.isEmpty()) {
                 List<BrewKettleRecipe> recipes = this.getMatchingRecipes();
