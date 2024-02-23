@@ -34,6 +34,8 @@ public class Reference {
         public static final String BAMBOO_WOOD_LOG = "bamboo_wood_log";
         public static final String BAMBOO_WOOD_LOG_STRIPPED = "bamboo_wood_log_stripped";
         public static final String BAMBOO_PLANK_BEE_BOX = "bee_box_bamboo";
+		public static final String TAG_BAMBOO_WOOD_LOGS = "bamboo_wood_logs";
+		public static final String TAG_APPLBAMBOO_WOOD = "bamboo_wood";
 
         private UnlocalizedName() {
             /* Disable Automatic Creation of Public Constructor */

@@ -46,9 +46,13 @@ public class GrowthcraftTags {
         public static final TagKey<Item> ROASTER_WRENCH = tag(Reference.UnlocalizedName.TAG_ROASTER_WRENCH);
 
         public static final TagKey<Item> SALT = tag(Reference.UnlocalizedName.TAG_SALT);
+        public static final TagKey<Item> DUSTS_SALT = forgeTag(Reference.UnlocalizedName.DUSTS_SALT);
 
         private static TagKey<Item> tag(String name) {
             return ItemTags.create(new ResourceLocation(Reference.MODID, name));
+        }
+        private static TagKey<Item> forgeTag(String name) {
+            return ItemTags.create(new ResourceLocation("forge", name));
         }
     }
 
