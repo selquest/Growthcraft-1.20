@@ -4,6 +4,7 @@ import java.util.Map;
 import java.util.stream.Collectors;
 
 import growthcraft.core.block.RopeBlock;
+import growthcraft.core.init.GrowthcraftItems;
 import growthcraft.core.shared.Reference;
 import growthcraft.lib.block.GrowthcraftBlock;
 import net.minecraft.data.loot.packs.VanillaBlockLoot;
@@ -14,8 +15,11 @@ public class GrowthcraftCoreLootTables extends VanillaBlockLoot{
 	
 	@Override
 	protected void generate() {
-		getKnownBlocks().forEach(block -> {
+		getBlocksThatDropSelf().forEach(block -> {
 				dropSelf(block);
+		});
+		getBlocksThatDropRope().forEach(block -> {
+			dropOther(block, GrowthcraftItems.ROPE_LINEN.get());
 		});
 	}
 	
@@ -26,4 +30,21 @@ public class GrowthcraftCoreLootTables extends VanillaBlockLoot{
                 .map(Map.Entry::getValue)
                 .collect(Collectors.toList());
     }
+
+
+	private Iterable<Block> getBlocksThatDropSelf() {
+		return ForgeRegistries.BLOCKS.getEntries().stream()
+									 .filter(e -> e.getKey().location().getNamespace().equals(Reference.MODID))
+									 .filter(e -> ! e.getKey().location().getPath().contains("fence"))
+									 .map(Map.Entry::getValue)
+									 .collect(Collectors.toList());
+	}
+
+	private Iterable<Block> getBlocksThatDropRope() {
+		return ForgeRegistries.BLOCKS.getEntries().stream()
+									 .filter(e -> e.getKey().location().getNamespace().equals(Reference.MODID))
+									 .filter(e -> e.getKey().location().getPath().contains("fence"))
+									 .map(Map.Entry::getValue)
+									 .collect(Collectors.toList());
+	}
 }

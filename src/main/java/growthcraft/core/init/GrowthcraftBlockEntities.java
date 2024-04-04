@@ -24,7 +24,10 @@ public class GrowthcraftBlockEntities {
                     GrowthcraftBlocks.ROPE_LINEN_NETHER_BRICK_FENCE.get(),
                     GrowthcraftBlocks.ROPE_LINEN_OAK_FENCE.get(),
                     GrowthcraftBlocks.ROPE_LINEN_SPRUCE_FENCE.get(),
-                    GrowthcraftBlocks.ROPE_LINEN_WARPED_FENCE.get()
+                    GrowthcraftBlocks.ROPE_LINEN_WARPED_FENCE.get(),
+                    GrowthcraftBlocks.ROPE_LINEN_MANGROVE_FENCE.get(),
+                    GrowthcraftBlocks.ROPE_LINEN_CHERRY_FENCE.get(),
+                    GrowthcraftBlocks.ROPE_LINEN_BAMBOO_FENCE.get()
             ).build(null)
     );
 
