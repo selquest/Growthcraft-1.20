@@ -3,6 +3,10 @@
     "minecraft:lava",
     "minecraft:fire",
     "minecraft:magma_block",
-    "minecraft:campfire"
+    "minecraft:campfire",
+    {
+      "id": "farmersdelight:stove",
+      "required": false
+    }
   ]
 }

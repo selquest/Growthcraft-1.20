@@ -2,6 +2,8 @@ package growthcraft.core.datagen.providers;
 
 import java.util.concurrent.CompletableFuture;
 
+import net.minecraft.resources.ResourceLocation;
+import net.minecraft.tags.TagEntry;
 import org.jetbrains.annotations.Nullable;
 
 import growthcraft.apiary.init.GrowthcraftApiaryBlocks;
@@ -67,6 +69,9 @@ public class GrowthcraftCoreBlockTags extends BlockTagsProvider {
 		.add(GrowthcraftBlocks.ROPE_LINEN_OAK_FENCE.get())
 		.add(GrowthcraftBlocks.ROPE_LINEN_SPRUCE_FENCE.get())
 		.add(GrowthcraftBlocks.ROPE_LINEN_WARPED_FENCE.get())
+		.add(GrowthcraftBlocks.ROPE_LINEN_BAMBOO_FENCE.get())
+		.add(GrowthcraftBlocks.ROPE_LINEN_CHERRY_FENCE.get())
+		.add(GrowthcraftBlocks.ROPE_LINEN_MANGROVE_FENCE.get())
 		.add(GrowthcraftCellarBlocks.HOPS_VINE.get())
 		.add(GrowthcraftCellarBlocks.PURPLE_GRAPE_VINE.get())
 		.add(GrowthcraftCellarBlocks.PURPLE_GRAPE_VINE_LEAVES.get())
