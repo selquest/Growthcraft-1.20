@@ -75,12 +75,12 @@ public class MixingVatRecipeFluidCategory implements IRecipeCategory<MixingVatFl
     @Override
     public void setRecipe(@NotNull IRecipeLayoutBuilder builder, MixingVatFluidRecipe recipe, @NotNull IFocusGroup focuses) {
 
-        int ingredientCount = recipe.getIngredientList().size();
+        int ingredientCount = recipe.getIngredients().size();
 
         // Input Inventory
         for(int i = 0; i < ingredientCount; i++) {
             builder.addSlot(RecipeIngredientRole.INPUT, 61, 8 + ( i * 16))
-                    .addItemStack(recipe.getIngredientList().get(i));
+                    .addIngredients(recipe.getIngredients().get(i));
         }
 
         // Fluid Tank 0

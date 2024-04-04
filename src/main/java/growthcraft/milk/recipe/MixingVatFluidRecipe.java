@@ -74,11 +74,11 @@ public class MixingVatFluidRecipe implements Recipe<SimpleContainer> {
         boolean ingredientMatches = false;
 
         if (this.getIngredients().size() == testIngredients.size()) {
-            int itemCount = this.getIngredientList().size();
+            int itemCount = this.getIngredients().size();
             int matchCount = 0;
-            for (int i = 0; i < this.getIngredientList().size(); i++) {
-                if (this.getIngredientList().get(i).getItem() == testIngredients.get(i).getItem() &&
-                        this.getIngredientList().get(i).getCount() == testIngredients.get(i).getCount()) {
+            for (int i = 0; i < this.getIngredients().size(); i++) {
+                if (this.getIngredients().get(i).getItems()[0].getItem() == testIngredients.get(i).getItem() &&
+                        this.getIngredients().get(i).getItems()[0].getCount() == testIngredients.get(i).getCount()) {
                     matchCount++;
                 }
             }
@@ -145,14 +145,10 @@ public class MixingVatFluidRecipe implements Recipe<SimpleContainer> {
         return this.ingredients;
     }
 
-    public List<ItemStack> getIngredientList() {
-        return Arrays.stream(ingredients.get(0).getItems()).toList();
-    }
-
     public List<Item> getIngredientItems() {
         List<Item> ingredientItems = new ArrayList<>();
-        this.getIngredientList().forEach(
-                itemStack -> ingredientItems.add(itemStack.getItem())
+        this.getIngredients().forEach(
+                itemStack -> ingredientItems.add(itemStack.getItems()[0].getItem())
         );
         return ingredientItems;
     }
@@ -261,7 +257,7 @@ public class MixingVatFluidRecipe implements Recipe<SimpleContainer> {
             buffer.writeFluidStack(recipe.getInputFluidStack());
             buffer.writeItemStack(recipe.getActivationTool(), false);
 
-            buffer.writeVarInt(recipe.getIngredientList().size());
+            buffer.writeVarInt(recipe.getIngredients().size());
 
             for (Ingredient ingredient : recipe.getIngredients()) {
                 ingredient.toNetwork(buffer);
