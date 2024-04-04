@@ -2,6 +2,8 @@ package growthcraft.core.datagen.providers;
 
 import java.util.concurrent.CompletableFuture;
 
+import net.minecraft.resources.ResourceLocation;
+import net.minecraft.tags.TagEntry;
 import org.jetbrains.annotations.Nullable;
 
 import growthcraft.apiary.init.GrowthcraftApiaryBlocks;
@@ -50,12 +52,16 @@ public class GrowthcraftCoreBlockTags extends BlockTagsProvider {
 		.add(GrowthcraftBambooBlocks.BAMBOO_WOOD.get())
 		.add(GrowthcraftBambooBlocks.BAMBOO_WOOD_STRIPPED.get())
 		.add(GrowthcraftBambooBlocks.BAMBOO_WOOD_LOG_STRIPPED.get());
-		
+
 		tag(GrowthcraftTags.Blocks.HEATSOURCES)
-		.add(Blocks.LAVA)
-		.add(Blocks.FIRE)
-		.add(Blocks.MAGMA_BLOCK)
-		.add(Blocks.CAMPFIRE);
+				.add(Blocks.LAVA)
+				.add(Blocks.MAGMA_BLOCK)
+				.add(TagEntry.optionalElement(new ResourceLocation("farmersdelight", "stove")))
+				.add(TagEntry.optionalElement(new ResourceLocation("decorative_blocks", "bonfire")))
+				.add(TagEntry.optionalElement(new ResourceLocation("decorative_blocks", "brazier")))  // would have liked to support additional_lights but their firepits aren't tagged and there's a ton of them.
+				.add(TagEntry.tag(BlockTags.CAMPFIRES.location()))
+				.add(TagEntry.tag(BlockTags.FIRE.location()));
+
 		tag(GrowthcraftTags.Blocks.ROPE)
 		.add(GrowthcraftBlocks.ROPE_LINEN.get())
 		.add(GrowthcraftBlocks.ROPE_LINEN_ACACIA_FENCE.get())
