@@ -1,6 +1,12 @@
 package growthcraft.milk.recipe;
 
+import java.util.List;
+
+import org.jetbrains.annotations.NotNull;
+import org.jetbrains.annotations.Nullable;
+
 import com.google.gson.JsonObject;
+
 import growthcraft.lib.utils.CraftingUtils;
 import growthcraft.lib.utils.RecipeUtils;
 import growthcraft.milk.GrowthcraftMilk;
@@ -19,11 +25,6 @@ import net.minecraft.world.item.crafting.RecipeType;
 import net.minecraft.world.level.Level;
 import net.minecraftforge.common.crafting.CraftingHelper;
 import net.minecraftforge.fluids.FluidStack;
-import org.jetbrains.annotations.NotNull;
-import org.jetbrains.annotations.Nullable;
-
-import java.util.Arrays;
-import java.util.List;
 
 public class MixingVatItemRecipe implements Recipe<SimpleContainer> {
 
@@ -67,11 +68,11 @@ public class MixingVatItemRecipe implements Recipe<SimpleContainer> {
         boolean ingredientMatches = false;
 
         if (this.getIngredients().size() == testIngredients.size()) {
-            int itemCount = this.getIngredientList().size();
+            int itemCount = this.getIngredients().size();
             int matchCount = 0;
-            for (int i = 0; i < this.getIngredientList().size(); i++) {
-                if (this.getIngredientList().get(i).getItem() == testIngredients.get(i).getItem() &&
-                        this.getIngredientList().get(i).getCount() == testIngredients.get(i).getCount()) {
+            for (int i = 0; i < this.getIngredients().size(); i++) {
+                if (this.getIngredients().get(i).getItems()[0].getItem() == testIngredients.get(i).getItem() &&
+                        this.getIngredients().get(i).getItems()[0].getCount() == testIngredients.get(i).getCount()) {
                     matchCount++;
                 }
             }
@@ -100,10 +101,6 @@ public class MixingVatItemRecipe implements Recipe<SimpleContainer> {
     @Override
     public @NotNull NonNullList<Ingredient> getIngredients() {
         return this.ingredients;
-    }
-
-    public List<ItemStack> getIngredientList() {
-        return Arrays.stream(ingredients.get(0).getItems()).toList();
     }
 
     public ItemStack getResultItemStack() {
@@ -243,7 +240,7 @@ public class MixingVatItemRecipe implements Recipe<SimpleContainer> {
             buffer.writeFluidStack(recipe.getInputFluidStack());
             buffer.writeItemStack(recipe.getActivationTool(), false);
 
-            buffer.writeVarInt(recipe.getIngredientList().size());
+            buffer.writeVarInt(recipe.getIngredients().size());
 
             for (Ingredient ingredient : recipe.getIngredients()) {
                 ingredient.toNetwork(buffer);
