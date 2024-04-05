@@ -100,7 +100,7 @@ public class CultureJarBlock extends BaseEntityBlock {
     public BlockState getStateForPlacement(BlockPlaceContext context) {
         return this.defaultBlockState()
                 .setValue(FACING, context.getHorizontalDirection().getOpposite())
-                .setValue(LIT, BlockStateUtils.isHeated(context.getLevel(), context.getClickedPos()));
+                .setValue(LIT, BlockStateUtils.isHeatedFromTwoBlockRange(context.getLevel(), context.getClickedPos()));
     }
 
     @Override
