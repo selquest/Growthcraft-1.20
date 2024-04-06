@@ -20,6 +20,7 @@ import net.minecraft.world.item.context.BlockPlaceContext;
 import net.minecraft.world.level.BlockGetter;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.LevelAccessor;
+import net.minecraft.world.level.LevelReader;
 import net.minecraft.world.level.block.*;
 import net.minecraft.world.level.block.entity.BlockEntity;
 import net.minecraft.world.level.block.entity.BlockEntityTicker;
@@ -29,6 +30,7 @@ import net.minecraft.world.level.block.state.StateDefinition;
 import net.minecraft.world.level.block.state.properties.BlockStateProperties;
 import net.minecraft.world.level.block.state.properties.BooleanProperty;
 import net.minecraft.world.level.block.state.properties.DirectionProperty;
+import net.minecraft.world.level.block.state.properties.Half;
 import net.minecraft.world.level.material.PushReaction;
 import net.minecraft.world.phys.BlockHitResult;
 import net.minecraft.world.phys.shapes.CollisionContext;
@@ -116,6 +118,45 @@ public class CultureJarBlock extends BaseEntityBlock {
     @Override
     public BlockState mirror(BlockState state, Mirror mirror) {
         return state.rotate(mirror.getRotation(state.getValue(FACING))).setValue(LIT, state.getValue(LIT));
+    }
+
+    @Override
+    public boolean canSurvive(BlockState state, LevelReader world, BlockPos blockPos)
+    {
+        // allow the jar to be on solid blocks or at least blocks with solid top center.
+        BlockPos belowPos = blockPos.below();
+        BlockState below = world.getBlockState(belowPos);
+        if (below.getBlock() instanceof StairBlock && below.getValue(StairBlock.HALF).equals(Half.BOTTOM)) {
+            return false; // logic below fails to get top area of stairs properly, and it's annoying.
+        }
+        VoxelShape top = below.getFaceOcclusionShape(world, belowPos, Direction.UP);
+        boolean belowHas8x8Support = top.min(Direction.Axis.X) <= 4/16d && top.max(Direction.Axis.X) >= 12/16d && top.min(Direction.Axis.Z) <= 4/16d && top.max(Direction.Axis.Z) >= 12/16d;
+        return belowHas8x8Support && super.canSurvive(state, world, blockPos);
+    }
+
+    @Override
+    public void neighborChanged(BlockState state, Level level, BlockPos blockPos, Block block, BlockPos neighbor, boolean p_60514_)
+    {
+        // when a block is removed from below the jar, drop the jar too.
+        if (this.canSurvive(state, level, blockPos)) {
+            super.neighborChanged(state, level, blockPos, block, neighbor, p_60514_);
+        }
+        else {
+            level.destroyBlock(blockPos, true);
+        }
+    }
+
+    @Override
+    public void onRemove(BlockState state, Level level, BlockPos pos, BlockState newState, boolean isMoving)
+    {
+        if (!level.isClientSide && state.getBlock() != newState.getBlock())
+        {
+            if (level.getBlockEntity(pos) instanceof CultureJarBlockEntity jar)
+            {
+                jar.dropHeldItems();
+            }
+            super.onRemove(state, level, pos, newState, isMoving);
+        }
     }
 
     @Nullable

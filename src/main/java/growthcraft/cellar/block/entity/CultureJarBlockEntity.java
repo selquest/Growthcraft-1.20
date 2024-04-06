@@ -115,9 +115,16 @@ public class CultureJarBlockEntity extends BlockEntity implements BlockEntityTic
                 : Component.translatable("container.growthcraft_cellar.culture_jar");
     }
 
+    public void dropHeldItems() {
+        // called when the block is destroyed. drops items from item slots.
+        if (this.level != null && !this.itemStackHandler.getStackInSlot(0).isEmpty()) {
+            Block.popResource(this.level, this.getBlockPos(), this.itemStackHandler.getStackInSlot(0));
+            this.itemStackHandler.setStackInSlot(0, ItemStack.EMPTY);
+        }
+    }
+
     @Override
     public void tick(Level level, BlockPos blockPos, BlockState blockState, CultureJarBlockEntity blockEntity) {
-
         if (level.isClientSide) {
             return; // do nothing; below code will send client updates.
         }
@@ -362,6 +369,4 @@ public class CultureJarBlockEntity extends BlockEntity implements BlockEntityTic
         }
         return super.getCapability(cap, side);
     }
-
-
 }
