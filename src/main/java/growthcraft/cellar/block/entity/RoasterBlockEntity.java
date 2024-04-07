@@ -141,7 +141,7 @@ public class RoasterBlockEntity extends BlockEntity implements BlockEntityTicker
     }
 
     public boolean isHeated() {
-        boolean heated = BlockStateUtils.isHeated(this.level, this.getBlockPos());
+        boolean heated = BlockStateUtils.isHeatedFromBelow(this.level, this.getBlockPos());
         // Only change the blockstate if it is different.
         if (Boolean.TRUE.equals(this.getBlockState().getValue(LIT)) != heated) {
             if (level != null)
