@@ -2,6 +2,7 @@ package growthcraft.milk.block;
 
 import growthcraft.milk.block.entity.CheeseWheelBlockEntity;
 import growthcraft.milk.init.GrowthcraftMilkBlockEntities;
+import growthcraft.rice.init.GrowthcraftRiceTags;
 import net.minecraft.core.BlockPos;
 import net.minecraft.world.InteractionHand;
 import net.minecraft.world.InteractionResult;
@@ -131,7 +132,7 @@ public class CheeseWheelBlock extends BaseEntityBlock {
                     // Allow the stackage of cheese beyond 1 block high
                     return InteractionResult.PASS;
                 }
-            } else if(!player.isCrouching() && player.getItemInHand(interactionHand).isEmpty()) {
+            } else if(!player.isCrouching() && player.getItemInHand(interactionHand).is(GrowthcraftRiceTags.Items.TAG_KNIFE)) {
                 if(blockEntity.canTakeSlice()) {
                     player.getInventory().add(blockEntity.takeSlice());
                 }
