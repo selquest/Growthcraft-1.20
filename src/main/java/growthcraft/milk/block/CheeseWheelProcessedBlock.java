@@ -1,5 +1,6 @@
 package growthcraft.milk.block;
 
+import growthcraft.core.init.GrowthcraftTags;
 import growthcraft.milk.block.entity.CheeseWheelBlockEntity;
 import growthcraft.rice.init.GrowthcraftRiceTags;
 import net.minecraft.core.BlockPos;
@@ -24,7 +25,7 @@ public class CheeseWheelProcessedBlock extends BaseCheeseWheel {
         assert entity != null;
         System.out.println(player.getItemInHand(interactionHand).getTags().toList());
         // handle taking slices
-        if (!player.isCrouching() && player.getItemInHand(interactionHand).is(GrowthcraftRiceTags.Items.TAG_KNIFE)) {
+        if (!player.isCrouching() && player.getItemInHand(interactionHand).is(GrowthcraftTags.Items.TAG_KNIFE)) {
             entity.takeSlice(1);
             player.getInventory().add(getVariant().getSlices(1));
             if (entity.getSliceCount() == 0) level.destroyBlock(blockPos, false);
