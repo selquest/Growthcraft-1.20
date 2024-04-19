@@ -171,26 +171,16 @@ public class CultureJarBlock extends BaseEntityBlock {
 
     @Override
     public InteractionResult use(BlockState blockState, Level level, BlockPos blockPos, Player player, InteractionHand interactionHand, BlockHitResult blockHitResult) {
-        if (!level.isClientSide && player.isCrouching()) {
-            try {
-                // Play sound
-                level.playSound(player, blockPos, SoundEvents.BARREL_OPEN, SoundSource.BLOCKS, 1.0F, 1.0F);
-                CultureJarBlockEntity blockEntity = (CultureJarBlockEntity) level.getBlockEntity(blockPos);
-                NetworkHooks.openScreen(((ServerPlayer) player), blockEntity, blockPos);
-            } catch (Exception ex) {
-                GrowthcraftCellar.LOGGER.error(String.format("%s unable to open CultureJarBlockEntity GUI at %s.", player.getDisplayName().getString(), blockPos));
-                GrowthcraftCellar.LOGGER.error(ex.getMessage());
-                GrowthcraftCellar.LOGGER.error(ex.fillInStackTrace());
-            }
-            return InteractionResult.SUCCESS;
-        }
-
         if (!level.isClientSide) {
-            try {
-                // Handling of Vanilla Milk Bucket
-                if (player.getItemInHand(interactionHand).getItem() == Items.MILK_BUCKET) {
-                    CultureJarBlockEntity blockEntity = (CultureJarBlockEntity) level.getBlockEntity(blockPos);
+            CultureJarBlockEntity blockEntity = (CultureJarBlockEntity) level.getBlockEntity(blockPos);
+            if (blockEntity == null) return InteractionResult.FAIL;
 
+            // Try fluid handling first:
+            if(player.getItemInHand(interactionHand).getCapability(ForgeCapabilities.FLUID_HANDLER_ITEM).isPresent()){
+                boolean fluidInteractionResult = false;
+
+                // Special case for handling Vanilla milk by converting it to GC Milk:
+                if (player.getItemInHand(interactionHand).getItem() == Items.MILK_BUCKET) {
                     int capacity = blockEntity.getFluidTank(0).getCapacity();
                     int amount = blockEntity.getFluidTank(0).getFluidAmount();
                     int remainingFill = capacity - amount;
@@ -199,23 +189,45 @@ public class CultureJarBlock extends BaseEntityBlock {
                             || (remainingFill >= 1000
                             && blockEntity.getFluidStackInTank(0).getFluid().getFluidType() == GrowthcraftMilkFluids.MILK.source.get().getFluidType())
                     ) {
-                        FluidStack fluidStack = new FluidStack(GrowthcraftMilkFluids.MILK.source.get().getSource(), 1000);
-                        blockEntity.getFluidTank(0).fill(fluidStack, IFluidHandler.FluidAction.EXECUTE);
-                        player.setItemInHand(interactionHand, new ItemStack(Items.BUCKET));
+                        try {
+                            FluidStack fluidStack = new FluidStack(GrowthcraftMilkFluids.MILK.source.get().getSource(), 1000);
+                            blockEntity.getFluidTank(0).fill(fluidStack, IFluidHandler.FluidAction.EXECUTE);
+                            player.setItemInHand(interactionHand, new ItemStack(Items.BUCKET));
+                            level.playSound(null, blockPos, SoundEvents.BUCKET_EMPTY, SoundSource.BLOCKS, 1.0F, 1.0F);
+                            fluidInteractionResult = true;
+                        } catch (Exception ex) {
+                            GrowthcraftCellar.LOGGER.error(String.format("Exception Thrown: %s unable to place vanilla milk in CultureJarBlockEntity at %s.", player.getDisplayName().getString(), blockPos));
+                            GrowthcraftCellar.LOGGER.error(ex.getMessage());
+                            GrowthcraftCellar.LOGGER.error(ex.fillInStackTrace());
+                        }
                     }
-                } else if (
-                        FluidUtil.interactWithFluidHandler(player, interactionHand, level, blockPos, blockHitResult.getDirection())
-                                || player.getItemInHand(interactionHand).getCapability(ForgeCapabilities.FLUID_HANDLER_ITEM).isPresent()
-                ) {
-                    return InteractionResult.SUCCESS;
+                } else {
+                    try {
+                        fluidInteractionResult =  FluidUtil.interactWithFluidHandler(player, interactionHand, level, blockPos, blockHitResult.getDirection());
+                    } catch (Exception ex) {
+                        GrowthcraftCellar.LOGGER.error(String.format("Exception Thrown: %s unable to place fluid in CultureJarBlockEntity at %s.", player.getDisplayName().getString(), blockPos));
+                        GrowthcraftCellar.LOGGER.error(ex.getMessage());
+                        GrowthcraftCellar.LOGGER.error(ex.fillInStackTrace());
+                    }
                 }
-            } catch (Exception ex) {
-                GrowthcraftCellar.LOGGER.error(String.format("Exception Thrown: %s unable to place fluid in CultureJarBlockEntity at %s.", player.getDisplayName().getString(), blockPos));
-                GrowthcraftCellar.LOGGER.error(ex.getMessage());
-                GrowthcraftCellar.LOGGER.error(ex.fillInStackTrace());
+                // Return based on whether interaction with the fluid handler item was successful or not.
+                return fluidInteractionResult ? InteractionResult.SUCCESS : InteractionResult.FAIL;
+            } else {
+                // if not holding a fluid, open the GUI
+                try {
+                    // Play sound
+                    level.playSound(player, blockPos, SoundEvents.BARREL_OPEN, SoundSource.BLOCKS, 1.0F, 1.0F);
+                    NetworkHooks.openScreen(((ServerPlayer) player), blockEntity, blockPos);
+                } catch (Exception ex) {
+                    GrowthcraftCellar.LOGGER.error(String.format("%s unable to open CultureJarBlockEntity GUI at %s.", player.getDisplayName().getString(), blockPos));
+                    GrowthcraftCellar.LOGGER.error(ex.getMessage());
+                    GrowthcraftCellar.LOGGER.error(ex.fillInStackTrace());
+                }
+                return InteractionResult.SUCCESS;
             }
-        }
 
+        }
+        // Always return SUCCESS for client side.
         return InteractionResult.SUCCESS;
     }
 }
