@@ -1,12 +1,20 @@
 {
   "values": [
     "minecraft:lava",
-    "minecraft:fire",
     "minecraft:magma_block",
-    "minecraft:campfire",
     {
       "id": "farmersdelight:stove",
       "required": false
-    }
+    },
+    {
+      "id": "decorative_blocks:bonfire",
+      "required": false
+    },
+    {
+      "id": "decorative_blocks:brazier",
+      "required": false
+    },
+    "#minecraft:campfires",
+    "#minecraft:fire"
   ]
 }
