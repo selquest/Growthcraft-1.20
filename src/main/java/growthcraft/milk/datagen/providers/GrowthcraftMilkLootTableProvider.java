@@ -15,4 +15,9 @@ public class GrowthcraftMilkLootTableProvider extends LootTableProvider {
                 new LootTableProvider.SubProviderEntry(GrowthcraftMilkLootTables::new, LootContextParamSets.BLOCK)
         ));
     }
+
+    @Override
+    public String getName() {
+        return "Growthcraft Milk Loot Tables";
+    }
 }
