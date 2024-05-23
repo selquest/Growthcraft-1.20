@@ -41,7 +41,7 @@ public class GrowthcraftApiaryConfig {
     public static void initServerConfig(ForgeConfigSpec.Builder specBuilder) {
         flowerReplicationRange = specBuilder
                 .comment("Set the range for the bee box to look for flowers.")
-                .defineInRange(String.format(FormatUtils.STRING_DOT_STRING, CATEGORY_BEE_BOX, "flowerRange"), 9, 0, 18);
+                .defineInRange(String.format(FormatUtils.STRING_DOT_STRING, CATEGORY_BEE_BOX, "flowerRange"), 4, 0, 18);
         beeBoxCycleUpdateTicks = specBuilder
                 .comment("Set the process time for the bee box to update. Default is once a minute.")
                 .defineInRange(String.format(FormatUtils.STRING_DOT_STRING, CATEGORY_BEE_BOX, "maxProcessingTime"), 1200, 200, 1728000);
