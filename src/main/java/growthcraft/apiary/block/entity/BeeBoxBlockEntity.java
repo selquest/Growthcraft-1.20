@@ -59,6 +59,14 @@ public class BeeBoxBlockEntity extends BlockEntity implements BlockEntityTicker<
             return (slot == 0 && stack.is(GrowthcraftApiaryTags.Items.BEE)) ||
                     (slot > 0 && slot <= 27 && stack.is(GrowthcraftApiaryTags.Items.HONEY_COMB));
         }
+
+        @Override
+        public int getSlotLimit(int slot) {
+            if(slot > 0 && slot <= 27) {
+                return 1;
+            }
+            return 64;
+        }
     };
 
     private LazyOptional<IItemHandler> itemHandlerLazyOptional = LazyOptional.empty();
