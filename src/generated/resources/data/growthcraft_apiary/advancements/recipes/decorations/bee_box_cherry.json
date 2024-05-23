@@ -6,7 +6,7 @@
         "items": [
           {
             "items": [
-              "minecraft:oak_planks"
+              "minecraft:cherry_planks"
             ]
           }
         ]
@@ -15,7 +15,7 @@
     },
     "has_the_recipe": {
       "conditions": {
-        "recipe": "growthcraft_apiary:bee_box_oak"
+        "recipe": "growthcraft_apiary:bee_box_cherry"
       },
       "trigger": "minecraft:recipe_unlocked"
     }
@@ -28,7 +28,7 @@
   ],
   "rewards": {
     "recipes": [
-      "growthcraft_apiary:bee_box_oak"
+      "growthcraft_apiary:bee_box_cherry"
     ]
   },
   "sends_telemetry_event": false

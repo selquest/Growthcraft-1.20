@@ -4,10 +4,10 @@
   "group": "growthcraft_apiary",
   "key": {
     "B": {
-      "item": "minecraft:oak_slab"
+      "item": "minecraft:mangrove_slab"
     },
     "P": {
-      "item": "minecraft:oak_planks"
+      "item": "minecraft:mangrove_planks"
     },
     "S": {
       "tag": "forge:rods/wooden"
@@ -19,7 +19,7 @@
     "SPS"
   ],
   "result": {
-    "item": "growthcraft_apiary:bee_box_oak"
+    "item": "growthcraft_apiary:bee_box_mangrove"
   },
   "show_notification": true
 }
